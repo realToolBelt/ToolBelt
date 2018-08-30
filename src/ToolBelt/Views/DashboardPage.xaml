@@ -9,7 +9,7 @@
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           prism:ViewModelLocator.AutowireViewModel="True"
                           x:TypeArguments="local:DashboardPageViewModel">
-    <StackLayout Padding="20">
+    <Grid Padding="20">
         <ListView x:Name="_lstProjects"
                   BackgroundColor="Transparent"
                   HasUnevenRows="True"
@@ -30,5 +30,5 @@
         <ActivityIndicator x:Name="_activityIndicator"
                            HorizontalOptions="Center"
                            VerticalOptions="Center" />
-    </StackLayout>
+    </Grid>
 </rxui:ReactiveContentView>

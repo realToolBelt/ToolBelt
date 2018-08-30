@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using ToolBelt.Models;
 using ToolBelt.Services;
 using ToolBelt.ViewModels;
@@ -22,8 +23,13 @@ namespace ToolBelt.Views
             Title = "Dashboard";
             _projectDataStore = projectDataStore;
 
-            var loadProjectsCommand = ReactiveCommand.CreateFromTask(() =>
-                projectDataStore.GetProjectsAsync());
+            var loadProjectsCommand = ReactiveCommand.CreateFromTask(async () =>
+            {
+                var random = new Random();
+                await Task.Delay(random.Next(400, 2000));
+
+                return await projectDataStore.GetProjectsAsync().ConfigureAwait(false);
+            });
 
             // when the command is executing, update the busy state
             loadProjectsCommand.IsExecuting
@@ -37,7 +43,13 @@ namespace ToolBelt.Views
             ViewProjectDetails = ReactiveCommand.CreateFromTask<Project, Unit>(async project =>
             {
                 // TODO: Add project as parameter...
-                await NavigationService.NavigateAsync(nameof(ProjectDetailsPage)).ConfigureAwait(false);
+                await NavigationService.NavigateAsync(
+                    nameof(ProjectDetailsPage),
+                    new NavigationParameters
+                    {
+                        { "project", project }
+                    }).ConfigureAwait(false);
+
                 return Unit.Default;
             });
         }
