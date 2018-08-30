@@ -9,6 +9,8 @@ namespace ToolBelt.Views
 {
     public class ProjectDetailsPageViewModel : BaseViewModel
     {
+        private Project _project;
+
         public ProjectDetailsPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "Project Details";
@@ -22,7 +24,6 @@ namespace ToolBelt.Views
                 });
         }
 
-        private Project _project;
         public Project Project
         {
             get => _project;
