@@ -1,0 +1,70 @@
+﻿using ReactiveUI;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
+
+namespace ToolBelt.Validation
+{
+    /// <summary>
+    /// An object that can be validated.
+    /// </summary>
+    /// <typeparam name="T">The type of the value held by the object.</typeparam>
+    /// <seealso cref="ReactiveUI.ReactiveObject" />
+    /// <seealso cref="ToolBelt.Validation.IValidity" />
+    public class ValidatableObject<T> : ReactiveObject, IValidity
+    {
+        private readonly ObservableAsPropertyHelper<bool> _isValid;
+        private T _value;
+
+        public ValidatableObject()
+        {
+            Errors.Changed
+                .Select(_ => Errors.Count == 0)
+                .ToProperty(this, x => x.IsValid, out _isValid, initialValue: true, scheduler: Scheduler.Immediate);
+        }
+
+        public ReactiveList<string> Errors { get; } = new ReactiveList<string>();
+
+        /// <summary>
+        /// Gets a value indicating whether or not the value held by this instance is valie.
+        /// </summary>
+        /// <value><c>true</c> if this instance is valid; otherwise, <c>false</c>.</value>
+        public bool IsValid => _isValid?.Value ?? true;
+
+        public List<IValidationRule<T>> Validations { get; } = new List<IValidationRule<T>>();
+
+        /// <summary>
+        /// Gets or sets the value held by the object.
+        /// </summary>
+        public T Value
+        {
+            get => _value;
+            set => this.RaiseAndSetIfChanged(ref _value, value);
+        }
+
+        /// <summary>
+        /// Clears the validation errors on this instance.
+        /// </summary>
+        public void ClearValidationErrors()
+        {
+            Errors.Clear();
+        }
+
+        /// <summary>
+        /// Validates the value held by this instance.
+        /// </summary>
+        /// <returns><c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
+        public bool Validate()
+        {
+            IEnumerable<string> errors = Validations
+                .Where(v => !v.IsValid(Value))
+                .Select(v => v.ValidationMessage);
+
+            Errors.Clear();
+            Errors.AddRange(errors);
+
+            return this.IsValid;
+        }
+    }
+}

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:ContentPageBase x:Class="ToolBelt.Views.ExtendedSplashPage"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:local="clr-namespace:ToolBelt.Views"
+                       xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:TypeArguments="local:ExtendedSplashPageViewModel"
+                       BackgroundColor="Transparent">
+
+    <Grid AutomationId="splash">
+        <!--<Image Aspect="AspectFill">
+            <Image.Source>
+                <OnPlatform x:TypeArguments="ImageSource">
+                    <On Platform="iOS" Value="Default" />
+                </OnPlatform>
+            </Image.Source>
+        </Image>-->
+
+        <ActivityIndicator x:Name="_activityIndicator"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+    </Grid>
+</local:ContentPageBase>

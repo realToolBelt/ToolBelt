@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:ContentPageBase x:Class="ToolBelt.Views.ContactUsPage"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:controls="clr-namespace:ToolBelt.Controls"
+                       xmlns:local="clr-namespace:ToolBelt.Views"
+                       xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                       xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:TypeArguments="local:ContactUsPageViewModel">
+    <ScrollView>
+        <Grid Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <controls:ToolBeltLabel Margin="0,10,0,20"
+                                    FontAttributes="Bold"
+                                    FontSize="{StaticResource LargeSize}"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
+            <StackLayout Grid.Row="1">
+                <Label FontAttributes="Bold"
+                       FontSize="{StaticResource MediumSize}"
+                       Text="Name:"
+                       VerticalOptions="Center" />
+                <Entry x:Name="_txtName" VerticalOptions="Center" />
+                <Label FontAttributes="Bold"
+                       FontSize="{StaticResource MediumSize}"
+                       Text="Email:"
+                       VerticalOptions="Center" />
+                <Entry x:Name="_txtEmail" VerticalOptions="Center" />
+                <Label FontAttributes="Bold"
+                       FontSize="{StaticResource MediumSize}"
+                       Text="Message:"
+                       VerticalOptions="Center" />
+                <Editor x:Name="_txtMessage" VerticalOptions="FillAndExpand" />
+                <Button x:Name="_btnSubmit"
+                        Text="Submit"
+                        VerticalOptions="Center" />
+            </StackLayout>
+
+            <ActivityIndicator x:Name="_activityIndicator" Grid.RowSpan="2" />
+        </Grid>
+    </ScrollView>
+</local:ContentPageBase>

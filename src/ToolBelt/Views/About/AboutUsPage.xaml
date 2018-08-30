@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<vw:ContentPageBase x:Class="ToolBelt.Views.About.AboutUsPage"
+                    xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:ToolBelt.Controls"
+                    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                    xmlns:local="clr-namespace:ToolBelt.Views.About"
+                    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                    xmlns:vw="clr-namespace:ToolBelt.Views"
+                    prism:ViewModelLocator.AutowireViewModel="True"
+                    x:TypeArguments="local:AboutUsPageViewModel">
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+            <ffimageloading:CachedImage Margin="0,0,15,0"
+                                        Aspect="AspectFit"
+                                        DownsampleToViewSize="true"
+                                        HeightRequest="{StaticResource ExtraBigSize}"
+                                        HorizontalOptions="Center"
+                                        Source="toolbeltIcon.png"
+                                        VerticalOptions="Center"
+                                        WidthRequest="{StaticResource ExtraBigSize}" />
+            <controls:ToolBeltLabel FontAttributes="Bold"
+                                    FontSize="{StaticResource ExtraBigSize}"
+                                    HorizontalOptions="Center" />
+        </StackLayout>
+    </Grid>
+</vw:ContentPageBase>

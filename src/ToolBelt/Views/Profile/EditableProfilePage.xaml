@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<vw:ContentPageBase x:Class="ToolBelt.Views.Profile.EditableProfilePage"
+                    xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:ToolBelt.Controls"
+                    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                    xmlns:local="clr-namespace:ToolBelt.Views.Profile"
+                    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                    xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                    xmlns:vw="clr-namespace:ToolBelt.Views"
+                    prism:ViewModelLocator.AutowireViewModel="True"
+                    x:TypeArguments="local:EditableProfilePageViewModel">
+    <ContentPage.Resources>
+
+        <Style x:Key="HeaderTextStyle"
+               BasedOn="{StaticResource BaseLabelStyle}"
+               TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource textColor}" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+        </Style>
+
+    </ContentPage.Resources>
+
+    <ScrollView>
+
+        <StackLayout Margin="20">
+            <!--  TODO: Turn the label, entry, and error label into a single reusable control  -->
+            <controls:ValidatedEntry x:Name="_firstNameControl"
+                                     HeaderText="First Name:"
+                                     PlaceholderText="First Name" />
+
+            <controls:ValidatedEntry x:Name="_lastNameControl"
+                                     HeaderText="Last Name:"
+                                     PlaceholderText="Last Name" />
+
+            <controls:ValidatedEntry x:Name="_emailControl"
+                                     HeaderText="Email:"
+                                     PlaceholderText="Email" />
+
+            <controls:ValidatedEntry x:Name="_phoneControl"
+                                     HeaderText="Phone:"
+                                     PlaceholderText="Phone" />
+
+
+            <Label FontAttributes="Bold"
+                   Style="{StaticResource HeaderTextStyle}"
+                   Text="Photo:" />
+            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                <ffimageloading:CachedImage x:Name="_imgPhoto"
+                                            Margin="0,0,10,0"
+                                            Aspect="AspectFit"
+                                            DownsampleToViewSize="true"
+                                            HeightRequest="75"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            WidthRequest="75" />
+                <Button x:Name="_btnPhoto" Text="Change Photo" />
+            </StackLayout>
+
+
+            <StackLayout Orientation="Horizontal">
+                <Label HorizontalOptions="StartAndExpand"
+                       Text="Communities"
+                       TextColor="{DynamicResource accentColor}" />
+                <Button x:Name="_btnSelectCommunities" Text="Select" />
+            </StackLayout>
+
+            <controls:RepeaterView x:Name="_rptCommunities" Margin="10,0,0,0">
+                <controls:RepeaterView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding .}" />
+                    </DataTemplate>
+                </controls:RepeaterView.ItemTemplate>
+            </controls:RepeaterView>
+
+            <!--  ...  -->
+
+        </StackLayout>
+    </ScrollView>
+</vw:ContentPageBase>

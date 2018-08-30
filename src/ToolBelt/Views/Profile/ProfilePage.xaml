@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<vw:ContentPageBase x:Class="ToolBelt.Views.Profile.ProfilePage"
+                    xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+                    xmlns:local="clr-namespace:ToolBelt.Views.Profile"
+                    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                    xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                    xmlns:vw="clr-namespace:ToolBelt.Views"
+                    prism:ViewModelLocator.AutowireViewModel="True"
+                    x:TypeArguments="local:ProfilePageViewModel">
+    <ContentPage.Resources>
+        <Style x:Key="ProfileTitleLabelStyle"
+               BasedOn="{StaticResource BaseLabelStyle}"
+               TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+        </Style>
+
+        <Style x:Key="ProfileItemLabelStyle"
+               BasedOn="{StaticResource BaseLabelStyle}"
+               TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+            <Setter Property="Margin" Value="0,0,0,14" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="_miEdit"
+                     Icon="ic_action_edit"
+                     Priority="0" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView Padding="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ffimageloading:CachedImage x:Name="_imgProfile"
+                                        Aspect="AspectFit"
+                                        DownsampleToViewSize="true"
+                                        HeightRequest="75"
+                                        HorizontalOptions="Center"
+                                        Source="devnl.png"
+                                        VerticalOptions="Center"
+                                        WidthRequest="75">
+                <ffimageloading:CachedImage.Transformations>
+                    <fftransformations:CircleTransformation />
+                </ffimageloading:CachedImage.Transformations>
+            </ffimageloading:CachedImage>
+
+            <StackLayout Grid.Row="1" Spacing="10">
+                <Label Style="{StaticResource ProfileTitleLabelStyle}" Text="First Name" />
+                <Label x:Name="_lblFirstName" Style="{StaticResource ProfileItemLabelStyle}" />
+
+                <Label Style="{StaticResource ProfileTitleLabelStyle}" Text="Last Name" />
+                <Label x:Name="_lblLastName" Style="{StaticResource ProfileItemLabelStyle}" />
+
+                <Label Style="{StaticResource ProfileTitleLabelStyle}" Text="Birhdate" />
+                <Label x:Name="_lblBirthDate" Style="{StaticResource ProfileItemLabelStyle}" />
+
+                <Label Style="{StaticResource ProfileTitleLabelStyle}" Text="Email" />
+                <Label x:Name="_lblEmail" Style="{StaticResource ProfileItemLabelStyle}" />
+            </StackLayout>
+        </Grid>
+    </ScrollView>
+</vw:ContentPageBase>

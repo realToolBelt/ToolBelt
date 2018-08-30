@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rxui:ReactiveMasterDetailPage x:Class="ToolBelt.Views.RootPage"
+                               xmlns="http://xamarin.com/schemas/2014/forms"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                               xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                               xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+                               xmlns:local="clr-namespace:ToolBelt.Views"
+                               xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                               xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                               prism:ViewModelLocator.AutowireViewModel="True"
+                               x:TypeArguments="local:RootPageViewModel">
+    <MasterDetailPage.Master>
+        <!--  Hamburger Menu Secret Sauce... Add an Icon!!!! Make sure it's in your resources for your Platform Project  -->
+        <NavigationPage Title="TOOLBELT" Icon="hamburger.png">
+            <x:Arguments>
+                <ContentPage Title="TOOLBELT">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Margin="20,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ffimageloading:CachedImage x:Name="_imgProfile"
+                                                        Aspect="AspectFit"
+                                                        DownsampleToViewSize="true"
+                                                        HeightRequest="50"
+                                                        HorizontalOptions="Center"
+                                                        Source="devnl.png"
+                                                        VerticalOptions="Center"
+                                                        WidthRequest="50">
+                                <ffimageloading:CachedImage.Transformations>
+                                    <fftransformations:CircleTransformation />
+                                </ffimageloading:CachedImage.Transformations>
+                            </ffimageloading:CachedImage>
+
+                            <StackLayout Grid.Column="1">
+                                <Label x:Name="_lblUserName" FontSize="{StaticResource LargeSize}" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Available"
+                                           VerticalOptions="CenterAndExpand"
+                                           VerticalTextAlignment="Center" />
+                                    <Switch IsToggled="True"
+                                            Scale="0.7"
+                                            VerticalOptions="Center" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+
+                        <BoxView Grid.Row="1"
+                                 BackgroundColor="{DynamicResource accentColor}"
+                                 HeightRequest="5" />
+
+                        <ListView x:Name="_lstMenu"
+                                  Grid.Row="2"
+                                  BackgroundColor="Transparent"
+                                  HasUnevenRows="True"
+                                  RowHeight="50"
+                                  SeparatorVisibility="None"
+                                  VerticalOptions="FillAndExpand">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <local:CustomMenuItemCellView />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </ContentPage>
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Master>
+</rxui:ReactiveMasterDetailPage>

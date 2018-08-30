@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase x:Class="ToolBelt.Views.Messages.ChatPage"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:local="clr-namespace:ToolBelt.Views.Messages"
+                       xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                       xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                       xmlns:views="clr-namespace:ToolBelt.Views"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:TypeArguments="local:ChatPageViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:MessageCellDataTemplateSelector x:Key="MessageCellDataTemplateSelector" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid ColumnSpacing="0" RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  Messages in Row 0  -->
+        <ListView x:Name="_lstMessages"
+                  HasUnevenRows="True"
+                  ItemTemplate="{StaticResource MessageCellDataTemplateSelector}"
+                  SeparatorVisibility="None" />
+
+        <!--  Entry and Send button in Row 1  -->
+        <StackLayout Grid.Row="1"
+                     Padding="10"
+                     BackgroundColor="Black"
+                     Orientation="Horizontal">
+            <Entry x:Name="_txtOutgoingText"
+                   HeightRequest="25"
+                   HorizontalOptions="FillAndExpand"
+                   Placeholder="Say something..." />
+            <Button x:Name="_btnSend" Text="Send" />
+        </StackLayout>
+    </Grid>
+</views:ContentPageBase>

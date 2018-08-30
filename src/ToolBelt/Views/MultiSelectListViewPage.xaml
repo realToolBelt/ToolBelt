@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:ContentPageBase x:Class="ToolBelt.Views.MultiSelectListViewPage"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:local="clr-namespace:ToolBelt.Views"
+                       xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:TypeArguments="local:MultiSelectListViewPageViewModel">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="_miSelectAll" Text="Select All" />
+        <ToolbarItem x:Name="_miSelectNone" Text="Select None" />
+    </ContentPage.ToolbarItems>
+    <ListView x:Name="_lstItems"
+              BackgroundColor="Transparent"
+              HasUnevenRows="True"
+              HorizontalOptions="FillAndExpand"
+              SeparatorVisibility="None"
+              VerticalOptions="FillAndExpand">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <local:MultiSelectItemViewCell />
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</local:ContentPageBase>

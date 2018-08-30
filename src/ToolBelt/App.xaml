@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<prism:PrismApplication x:Class="ToolBelt.App"
+                        xmlns="http://xamarin.com/schemas/2014/forms"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:controls="clr-namespace:ToolBelt.Controls"
+                        xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex"
+                        xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms">
+    <prism:PrismApplication.Resources>
+        <ResourceDictionary>
+            <!--  Global Styles  -->
+            <Color x:Key="primaryBackgroundColor">#353535</Color>
+            <Color x:Key="primaryBackgroundColorDark">#000000</Color>
+            <Color x:Key="accentColor">#FFC600</Color>
+            <Color x:Key="textColor">White</Color>
+            <Color x:Key="buttonBackground">#ffc600</Color>
+            <Color x:Key="buttonTextColor">Black</Color>
+            <Color x:Key="buttonDisabledTextColor">Red</Color>
+            <Color x:Key="ValidationErrorColor">#FF204F</Color>
+            <Color x:Key="BlackColor">#000000</Color>
+            <Color x:Key="WhiteColor">#FFFFFF</Color>
+            <!--<Color x:Key="ValidationErrorColor">#FF5252</Color>-->
+
+            <!--  FONTS  -->
+            <OnPlatform x:Key="FontAwesomeBrands" x:TypeArguments="x:String">
+                <On Platform="Android">fontawesome_brands.otf#Font Awesome 5 Brands Regular</On>
+                <On Platform="iOS">Font Awesome 5 Brands Regular</On>
+            </OnPlatform>
+
+            <OnPlatform x:Key="FontAwesomeSolid" x:TypeArguments="x:String">
+                <On Platform="Android">fontawesome.otf#Font Awesome 5 Free Solid</On>
+                <On Platform="iOS">Font Awesome 5 Free Solid</On>
+            </OnPlatform>
+
+            <OnPlatform x:Key="LittleSize" x:TypeArguments="x:Double">
+                <On Platform="Android">12</On>
+                <On Platform="iOS">11</On>
+            </OnPlatform>
+
+            <OnPlatform x:Key="MidMediumSize" x:TypeArguments="x:Double">
+                <On Platform="Android">14</On>
+                <On Platform="iOS">12</On>
+            </OnPlatform>
+
+            <OnPlatform x:Key="MediumSize" x:TypeArguments="x:Double">
+                <On Platform="Android">16</On>
+                <On Platform="iOS">14</On>
+            </OnPlatform>
+
+            <OnPlatform x:Key="LargeSize" x:TypeArguments="x:Double">
+                <On Platform="Android">18</On>
+                <On Platform="iOS">16</On>
+            </OnPlatform>
+
+            <OnPlatform x:Key="LargerSize" x:TypeArguments="x:Double">
+                <On Platform="Android">20</On>
+                <On Platform="iOS">18</On>
+            </OnPlatform>
+
+            <OnPlatform x:Key="BigSize" x:TypeArguments="x:Double">
+                <On Platform="Android">24</On>
+                <On Platform="iOS">20</On>
+            </OnPlatform>
+
+            <OnPlatform x:Key="ExtraBigSize" x:TypeArguments="x:Double">
+                <On Platform="Android">32</On>
+                <On Platform="iOS">24</On>
+            </OnPlatform>
+
+            <OnPlatform x:Key="HugeSize" x:TypeArguments="x:Double">
+                <On Platform="Android">48</On>
+                <On Platform="iOS">32</On>
+            </OnPlatform>
+
+
+
+
+
+
+            <!--  STYLES  -->
+
+            <!--  Default style for Navigation Pages  -->
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource primaryBackgroundColor}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource primaryBackgroundColor}" />
+                <Setter Property="BarTextColor" Value="{StaticResource textColor}" />
+            </Style>
+
+            <!--  Default style for Content Pages  -->
+            <Style TargetType="ContentPage">
+                <Setter Property="BackgroundColor" Value="{StaticResource primaryBackgroundColor}" />
+            </Style>
+
+
+            <!--  Base style to use for Label controls  -->
+            <Style x:Key="BaseLabelStyle" TargetType="{x:Type Label}">
+                <Setter Property="TextColor" Value="{StaticResource textColor}" />
+            </Style>
+
+            <!--  Default style for Label controls  -->
+            <Style BasedOn="{StaticResource BaseLabelStyle}" TargetType="{x:Type Label}" />
+
+            <!--  Base style for labels that use the Font Awesome Solid font  -->
+            <Style x:Key="FASolidLabelStyle"
+                   BasedOn="{StaticResource BaseLabelStyle}"
+                   TargetType="{x:Type Label}">
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolid}" />
+            </Style>
+
+            <!--  Base style for labels that use the Font Awesome Brand font  -->
+            <Style x:Key="FABrandLabelStyle"
+                   BasedOn="{StaticResource BaseLabelStyle}"
+                   TargetType="{x:Type Label}">
+                <Setter Property="TextColor" Value="{StaticResource BlackColor}" />
+                <Setter Property="FontFamily" Value="{StaticResource FontAwesomeBrands}" />
+            </Style>
+
+            <!--  Base style for validation error message labels  -->
+            <Style x:Key="ValidationErrorLabelStyle"
+                   BasedOn="{StaticResource BaseLabelStyle}"
+                   TargetType="{x:Type Label}">
+                <Setter Property="TextColor" Value="{StaticResource ValidationErrorColor}" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+            </Style>
+
+            <Style x:Key="HeaderTextStyle"
+                   BasedOn="{StaticResource BaseLabelStyle}"
+                   TargetType="{x:Type Label}">
+                <Setter Property="TextColor" Value="{StaticResource textColor}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+            </Style>
+
+
+
+
+
+            <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="{StaticResource textColor}" />
+            </Style>
+
+            <Style TargetType="Picker">
+                <Setter Property="TextColor" Value="{StaticResource textColor}" />
+            </Style>
+
+
+
+
+
+
+            <Style x:Key="BaseButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="BackgroundColor" Value="{StaticResource accentColor}" />
+                <Setter Property="TextColor" Value="{StaticResource buttonTextColor}" />
+                <Setter Property="BorderRadius" Value="0" />
+                <Setter Property="HeightRequest" Value="73" />
+                <Setter Property="HorizontalOptions" Value="Fill" />
+                <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
+            </Style>
+
+            <Style BasedOn="{StaticResource BaseButtonStyle}" TargetType="{x:Type Button}" />
+
+            <Style x:Key="FABrandButton"
+                   BasedOn="{StaticResource BaseButtonStyle}"
+                   TargetType="{x:Type Button}">
+                <Setter Property="FontFamily" Value="{StaticResource FontAwesomeBrands}" />
+            </Style>
+
+            <Style x:Key="FABrandFlexButton" TargetType="{x:Type flex:FlexButton}">
+                <Setter Property="FontFamily" Value="{StaticResource FontAwesomeBrands}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource accentColor}" />
+                <Setter Property="HighlightBackgroundColor" Value="#c19600" />
+                <Setter Property="ForegroundColor" Value="{StaticResource buttonTextColor}" />
+                <Setter Property="HighlightForegroundColor" Value="{StaticResource buttonTextColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource accentColor}" />
+                <Setter Property="HighlightBorderColor" Value="#c19600" />
+                <Setter Property="WidthRequest" Value="64" />
+                <Setter Property="HeightRequest" Value="64" />
+                <Setter Property="CornerRadius" Value="32" />
+                <Setter Property="BorderThickness" Value="3" />
+            </Style>
+
+            <!--  Base style to use for Extended Entry controls  -->
+            <Style x:Key="BaseEntryStyle" TargetType="{x:Type controls:ExtendedEntry}">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{StaticResource textColor}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource textColor}" />
+                <Setter Property="HeightRequest" Value="44" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Opacity" Value="0.6" />
+                <Setter Property="FocusLineColor" Value="{StaticResource accentColor}" />
+                <Setter Property="InvalidLineColor" Value="{StaticResource ValidationErrorColor}" />
+                <Style.Triggers>
+                    <Trigger TargetType="Entry" Property="IsFocused" Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!--  Default style for Extended Entry controls  -->
+            <Style BasedOn="{StaticResource BaseEntryStyle}" TargetType="{x:Type controls:ExtendedEntry}" />
+
+            <!--  Default style for the Activity Indicator  -->
+            <Style TargetType="{x:Type ActivityIndicator}">
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="WidthRequest">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android, iOS" Value="100" />
+                            <On Platform="UWP" Value="300" />
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </prism:PrismApplication.Resources>
+</prism:PrismApplication>
