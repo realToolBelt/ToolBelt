@@ -1,5 +1,6 @@
 ﻿using Prism.Ioc;
 using Prism.Navigation;
+using Prism.Services;
 using ReactiveUI;
 using System;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace ToolBelt.Views
     {
         private readonly AccountStore _accountStore;
         private readonly IContainerRegistry _containerRegistry;
+        private readonly IPageDialogService _dialogService;
         private readonly ObservableAsPropertyHelper<bool> _isBusy;
         private readonly IUserDataStore _userDataStore;
 
@@ -23,11 +25,13 @@ namespace ToolBelt.Views
             INavigationService navigationService,
             IAuthenticatorFactory authenticatorFactory,
             IContainerRegistry containerRegistry,
-            IUserDataStore userDataStore) : base(navigationService)
+            IUserDataStore userDataStore,
+            IPageDialogService dialogService) : base(navigationService)
         {
             _accountStore = AccountStore.Create();
             _containerRegistry = containerRegistry;
             _userDataStore = userDataStore;
+            _dialogService = dialogService;
 
             Initialize = ReactiveCommand.CreateFromTask(async () =>
             {
@@ -81,11 +85,10 @@ namespace ToolBelt.Views
 
         async void IAuthenticationDelegate.OnAuthenticationCompleted(OAuthToken token, AuthenticationProviderUser providerUser)
         {
-            _containerRegistry.RegisterInstance<IAuthenticator>(AuthenticationState.Authenticator);
-
             var user = await _userDataStore.GetUserFromProvider(providerUser);
             if (user != null)
             {
+                _containerRegistry.RegisterInstance<IAuthenticator>(AuthenticationState.Authenticator);
                 _containerRegistry.RegisterInstance<IUserService>(new UserService(user));
 
                 // the user is already registered. Show the main page.
@@ -93,9 +96,9 @@ namespace ToolBelt.Views
             }
             else
             {
-                // NOTE: This should *never* happen from this page unless there's an error. Should
-                //       navigate to the login screen in that case...
-                await NavigationService.NavigateToLoginPageAsync().ConfigureAwait(false);
+                // This should only happen if we successfully authenticate with the OAuth process,
+                // but fail to retrieve the user from the database. Just show that login failed
+                await _dialogService.DisplayAlertAsync("Login Failed", "Failed to log in.  Please try again.", "OK").ConfigureAwait(false);
             }
         }
 

@@ -16,6 +16,7 @@
     <PackageReference Include="Prism.Forms" Version="7.0.0.396" />
     <PackageReference Include="ReactiveUI.Events.XamForms" Version="8.7.2" />
     <PackageReference Include="ReactiveUI.XamForms" Version="8.7.2" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
     <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
     <PackageReference Include="Xamarin.Auth" Version="1.6.0.2" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.3.840" />
@@ -23,12 +24,6 @@
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.3.840" />
     <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />  
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.ComponentModel.Annotations">
-      <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.1.0\ref\netcoreapp2.1\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +46,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\About\AboutUsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Authentication\Registration\BasicInformationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Authentication\Registration\TradeSpecialtiesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Cells\ProjectSummaryCellView.xaml">

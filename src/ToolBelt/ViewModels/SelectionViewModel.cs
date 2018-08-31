@@ -8,6 +8,7 @@ namespace ToolBelt.ViewModels
     /// </summary>
     public class SelectionViewModel : ReactiveObject
     {
+        private string _displayValue;
         private bool _isSelected;
 
         /// <summary>
@@ -37,8 +38,20 @@ namespace ToolBelt.ViewModels
         /// <param name="isSelected">The default selected state to use.</param>
         public SelectionViewModel(object item, bool isSelected)
         {
-            this.Item = item;
-            this.IsSelected = isSelected;
+            Item = item;
+            IsSelected = isSelected;
+
+            // default the display value to the item as a string
+            DisplayValue = Item?.ToString();
+        }
+
+        /// <summary>
+        /// Gets or sets the value to display for the item.
+        /// </summary>
+        public string DisplayValue
+        {
+            get => _displayValue;
+            set => this.RaiseAndSetIfChanged(ref _displayValue, value);
         }
 
         /// <summary>

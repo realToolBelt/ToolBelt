@@ -15,7 +15,7 @@
         <Grid Padding="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
@@ -26,54 +26,24 @@
 
             <StackLayout Grid.Row="1" Margin="0,20,0,0">
 
-                <Label FontAttributes="Bold"
-                       FontSize="{StaticResource MediumSize}"
-                       Text="Name:" />
-                <Entry x:Name="_txtName" />
-
-                <Label Margin="0,10,0,0"
-                       FontAttributes="Bold"
-                       FontSize="{StaticResource MediumSize}"
-                       Text="Email:" />
-                <Entry x:Name="_txtEmail" />
-
-                <Label Margin="0,10,0,0"
-                       FontAttributes="Bold"
-                       FontSize="{StaticResource MediumSize}"
-                       Text="Password:" />
-                <Entry x:Name="_txtPassword" IsPassword="true" />
-
-                <Label Margin="0,10,0,0"
-                       FontAttributes="Bold"
-                       FontSize="{StaticResource MediumSize}"
-                       Text="Confirm Password:" />
-                <Entry x:Name="_txtPasswordConfirm" IsPassword="true" />
-
                 <StackLayout Margin="0,10,0,0" Orientation="Horizontal">
                     <Switch x:Name="_chkAgreeWithTerms" />
                     <Label FontSize="{StaticResource MidMediumSize}" Text="By signing up, you agree with our terms and conditions" />
                 </StackLayout>
+
+                <controls:SocialButton x:Name="_btnFacebook"
+                                       BackgroundColor="#4267B2"
+                                       IconText="&#xf39e;"
+                                       Text="Sign in with Facebook" />
+                <controls:SocialButton x:Name="_btnTwitter"
+                                       BackgroundColor="#55ACEE"
+                                       IconText="&#xf099;"
+                                       Text="Sign in with Twitter" />
+                <controls:SocialButton x:Name="_btnGoogle"
+                                       BackgroundColor="#DD4B39"
+                                       IconText="&#xf1a0;"
+                                       Text="Sign in with Google" />
             </StackLayout>
-
-            <StackLayout Grid.Row="2" Margin="0,10,0,0">
-                <Button x:Name="_btnRegister" Text="Register" />
-
-                <StackLayout Margin="0,10,0,0"
-                             HorizontalOptions="Center"
-                             Orientation="Horizontal">
-                    <flex:FlexButton HorizontalOptions="Center"
-                                     Style="{DynamicResource FABrandFlexButton}"
-                                     Text="&#xf39e;" />
-                    <flex:FlexButton HorizontalOptions="Center"
-                                     Style="{DynamicResource FABrandFlexButton}"
-                                     Text="&#xf099;" />
-                    <flex:FlexButton HorizontalOptions="Center"
-                                     Style="{DynamicResource FABrandFlexButton}"
-                                     Text="&#xf0d5;" />
-                </StackLayout>
-            </StackLayout>
-
-            <ActivityIndicator x:Name="_activityIndicator" Grid.Row="1" />
         </Grid>
     </ScrollView>
 </views:ContentPageBase>

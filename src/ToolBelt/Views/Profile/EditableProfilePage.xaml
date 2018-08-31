@@ -25,7 +25,6 @@
     <ScrollView>
 
         <StackLayout Margin="20">
-            <!--  TODO: Turn the label, entry, and error label into a single reusable control  -->
             <controls:ValidatedEntry x:Name="_firstNameControl"
                                      HeaderText="First Name:"
                                      PlaceholderText="First Name" />

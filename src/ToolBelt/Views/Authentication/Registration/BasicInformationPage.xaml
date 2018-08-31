@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase x:Class="ToolBelt.Views.Authentication.Registration.BasicInformationPage"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:controls="clr-namespace:ToolBelt.Controls"
+                       xmlns:local="clr-namespace:ToolBelt.Views.Authentication.Registration"
+                       xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                       xmlns:views="clr-namespace:ToolBelt.Views"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:TypeArguments="local:BasicInformationPageViewModel">
+    <StackLayout Padding="20">
+        <Frame Margin="0,0,0,10"
+               Padding="10"
+               BackgroundColor="{StaticResource primaryBackgroundColor}"
+               VerticalOptions="Start">
+            <Label Text="The first thing we need to do is set up your account.  To do that, we need to gather some basic information about who you are." />
+        </Frame>
+
+        <controls:ValidatedEntry x:Name="_firstNameControl"
+                                 HeaderText="First Name:"
+                                 PlaceholderText="First Name"
+                                 VerticalOptions="Start" />
+
+        <controls:ValidatedEntry x:Name="_lastNameControl"
+                                 HeaderText="Last Name:"
+                                 PlaceholderText="Last Name"
+                                 VerticalOptions="Start" />
+
+        <controls:ValidatedEntry x:Name="_emailControl"
+                                 HeaderText="Email:"
+                                 PlaceholderText="Email"
+                                 VerticalOptions="Start" />
+
+        <controls:ValidatedEntry x:Name="_phoneControl"
+                                 HeaderText="Phone:"
+                                 PlaceholderText="Phone"
+                                 VerticalOptions="Start" />
+
+        <Label FontAttributes="Bold"
+               Style="{StaticResource HeaderTextStyle}"
+               Text="Birth Date:"
+               TextColor="{Binding LineColorToApply, Source={Reference _birthDatePicker}}"
+               VerticalOptions="Start" />
+        <controls:ExtendedDatePicker x:Name="_birthDatePicker" VerticalOptions="Start" />
+        <Label x:Name="_lblBirthDateError"
+               Style="{StaticResource ValidationErrorLabelStyle}"
+               VerticalOptions="Start" />
+
+        <BoxView Margin="0,5"
+                 BackgroundColor="{DynamicResource accentColor}"
+                 HeightRequest="2"
+                 HorizontalOptions="FillAndExpand"
+                 VerticalOptions="EndAndExpand" />
+        <Button x:Name="_btnNext"
+                HorizontalOptions="End"
+                Text="Next"
+                VerticalOptions="End" />
+    </StackLayout>
+</views:ContentPageBase>

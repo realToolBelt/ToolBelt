@@ -3,6 +3,7 @@
 
   <style name="MainTheme" parent="MainTheme.Base">
   </style>
+  
   <!-- Base theme applied no matter what API -->
   <style name="MainTheme.Base" parent="Theme.AppCompat">
     <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
@@ -11,12 +12,12 @@
     <item name="windowActionBar">false</item>
     <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette -->
     <!-- colorPrimary is used for the default action bar background -->
-    <item name="colorPrimary">#353535</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
     <!-- colorPrimaryDark is used for the status bar -->
-    <item name="colorPrimaryDark">#000000</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <!-- colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets -->
-    <item name="colorAccent">#FFC600</item>
+    <item name="colorAccent">@color/colorAccent</item>
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
@@ -25,6 +26,28 @@
   </style>
 
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Dialog">
-    <item name="colorAccent">#FFC600</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:colorAccent">@color/colorAccent</item>
+    <item name="android:windowBackground">@drawable/background_dialog</item>
   </style>
+  
+  
+  
+  <style name="DatePickerSpinnerDialogStyle" parent="Theme.AppCompat.Dialog">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:colorAccent">@color/colorAccent</item>
+    <item name="android:windowBackground">@drawable/background_dialog</item>
+    <item name="android:datePickerStyle">@style/SpinnerDatePicker</item>
+  </style>
+
+  <style name="SpinnerDatePicker" parent="@android:style/Widget.Material.DatePicker">
+    <item name="android:datePickerMode">spinner</item>
+    <item name="android:calendarViewShown">false</item>
+  </style>
+  
+  
 </resources>

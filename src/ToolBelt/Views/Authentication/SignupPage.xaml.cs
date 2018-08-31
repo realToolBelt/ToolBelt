@@ -1,5 +1,7 @@
 ﻿using ReactiveUI;
+using Splat;
 using System.Reactive.Disposables;
+using ToolBelt.Extensions;
 using Xamarin.Forms.Xaml;
 
 namespace ToolBelt.Views.Authentication
@@ -9,7 +11,10 @@ namespace ToolBelt.Views.Authentication
     {
         public SignupPage()
         {
-            InitializeComponent();
+            using (this.Log().Perf($"{nameof(SignupPage)}: Initialize component."))
+            {
+                InitializeComponent();
+            }
         }
 
         protected override void OnAppearing()
@@ -18,33 +23,20 @@ namespace ToolBelt.Views.Authentication
 
             this.WhenActivated(disposable =>
             {
-                this
-                    .Bind(ViewModel, vm => vm.IsBusy, v => v._activityIndicator.IsRunning)
-                    .DisposeWith(disposable);
+                using (this.Log().Perf($"{nameof(SignupPage)}: Activate."))
+                {
+                    this
+                        .Bind(ViewModel, vm => vm.AgreeWithTermsAndConditions, v => v._chkAgreeWithTerms.IsToggled)
+                        .DisposeWith(disposable);
 
-                this
-                    .Bind(ViewModel, vm => vm.Name, v => v._txtName.Text)
-                    .DisposeWith(disposable);
+                    this
+                        .BindCommand(ViewModel, vm => vm.SignInWithGoogle, v => v._btnGoogle)
+                        .DisposeWith(disposable);
 
-                this
-                    .Bind(ViewModel, vm => vm.Email, v => v._txtEmail.Text)
-                    .DisposeWith(disposable);
-
-                this
-                    .Bind(ViewModel, vm => vm.Password, v => v._txtPassword.Text)
-                    .DisposeWith(disposable);
-
-                this
-                    .Bind(ViewModel, vm => vm.PasswordConfirm, v => v._txtPasswordConfirm.Text)
-                    .DisposeWith(disposable);
-
-                this
-                    .Bind(ViewModel, vm => vm.AgreeWithTermsAndConditions, v => v._chkAgreeWithTerms.IsToggled)
-                    .DisposeWith(disposable);
-
-                this
-                    .BindCommand(ViewModel, vm => vm.Register, v => v._btnRegister)
-                    .DisposeWith(disposable);
+                    this
+                        .BindCommand(ViewModel, vm => vm.SignInWithFacebook, v => v._btnFacebook)
+                        .DisposeWith(disposable);
+                }
             });
         }
     }

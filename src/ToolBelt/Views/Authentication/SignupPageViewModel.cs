@@ -1,59 +1,48 @@
-﻿using ReactiveUI;
+﻿using Prism.Navigation;
+using Prism.Services;
+using ReactiveUI;
 using Splat;
 using System;
 using System.Diagnostics;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using ToolBelt.ViewModels;
+using ToolBelt.Views.Authentication.Registration;
 
 namespace ToolBelt.Views.Authentication
 {
     public class SignupPageViewModel : BaseViewModel
     {
-        private readonly ObservableAsPropertyHelper<bool> _isBusy;
-        private readonly ObservableAsPropertyHelper<bool> _isValid;
         private bool _agreeWithTermsAndConditions;
-        private string _email;
-        private string _name;
-        private string _password;
-        private string _passwordConfirm;
 
-        public SignupPageViewModel(Prism.Navigation.INavigationService navigationService) : base(navigationService)
+        public SignupPageViewModel(
+            INavigationService navigationService,
+            IPageDialogService dialogService) : base(navigationService)
         {
             Title = "Sign Up";
 
-            this
-                .WhenAnyValue(n => n.Name, e => e.Email, p => p.Password, p => p.PasswordConfirm, a => a.AgreeWithTermsAndConditions,
-                    (name, emailAddress, password, passwordConfirm, agreeWithTerms) =>
-                        !string.IsNullOrEmpty(name)
-                        && !string.IsNullOrEmpty(emailAddress)
-                        && !string.IsNullOrEmpty(password)
-                        && !string.IsNullOrEmpty(passwordConfirm)
-                        && password.Equals(passwordConfirm, StringComparison.Ordinal)
-                        && agreeWithTerms)
-                .ToProperty(this, v => v.IsValid, out _isValid);
+            SignInWithGoogle = ReactiveCommand.CreateFromTask(async () =>
+            {
+                if (!AgreeWithTermsAndConditions)
+                {
+                    await dialogService.DisplayAlertAsync("Missing information", "You must agree to the terms and conditions", "OK").ConfigureAwait(false);
+                }
 
-            var canExecuteLogin = this
-                .WhenAnyValue(x => x.IsBusy, x => x.IsValid, (isBusy, isValid) => !isBusy && isValid);
+                // TODO:
+                await navigationService.NavigateAsync($"/NavigationPage/{nameof(BasicInformationPage)}").ConfigureAwait(false);
+            });
 
-            Register = ReactiveCommand.CreateFromTask(
-              async _ =>
-              {
-                  var random = new Random();
-                  await Task.Delay(random.Next(400, 2000));
+            SignInWithFacebook = ReactiveCommand.CreateFromTask(async () =>
+            {
+                if (!AgreeWithTermsAndConditions)
+                {
+                    await dialogService.DisplayAlertAsync("Missing information", "You must agree to the terms and conditions", "OK").ConfigureAwait(false);
+                }
 
-                  this.Log().Debug("User registered!");
-
-                  await NavigationService.NavigateAsync($"/Root/Details/{nameof(DashboardPage)}");
-              },
-              canExecuteLogin);
-
-            // TODO: Switch to "Subscribe Safe"
-            Register.ThrownExceptions.Subscribe(error => Debug.Write($"Error: {error}"));
-
-            this.WhenAnyObservable(x => x.Register.IsExecuting)
-              .StartWith(false)
-              .ToProperty(this, x => x.IsBusy, out _isBusy);
+                // TODO:
+                await navigationService.NavigateAsync($"/NavigationPage/{nameof(BasicInformationPage)}").ConfigureAwait(false);
+            });
         }
 
         public bool AgreeWithTermsAndConditions
@@ -62,34 +51,8 @@ namespace ToolBelt.Views.Authentication
             set => this.RaiseAndSetIfChanged(ref _agreeWithTermsAndConditions, value);
         }
 
-        public string Email
-        {
-            get => _email;
-            set => this.RaiseAndSetIfChanged(ref _email, value);
-        }
+        public ReactiveCommand<Unit, Unit> SignInWithFacebook { get; }
 
-        public bool IsBusy => _isBusy?.Value ?? false;
-
-        public bool IsValid => _isValid?.Value ?? false;
-
-        public string Name
-        {
-            get => _name;
-            set => this.RaiseAndSetIfChanged(ref _name, value);
-        }
-
-        public string Password
-        {
-            get => _password;
-            set => this.RaiseAndSetIfChanged(ref _password, value);
-        }
-
-        public string PasswordConfirm
-        {
-            get => _passwordConfirm;
-            set => this.RaiseAndSetIfChanged(ref _passwordConfirm, value);
-        }
-
-        public ReactiveCommand Register { get; }
+        public ReactiveCommand<Unit, Unit> SignInWithGoogle { get; }
     }
 }

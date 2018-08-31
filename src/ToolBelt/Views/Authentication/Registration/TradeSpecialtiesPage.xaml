@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase x:Class="ToolBelt.Views.Authentication.Registration.TradeSpecialtiesPage"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:controls="clr-namespace:ToolBelt.Controls"
+                       xmlns:local="clr-namespace:ToolBelt.Views.Authentication.Registration"
+                       xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                       xmlns:views="clr-namespace:ToolBelt.Views"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:TypeArguments="local:TradeSpecialtiesPageViewModel">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="_miSelectAll" Text="All" />
+        <ToolbarItem x:Name="_miSelectNone" Text="None" />
+    </ContentPage.ToolbarItems>
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Frame Margin="0,0,0,10"
+               Padding="10"
+               BackgroundColor="{StaticResource primaryBackgroundColor}"
+               VerticalOptions="Start">
+            <Label Text="Selecting your trade specialties will help you find projects you might be interested in, and will allow other people to find you when looking for tradesmen." />
+        </Frame>
+
+        <ListView x:Name="_lstItems"
+                  Grid.Row="1"
+                  BackgroundColor="Transparent"
+                  HasUnevenRows="True"
+                  HorizontalOptions="FillAndExpand"
+                  SeparatorVisibility="None"
+                  VerticalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <views:MultiSelectItemViewCell />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <BoxView Grid.Row="2"
+                 Margin="0,5"
+                 BackgroundColor="{DynamicResource accentColor}"
+                 HeightRequest="2"
+                 HorizontalOptions="FillAndExpand"
+                 VerticalOptions="EndAndExpand" />
+        <Button x:Name="_btnNext"
+                Grid.Row="3"
+                HorizontalOptions="EndAndExpand"
+                Text="Next" />
+    </Grid>
+</views:ContentPageBase>

@@ -5,15 +5,13 @@
                        xmlns:model="clr-namespace:ToolBelt.Models"
                        xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                        x:TypeArguments="model:Project">
-    <!--  TODO: Finish this...  -->
-    <StackLayout Padding="5">
-        <Label x:Name="_lblProjectName" />
-        <Label x:Name="_lblProjectStartDate" />
-
-        <BoxView Margin="0,5,0,0"
-                 BackgroundColor="{DynamicResource accentColor}"
-                 HeightRequest="2"
-                 HorizontalOptions="FillAndExpand"
-                 VerticalOptions="Center" />
-    </StackLayout>
+    <Frame Margin="0,5"
+           BackgroundColor="Black"
+           CornerRadius="10">
+        <!--  TODO: Finish this...  -->
+        <StackLayout Padding="5">
+            <Label x:Name="_lblProjectName" />
+            <Label x:Name="_lblProjectStartDate" />
+        </StackLayout>
+    </Frame>
 </rxui:ReactiveViewCell>

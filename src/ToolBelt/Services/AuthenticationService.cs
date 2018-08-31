@@ -57,6 +57,8 @@ namespace ToolBelt.Services
     {
         public Task<User> GetUserFromProvider(AuthenticationProviderUser providerUser)
         {
+            return Task.FromResult((User)null);
+
             return Task.FromResult(new User
             {
                 Id = 1,

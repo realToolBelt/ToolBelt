@@ -2,6 +2,7 @@
 using Splat;
 using ToolBelt.ViewModels;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace ToolBelt.Views
 {
@@ -21,6 +22,9 @@ namespace ToolBelt.Views
 
             // Set the background color of the page to the primary background color for the application
             SetDynamicResource(BackgroundColorProperty, "primaryBackgroundColor");
+
+            //  make sure the page honors iOS safe areas (eg. plays nice with the notch)
+            On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
         }
     }
 }

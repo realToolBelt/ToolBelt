@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace ToolBelt.Controls
@@ -7,12 +6,6 @@ namespace ToolBelt.Controls
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SocialButton : Frame
     {
-        public static readonly BindableProperty CommandProperty = BindableProperty.Create(
-            nameof(Command),
-            typeof(ICommand),
-            typeof(SocialButton),
-            null);
-
         public static readonly BindableProperty IconTextProperty = BindableProperty.Create(
             nameof(IconText),
             typeof(string),
@@ -28,12 +21,9 @@ namespace ToolBelt.Controls
         public SocialButton()
         {
             InitializeComponent();
-        }
 
-        public ICommand Command
-        {
-            get => (ICommand)GetValue(CommandProperty);
-            set => SetValue(CommandProperty, value);
+            TapGestureRecognizer = new TapGestureRecognizer();
+            GestureRecognizers.Add(TapGestureRecognizer);
         }
 
         public string IconText
@@ -41,6 +31,8 @@ namespace ToolBelt.Controls
             get => (string)GetValue(IconTextProperty);
             set => SetValue(IconTextProperty, value);
         }
+
+        public TapGestureRecognizer TapGestureRecognizer { get; }
 
         public string Text
         {

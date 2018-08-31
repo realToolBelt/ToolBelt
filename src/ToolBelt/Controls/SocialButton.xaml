@@ -15,10 +15,6 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Grid.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding Command, Source={x:Reference _control}}" />
-        </Grid.GestureRecognizers>
-
         <Label Margin="0"
                FontSize="20"
                HorizontalOptions="Center"

@@ -1,4 +1,5 @@
-﻿using FFImageLoading.Forms.Platform;
+﻿using System;
+using FFImageLoading.Forms.Platform;
 using Foundation;
 using UIKit;
 
@@ -17,12 +18,30 @@ namespace ToolBelt.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+
+            // initialize authentication
+            global::Xamarin.Auth.Presenters.XamarinIOS.AuthenticationConfiguration.Init();
+
             Flex.FlexButton.Init();
             CachedImageRenderer.Init();
             CarouselView.FormsPlugin.iOS.CarouselViewRenderer.Init();
             LoadApplication(new App(new iOSInitializer()));
 
             return base.FinishedLaunching(app, options);
+        }
+
+        public override bool OpenUrl(
+           UIApplication application,
+           NSUrl url,
+           string sourceApplication,
+           NSObject annotation)
+        {
+            // Convert iOS NSUrl to C#/netxf/BCL System.Uri
+            var uri_netfx = new Uri(url.AbsoluteString);
+
+            Services.AuthenticationState.Authenticator.OnPageLoading(uri_netfx);
+
+            return true;
         }
     }
 }

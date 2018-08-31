@@ -29,11 +29,11 @@ namespace ToolBelt.Views.Authentication
                 using (this.Log().Perf($"{nameof(LoginPage)}: Activate."))
                 {
                     this
-                        .OneWayBind(ViewModel, vm => vm.SignInWithGoogle, v => v._btnGoogle.Command)
+                        .BindCommand(ViewModel, vm => vm.SignInWithGoogle, v => v._btnGoogle)
                         .DisposeWith(disposable);
 
                     this
-                        .OneWayBind(ViewModel, vm => vm.SignInWithFacebook, v => v._btnFacebook.Command)
+                        .BindCommand(ViewModel, vm => vm.SignInWithFacebook, v => v._btnFacebook)
                         .DisposeWith(disposable);
 
                     ViewModel.Authenticate

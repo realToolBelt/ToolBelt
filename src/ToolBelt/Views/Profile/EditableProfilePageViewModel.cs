@@ -7,6 +7,7 @@ using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
+using ToolBelt.Models;
 using ToolBelt.Services;
 using ToolBelt.Validation;
 using ToolBelt.Validation.Rules;
@@ -26,7 +27,8 @@ namespace ToolBelt.Views.Profile
 
         public EditableProfilePageViewModel(
             INavigationService navigationService,
-            IPageDialogService dialogService) : base(navigationService)
+            IPageDialogService dialogService,
+            IProjectDataStore projectDataStore) : base(navigationService)
         {
             AddValidationRules();
 
@@ -58,50 +60,12 @@ namespace ToolBelt.Views.Profile
             SelectCommunities = ReactiveCommand.CreateFromTask(async () =>
             {
                 NavigationParameters args = new NavigationParameters();
-                args.Add("items", new[]
-                {
-                    "Laborer",
-                    "Carpenter",
-                    "Construction manager",
-                    "Painter",
-                    "Admin support",
-                    "Plumber",
-                    "Professional",
-                    "Heat A/C mech",
-                    "Operating engineer",
-                    "Repairer",
-                    "Manager",
-                    "Electrician",
-                    "Roofer",
-                    "Truck driver",
-                    "Brickmason",
-                    "Foreman",
-                    "Service",
-                    "Drywall",
-                    "Welder",
-                    "Carpet and tile",
-                    "Material moving",
-                    "Concrete",
-                    "Ironworker",
-                    "Helper",
-                    "Insulation",
-                    "Sheet metal",
-                    "Fence Erector",
-                    "Highway Maint",
-                    "Misc worker",
-                    "Inspector",
-                    "Glazier",
-                    "Plasterer",
-                    "Dredge",
-                    "Power-line installer",
-                    "Driller",
-                    "Elevator",
-                    "Paving",
-                    "Iron reinforcement",
-                    "Boilermaker",
-                    "Other"
-                }
-                .Select(community => new SelectionViewModel<string>(community)));
+                args.Add(
+                    "items",
+                    (await projectDataStore.GetTradeSpecialtiesAsync()).Select(specialty => new SelectionViewModel<TradeSpecialty>(specialty)
+                    {
+                        DisplayValue = specialty.Name
+                    }));
 
                 await NavigationService.NavigateAsync(nameof(MultiSelectListViewPage), args).ConfigureAwait(false);
             });
@@ -141,7 +105,7 @@ namespace ToolBelt.Views.Profile
 
             if (parameters.TryGetValue("selected_items", out IEnumerable items))
             {
-                Communities.Reset(items.OfType<SelectionViewModel>().Select(item => item.Item.ToString()));
+                Communities.Reset(items.OfType<SelectionViewModel>().Select(item => item.DisplayValue));
                 this.RaisePropertyChanged(nameof(Communities));
             }
         }

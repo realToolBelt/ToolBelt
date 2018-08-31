@@ -152,7 +152,7 @@
                 <Setter Property="BackgroundColor" Value="{StaticResource accentColor}" />
                 <Setter Property="TextColor" Value="{StaticResource buttonTextColor}" />
                 <Setter Property="BorderRadius" Value="0" />
-                <Setter Property="HeightRequest" Value="73" />
+                <Setter Property="HeightRequest" Value="60" />
                 <Setter Property="HorizontalOptions" Value="Fill" />
                 <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
             </Style>
@@ -201,6 +201,28 @@
 
             <!--  Default style for Extended Entry controls  -->
             <Style BasedOn="{StaticResource BaseEntryStyle}" TargetType="{x:Type controls:ExtendedEntry}" />
+
+
+            <!--  Base style to use for Extended DatePicker controls  -->
+            <Style x:Key="BaseExtendedDatePickerStyle" TargetType="{x:Type controls:ExtendedDatePicker}">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{StaticResource textColor}" />
+                <Setter Property="HeightRequest" Value="44" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Opacity" Value="0.6" />
+                <Setter Property="FocusLineColor" Value="{StaticResource accentColor}" />
+                <Setter Property="InvalidLineColor" Value="{StaticResource ValidationErrorColor}" />
+                <Style.Triggers>
+                    <Trigger TargetType="controls:ExtendedDatePicker" Property="IsFocused" Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!--  Default style for Extended DatePicker controls  -->
+            <Style BasedOn="{StaticResource BaseExtendedDatePickerStyle}" TargetType="{x:Type controls:ExtendedDatePicker}" />
 
             <!--  Default style for the Activity Indicator  -->
             <Style TargetType="{x:Type ActivityIndicator}">
