@@ -35,7 +35,7 @@ namespace ToolBelt.Controls
             Color.Default);
 
         public static readonly BindableProperty NullableDateProperty = BindableProperty.Create(
-                                            nameof(NullableDate),
+            nameof(NullableDate),
             typeof(DateTime?),
             typeof(ExtendedDatePicker),
             null,

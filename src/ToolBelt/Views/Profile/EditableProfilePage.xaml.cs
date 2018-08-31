@@ -1,9 +1,7 @@
 ﻿using ReactiveUI;
 using Splat;
 using System;
-using System.Linq;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using ToolBelt.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -18,6 +16,7 @@ namespace ToolBelt.Views.Profile
             using (this.Log().Perf($"{nameof(EditableProfilePage)}: Initialize component."))
             {
                 InitializeComponent();
+                _birthDateControl.MaximumDate = DateTime.Today;
             }
         }
 
@@ -57,10 +56,6 @@ namespace ToolBelt.Views.Profile
                         .DisposeWith(disposable);
 
                     this
-                        .Bind(ViewModel, vm => vm.BirthDate.Value, v => v._birthDatePicker.NullableDate)
-                        .DisposeWith(disposable);
-
-                    this
                         .BindCommand(ViewModel, vm => vm.Save, v => v._miSave)
                         .DisposeWith(disposable);
 
@@ -69,32 +64,7 @@ namespace ToolBelt.Views.Profile
                         .DisposeWith(disposable);
 
                     this
-                        .OneWayBind(ViewModel, vm => vm.BirthDate.IsValid, v => v._birthDatePicker.IsValid)
-                        .DisposeWith(disposable);
-
-                    var errorsChanged = this
-                        .WhenAnyObservable(v => v.ViewModel.BirthDate.Errors.Changed)
-                        .Select(_ => ViewModel.BirthDate.Errors)
-                        .Publish()
-                        .RefCount();
-
-                    errorsChanged
-                        .Select(errors => errors.FirstOrDefault())
-                        .StartWith(ViewModel?.BirthDate.Errors ?? Enumerable.Empty<string>())
-                        .BindTo(this, v => v._lblBirthDateError.Text)
-                        .DisposeWith(disposable);
-
-                    errorsChanged
-                        .Select(errors => errors.Count > 0)
-                        .StartWith(ViewModel?.BirthDate.Errors.Count > 0)
-                        .BindTo(this, v => v._lblBirthDateError.IsVisible)
-                        .DisposeWith(disposable);
-
-                    _birthDatePicker
-                        .Events()
-                        .Focused
-                        .Where(args => args.IsFocused)
-                        .Subscribe(_ => ViewModel.BirthDate.ClearValidationErrors())
+                        .OneWayBind(ViewModel, vm => vm.BirthDate, v => v._birthDateControl.ViewModel)
                         .DisposeWith(disposable);
 
                     //this

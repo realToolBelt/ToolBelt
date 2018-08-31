@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<controls:BaseValidatedDatePicker x:Class="ToolBelt.Controls.ValidatedDatePicker"
+                                  xmlns="http://xamarin.com/schemas/2014/forms"
+                                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                                  xmlns:controls="clr-namespace:ToolBelt.Controls"
+                                  x:Name="_control">
+
+    <StackLayout>
+        <Label FontAttributes="Bold"
+               Style="{StaticResource HeaderTextStyle}"
+               Text="{Binding HeaderText, Source={x:Reference _control}}"
+               TextColor="{Binding LineColorToApply, Source={Reference _datePicker}}" />
+        <controls:ExtendedDatePicker x:Name="_datePicker"
+                                     MaximumDate="{Binding MaximumDate, Source={x:Reference _control}}"
+                                     MinimumDate="{Binding MinimumDate, Source={x:Reference _control}}" />
+        <Label x:Name="_lblPickerError" Style="{StaticResource ValidationErrorLabelStyle}" />
+    </StackLayout>
+</controls:BaseValidatedDatePicker>

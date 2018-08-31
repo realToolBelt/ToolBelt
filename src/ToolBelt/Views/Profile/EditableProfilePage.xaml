@@ -62,15 +62,9 @@
                                      HeaderText="Phone:"
                                      PlaceholderText="Phone" />
 
-            <Label FontAttributes="Bold"
-                   Style="{StaticResource HeaderTextStyle}"
-                   Text="Birth Date:"
-                   TextColor="{Binding LineColorToApply, Source={Reference _birthDatePicker}}"
-                   VerticalOptions="Start" />
-            <controls:ExtendedDatePicker x:Name="_birthDatePicker" VerticalOptions="Start" />
-            <Label x:Name="_lblBirthDateError"
-                   Style="{StaticResource ValidationErrorLabelStyle}"
-                   VerticalOptions="Start" />
+            <controls:ValidatedDatePicker x:Name="_birthDateControl"
+                                          HeaderText="Birth Date:"
+                                          VerticalOptions="Start" />
 
             <StackLayout Orientation="Horizontal">
                 <Label HorizontalOptions="StartAndExpand"
