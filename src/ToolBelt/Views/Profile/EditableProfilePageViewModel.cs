@@ -30,6 +30,8 @@ namespace ToolBelt.Views.Profile
             IPageDialogService dialogService,
             IProjectDataStore projectDataStore) : base(navigationService)
         {
+            Title = "Edit Profile";
+
             AddValidationRules();
 
             NavigatedTo
@@ -57,6 +59,16 @@ namespace ToolBelt.Views.Profile
                 }
             });
 
+            Save = ReactiveCommand.CreateFromTask(async () =>
+            {
+                // TODO:...
+            });
+
+            Cancel = ReactiveCommand.CreateFromTask(async () =>
+            {
+                await NavigationService.GoBackAsync(useModalNavigation: true).ConfigureAwait(false);
+            });
+
             SelectCommunities = ReactiveCommand.CreateFromTask(async () =>
             {
                 NavigationParameters args = new NavigationParameters();
@@ -70,6 +82,10 @@ namespace ToolBelt.Views.Profile
                 await NavigationService.NavigateAsync(nameof(MultiSelectListViewPage), args).ConfigureAwait(false);
             });
         }
+
+        public ValidatableObject<DateTime?> BirthDate { get; } = new ValidatableObject<DateTime?>();
+
+        public ReactiveCommand Cancel { get; }
 
         public ReactiveCommand ChangePhoto { get; }
 
@@ -97,6 +113,8 @@ namespace ToolBelt.Views.Profile
             }
         }
 
+        public ReactiveCommand Save { get; }
+
         public ReactiveCommand SelectCommunities { get; }
 
         public override void OnNavigatedTo(NavigationParameters parameters)
@@ -118,6 +136,8 @@ namespace ToolBelt.Views.Profile
             FirstName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "First Name cannot be empty" });
             LastName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "Last Name cannot be empty" });
             Phone.Validations.Add(new PhoneRule { ValidationMessage = "Invalid phone number" });
+
+            BirthDate.Validations.Add(new IsNotNullRule<DateTime?> { ValidationMessage = "Birth Date cannot be empty" });
         }
 
         private bool IsValid()
@@ -127,11 +147,13 @@ namespace ToolBelt.Views.Profile
             FirstName.Validate();
             LastName.Validate();
             Phone.Validate();
+            BirthDate.Validate();
 
             return Email.IsValid
                 && FirstName.IsValid
                 && LastName.IsValid
-                && Phone.IsValid;
+                && Phone.IsValid
+                && BirthDate.IsValid;
         }
     }
 }

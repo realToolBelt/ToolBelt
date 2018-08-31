@@ -22,7 +22,7 @@ namespace ToolBelt.Views.Profile
                     { "user", User }
                 };
 
-                await NavigationService.NavigateAsync(nameof(EditableProfilePage), parameters).ConfigureAwait(false);
+                await NavigationService.NavigateAsync($"NavigationPage/{nameof(EditableProfilePage)}", parameters, useModalNavigation: true).ConfigureAwait(false);
             });
 
             NavigatedTo

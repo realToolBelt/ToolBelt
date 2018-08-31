@@ -22,9 +22,30 @@
 
     </ContentPage.Resources>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="_miSave" Icon="ic_action_save" />
+        <ToolbarItem x:Name="_miCancel" Icon="ic_action_close" />
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
 
         <StackLayout Margin="20">
+            <Label FontAttributes="Bold"
+                   Style="{StaticResource HeaderTextStyle}"
+                   Text="Photo:" />
+            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                <ffimageloading:CachedImage x:Name="_imgPhoto"
+                                            Margin="0,0,10,0"
+                                            Aspect="AspectFit"
+                                            DownsampleToViewSize="true"
+                                            HeightRequest="60"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            WidthRequest="60" />
+                <Button x:Name="_btnPhoto" Text="Change Photo" />
+            </StackLayout>
+
+
             <controls:ValidatedEntry x:Name="_firstNameControl"
                                      HeaderText="First Name:"
                                      PlaceholderText="First Name" />
@@ -41,22 +62,15 @@
                                      HeaderText="Phone:"
                                      PlaceholderText="Phone" />
 
-
             <Label FontAttributes="Bold"
                    Style="{StaticResource HeaderTextStyle}"
-                   Text="Photo:" />
-            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                <ffimageloading:CachedImage x:Name="_imgPhoto"
-                                            Margin="0,0,10,0"
-                                            Aspect="AspectFit"
-                                            DownsampleToViewSize="true"
-                                            HeightRequest="75"
-                                            HorizontalOptions="Center"
-                                            VerticalOptions="Center"
-                                            WidthRequest="75" />
-                <Button x:Name="_btnPhoto" Text="Change Photo" />
-            </StackLayout>
-
+                   Text="Birth Date:"
+                   TextColor="{Binding LineColorToApply, Source={Reference _birthDatePicker}}"
+                   VerticalOptions="Start" />
+            <controls:ExtendedDatePicker x:Name="_birthDatePicker" VerticalOptions="Start" />
+            <Label x:Name="_lblBirthDateError"
+                   Style="{StaticResource ValidationErrorLabelStyle}"
+                   VerticalOptions="Start" />
 
             <StackLayout Orientation="Horizontal">
                 <Label HorizontalOptions="StartAndExpand"
