@@ -22,7 +22,7 @@
 
         <Frame Margin="0,0,0,10"
                Padding="10"
-               BackgroundColor="{StaticResource primaryBackgroundColor}"
+               BackgroundColor="{StaticResource primaryBackgroundColorLight}"
                VerticalOptions="Start">
             <Label Text="Selecting your trade specialties will help you find projects you might be interested in, and will allow other people to find you when looking for tradesmen." />
         </Frame>

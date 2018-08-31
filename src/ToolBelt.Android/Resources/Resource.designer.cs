@@ -3620,44 +3620,44 @@ namespace ToolBelt.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f0e005a
-			public const int abc_background_cache_hint_selector_material_dark = 2131624026;
-			
 			// aapt resource value: 0x7f0e005b
-			public const int abc_background_cache_hint_selector_material_light = 2131624027;
+			public const int abc_background_cache_hint_selector_material_dark = 2131624027;
 			
 			// aapt resource value: 0x7f0e005c
-			public const int abc_btn_colored_borderless_text_material = 2131624028;
+			public const int abc_background_cache_hint_selector_material_light = 2131624028;
 			
 			// aapt resource value: 0x7f0e005d
-			public const int abc_btn_colored_text_material = 2131624029;
+			public const int abc_btn_colored_borderless_text_material = 2131624029;
 			
 			// aapt resource value: 0x7f0e005e
-			public const int abc_color_highlight_material = 2131624030;
+			public const int abc_btn_colored_text_material = 2131624030;
 			
 			// aapt resource value: 0x7f0e005f
-			public const int abc_hint_foreground_material_dark = 2131624031;
+			public const int abc_color_highlight_material = 2131624031;
 			
 			// aapt resource value: 0x7f0e0060
-			public const int abc_hint_foreground_material_light = 2131624032;
+			public const int abc_hint_foreground_material_dark = 2131624032;
+			
+			// aapt resource value: 0x7f0e0061
+			public const int abc_hint_foreground_material_light = 2131624033;
 			
 			// aapt resource value: 0x7f0e0004
 			public const int abc_input_method_navigation_guard = 2131623940;
 			
-			// aapt resource value: 0x7f0e0061
-			public const int abc_primary_text_disable_only_material_dark = 2131624033;
-			
 			// aapt resource value: 0x7f0e0062
-			public const int abc_primary_text_disable_only_material_light = 2131624034;
+			public const int abc_primary_text_disable_only_material_dark = 2131624034;
 			
 			// aapt resource value: 0x7f0e0063
-			public const int abc_primary_text_material_dark = 2131624035;
+			public const int abc_primary_text_disable_only_material_light = 2131624035;
 			
 			// aapt resource value: 0x7f0e0064
-			public const int abc_primary_text_material_light = 2131624036;
+			public const int abc_primary_text_material_dark = 2131624036;
 			
 			// aapt resource value: 0x7f0e0065
-			public const int abc_search_url_text = 2131624037;
+			public const int abc_primary_text_material_light = 2131624037;
+			
+			// aapt resource value: 0x7f0e0066
+			public const int abc_search_url_text = 2131624038;
 			
 			// aapt resource value: 0x7f0e0005
 			public const int abc_search_url_text_normal = 2131623941;
@@ -3668,29 +3668,29 @@ namespace ToolBelt.Droid
 			// aapt resource value: 0x7f0e0007
 			public const int abc_search_url_text_selected = 2131623943;
 			
-			// aapt resource value: 0x7f0e0066
-			public const int abc_secondary_text_material_dark = 2131624038;
-			
 			// aapt resource value: 0x7f0e0067
-			public const int abc_secondary_text_material_light = 2131624039;
+			public const int abc_secondary_text_material_dark = 2131624039;
 			
 			// aapt resource value: 0x7f0e0068
-			public const int abc_tint_btn_checkable = 2131624040;
+			public const int abc_secondary_text_material_light = 2131624040;
 			
 			// aapt resource value: 0x7f0e0069
-			public const int abc_tint_default = 2131624041;
+			public const int abc_tint_btn_checkable = 2131624041;
 			
 			// aapt resource value: 0x7f0e006a
-			public const int abc_tint_edittext = 2131624042;
+			public const int abc_tint_default = 2131624042;
 			
 			// aapt resource value: 0x7f0e006b
-			public const int abc_tint_seek_thumb = 2131624043;
+			public const int abc_tint_edittext = 2131624043;
 			
 			// aapt resource value: 0x7f0e006c
-			public const int abc_tint_spinner = 2131624044;
+			public const int abc_tint_seek_thumb = 2131624044;
 			
 			// aapt resource value: 0x7f0e006d
-			public const int abc_tint_switch_track = 2131624045;
+			public const int abc_tint_spinner = 2131624045;
+			
+			// aapt resource value: 0x7f0e006e
+			public const int abc_tint_switch_track = 2131624046;
 			
 			// aapt resource value: 0x7f0e0008
 			public const int accent_material_dark = 2131623944;
@@ -3746,14 +3746,17 @@ namespace ToolBelt.Droid
 			// aapt resource value: 0x7f0e0003
 			public const int cardview_shadow_start_color = 2131623939;
 			
-			// aapt resource value: 0x7f0e0059
-			public const int colorAccent = 2131624025;
+			// aapt resource value: 0x7f0e005a
+			public const int colorAccent = 2131624026;
 			
 			// aapt resource value: 0x7f0e0057
 			public const int colorPrimary = 2131624023;
 			
 			// aapt resource value: 0x7f0e0058
 			public const int colorPrimaryDark = 2131624024;
+			
+			// aapt resource value: 0x7f0e0059
+			public const int colorPrimaryLight = 2131624025;
 			
 			// aapt resource value: 0x7f0e0053
 			public const int default_circle_indicator_fill_color = 2131624019;
@@ -3767,8 +3770,8 @@ namespace ToolBelt.Droid
 			// aapt resource value: 0x7f0e0040
 			public const int design_bottom_navigation_shadow_color = 2131624000;
 			
-			// aapt resource value: 0x7f0e006e
-			public const int design_error = 2131624046;
+			// aapt resource value: 0x7f0e006f
+			public const int design_error = 2131624047;
 			
 			// aapt resource value: 0x7f0e0041
 			public const int design_fab_shadow_end_color = 2131624001;
@@ -3794,8 +3797,8 @@ namespace ToolBelt.Droid
 			// aapt resource value: 0x7f0e0048
 			public const int design_snackbar_background_color = 2131624008;
 			
-			// aapt resource value: 0x7f0e006f
-			public const int design_tint_password_toggle = 2131624047;
+			// aapt resource value: 0x7f0e0070
+			public const int design_tint_password_toggle = 2131624048;
 			
 			// aapt resource value: 0x7f0e0016
 			public const int dim_foreground_disabled_material_dark = 2131623958;
@@ -3920,11 +3923,11 @@ namespace ToolBelt.Droid
 			// aapt resource value: 0x7f0e003a
 			public const int switch_thumb_disabled_material_light = 2131623994;
 			
-			// aapt resource value: 0x7f0e0070
-			public const int switch_thumb_material_dark = 2131624048;
-			
 			// aapt resource value: 0x7f0e0071
-			public const int switch_thumb_material_light = 2131624049;
+			public const int switch_thumb_material_dark = 2131624049;
+			
+			// aapt resource value: 0x7f0e0072
+			public const int switch_thumb_material_light = 2131624050;
 			
 			// aapt resource value: 0x7f0e003b
 			public const int switch_thumb_normal_material_dark = 2131623995;

@@ -11,7 +11,7 @@
     <StackLayout Padding="20">
         <Frame Margin="0,0,0,10"
                Padding="10"
-               BackgroundColor="{StaticResource primaryBackgroundColor}"
+               BackgroundColor="{StaticResource primaryBackgroundColorLight}"
                VerticalOptions="Start">
             <Label Text="The first thing we need to do is set up your account.  To do that, we need to gather some basic information about who you are." />
         </Frame>
