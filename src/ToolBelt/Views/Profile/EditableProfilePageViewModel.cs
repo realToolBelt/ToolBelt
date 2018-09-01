@@ -1,4 +1,6 @@
 ﻿using Plugin.Media;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using Prism.Navigation;
 using Prism.Services;
 using ReactiveUI;
@@ -44,18 +46,49 @@ namespace ToolBelt.Views.Profile
 
             ChangePhoto = ReactiveCommand.CreateFromTask(async () =>
             {
-                if (!CrossMedia.Current.IsPickPhotoSupported)
+                try
                 {
-                    await dialogService.DisplayAlertAsync("Photos Not Supported", ":( Permission not granted to photos.", "OK").ConfigureAwait(false);
-                    return;
-                }
-
-                using (var file = await CrossMedia.Current.PickPhotoAsync(_pickOptions))
-                {
-                    if (file != null)
+                    // check if permission has been granted to the photos
+                    var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Photos);
+                    if (status != PermissionStatus.Granted)
                     {
-                        Photo = file.GetStream();
+                        // check if we should show a rationale for requesting permissions
+                        if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Photos))
+                        {
+                            await dialogService.DisplayAlertAsync("Need photo permissions", "Need access to photos", "OK");
+                        }
+
+                        // request the permissions we need
+                        var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Photos);
+                        if (results.ContainsKey(Permission.Photos))
+                        {
+                            status = results[Permission.Photos];
+                        }
                     }
+
+                    // if permission was granted, open the photo picker
+                    if (status == PermissionStatus.Granted)
+                    {
+                        using (var file = await CrossMedia.Current.PickPhotoAsync(_pickOptions))
+                        {
+                            if (file != null)
+                            {
+                                Photo = file.GetStream();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // permission was not granted.  Let the user know they can't pick a photo without permissions
+                        await dialogService.DisplayAlertAsync("Photos Not Supported", ":( Permission not granted to photos.", "OK").ConfigureAwait(false);
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // TODO: log the exception...
+                    await dialogService.DisplayAlertAsync("AnError", "An error has occurred.", "OK").ConfigureAwait(false);
+                    return;
                 }
             });
 
