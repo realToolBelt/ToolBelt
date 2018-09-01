@@ -29,6 +29,13 @@ namespace ToolBelt.Controls
             typeof(ExtendedEntry),
             false);
 
+        public static readonly BindableProperty KeyboardProperty = BindableProperty.Create(
+            nameof(Keyboard),
+            typeof(Keyboard),
+            typeof(InputView),
+            Keyboard.Default,
+            coerceValue: (o, v) => (Keyboard)v ?? Keyboard.Default);
+
         public static readonly BindableProperty PlaceholderTextProperty = BindableProperty.Create(
             nameof(PlaceholderText),
             typeof(string),
@@ -86,6 +93,12 @@ namespace ToolBelt.Controls
         {
             get => (bool)GetValue(IsPasswordProperty);
             set => SetValue(IsPasswordProperty, value);
+        }
+
+        public Keyboard Keyboard
+        {
+            get => (Keyboard)GetValue(KeyboardProperty);
+            set => SetValue(KeyboardProperty, value);
         }
 
         public string PlaceholderText

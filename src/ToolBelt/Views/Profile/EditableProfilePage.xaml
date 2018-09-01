@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <vw:ContentPageBase x:Class="ToolBelt.Views.Profile.EditableProfilePage"
                     xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -56,6 +56,7 @@
 
             <controls:ValidatedEntry x:Name="_emailControl"
                                      HeaderText="Email:"
+                                     Keyboard="Email"
                                      PlaceholderText="Email" />
 
             <controls:ValidatedEntry x:Name="_phoneControl"

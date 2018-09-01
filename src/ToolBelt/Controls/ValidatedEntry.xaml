@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <controls:BaseValidatedEntry x:Class="ToolBelt.Controls.ValidatedEntry"
                              xmlns="http://xamarin.com/schemas/2014/forms"
                              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -12,6 +12,7 @@
                TextColor="{Binding LineColorToApply, Source={Reference _txtEntry}}" />
         <controls:ExtendedEntry x:Name="_txtEntry"
                                 IsPassword="{Binding IsPassword, Source={x:Reference _control}}"
+                                Keyboard="{Binding Keyboard, Source={x:Reference _control}}"
                                 Placeholder="{Binding PlaceholderText, Source={x:Reference _control}}" />
         <Label x:Name="_lblEntryError" Style="{StaticResource ValidationErrorLabelStyle}" />
     </StackLayout>
