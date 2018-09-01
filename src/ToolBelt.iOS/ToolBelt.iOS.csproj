@@ -28,6 +28,8 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -180,7 +182,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\ToolBelt\ToolBelt.csproj">
-      <Project>{DF597E44-BB04-439D-91A4-8CB86417C6ED}</Project>
+      <Project>{CACB1BA0-284E-4F8B-91C1-37BC2EED4758}</Project>
       <Name>ToolBelt</Name>
     </ProjectReference>
   </ItemGroup>
