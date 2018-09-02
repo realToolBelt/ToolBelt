@@ -30,7 +30,8 @@ namespace ToolBelt.Views.Profile
         public EditableProfilePageViewModel(
             INavigationService navigationService,
             IPageDialogService dialogService,
-            IProjectDataStore projectDataStore) : base(navigationService)
+            IProjectDataStore projectDataStore,
+            IPermissionsService permissionsService) : base(navigationService)
         {
             Title = "Edit Profile";
 
@@ -52,18 +53,7 @@ namespace ToolBelt.Views.Profile
                     var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Photos);
                     if (status != PermissionStatus.Granted)
                     {
-                        // check if we should show a rationale for requesting permissions
-                        if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Photos))
-                        {
-                            await dialogService.DisplayAlertAsync("Need photo permissions", "Need access to photos", "OK");
-                        }
-
-                        // request the permissions we need
-                        var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Photos);
-                        if (results.ContainsKey(Permission.Photos))
-                        {
-                            status = results[Permission.Photos];
-                        }
+                        status = await permissionsService.CheckPermissionsAsync(Permission.Photos, dialogService);
                     }
 
                     // if permission was granted, open the photo picker
@@ -80,7 +70,11 @@ namespace ToolBelt.Views.Profile
                     else
                     {
                         // permission was not granted.  Let the user know they can't pick a photo without permissions
-                        await dialogService.DisplayAlertAsync("Photos Not Supported", ":( Permission not granted to photos.", "OK").ConfigureAwait(false);
+                        await dialogService.DisplayAlertAsync(
+                            "Photos Not Supported",
+                            ":( Permission not granted to photos.",
+                            "OK").ConfigureAwait(false);
+
                         return;
                     }
                 }
