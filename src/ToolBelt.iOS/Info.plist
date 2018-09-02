@@ -51,5 +51,10 @@
 			<string>Viewer</string>
 		</dict>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>fontawesome.otf</string>
+		<string>fontawesome_brands.otf</string>
+	</array>
 </dict>
 </plist>

@@ -69,13 +69,17 @@
   <ItemGroup>
     <Compile Include="iOSInitializer.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="AppDelegate.cs" />
+    <Compile Include="AppDelegate.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Renderers\ExtendedDatePickerRenderer.cs" />
     <Compile Include="Renderers\ExtendedEntryRenderer.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <BundleResource Include="Resources\fontawesome.otf" />
+    <BundleResource Include="Resources\fontawesome.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
     <BundleResource Include="Resources\fontawesome_brands.otf" />
     <BundleResource Include="Resources\ic_action_close%402x.png" />
     <BundleResource Include="Resources\ic_action_close%403x.png" />

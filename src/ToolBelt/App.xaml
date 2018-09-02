@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <prism:PrismApplication x:Class="ToolBelt.App"
                         xmlns="http://xamarin.com/schemas/2014/forms"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -24,12 +24,12 @@
             <!--  FONTS  -->
             <OnPlatform x:Key="FontAwesomeBrands" x:TypeArguments="x:String">
                 <On Platform="Android">fontawesome_brands.otf#Font Awesome 5 Brands Regular</On>
-                <On Platform="iOS">Font Awesome 5 Brands Regular</On>
+                <On Platform="iOS">FontAwesome5BrandsRegular</On>
             </OnPlatform>
 
             <OnPlatform x:Key="FontAwesomeSolid" x:TypeArguments="x:String">
                 <On Platform="Android">fontawesome.otf#Font Awesome 5 Free Solid</On>
-                <On Platform="iOS">Font Awesome 5 Free Solid</On>
+                <On Platform="iOS">FontAwesome5FreeSolid</On>
             </OnPlatform>
 
             <OnPlatform x:Key="LittleSize" x:TypeArguments="x:Double">
@@ -153,7 +153,6 @@
                 <Setter Property="BackgroundColor" Value="{StaticResource accentColor}" />
                 <Setter Property="TextColor" Value="{StaticResource buttonTextColor}" />
                 <Setter Property="BorderRadius" Value="0" />
-                <Setter Property="HeightRequest" Value="60" />
                 <Setter Property="HorizontalOptions" Value="Fill" />
                 <Setter Property="FontSize" Value="{StaticResource MidMediumSize}" />
             </Style>
