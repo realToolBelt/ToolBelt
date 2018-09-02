@@ -18,17 +18,19 @@ namespace ToolBelt.Views.Cells
                 InitializeComponent();
             }
 
+            // on iOS, waiting to bind until "WhenActivated" causes the list items to
+            // be sized incorrectly.  We can bind here, then add the composite disposable
+            // to the "activated" disposable
+            CompositeDisposable disposables = new CompositeDisposable(
+                this.OneWayBind(ViewModel, vm => vm.Name, v => v._lblProjectName.Text),
+                this.OneWayBind(ViewModel, vm => vm.EstimatedStartDate, v => v._lblProjectStartDate.Text, date => $"{date:d}"));
+
+            // handle when the view is activated
             this.WhenActivated(disposable =>
             {
                 using (this.Log().Perf($"{nameof(ProjectSummaryCellView)}: Activate."))
                 {
-                    this
-                        .OneWayBind(ViewModel, vm => vm.Name, v => v._lblProjectName.Text)
-                        .DisposeWith(disposable);
-
-                    this
-                        .OneWayBind(ViewModel, vm => vm.EstimatedStartDate, v => v._lblProjectStartDate.Text, date => $"{date:d}")
-                        .DisposeWith(disposable);
+                    disposables.DisposeWith(disposable);
                 }
             });
         }

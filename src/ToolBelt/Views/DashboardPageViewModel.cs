@@ -23,23 +23,6 @@ namespace ToolBelt.Views
             Title = "Dashboard";
             _projectDataStore = projectDataStore;
 
-            var loadProjectsCommand = ReactiveCommand.CreateFromTask(async () =>
-            {
-                var random = new Random();
-                await Task.Delay(random.Next(400, 2000));
-
-                return await projectDataStore.GetProjectsAsync().ConfigureAwait(false);
-            });
-
-            // when the command is executing, update the busy state
-            loadProjectsCommand.IsExecuting
-              .StartWith(false)
-              .ToProperty(this, x => x.IsBusy, out _isBusy);
-
-            loadProjectsCommand
-                .Execute()
-                .Subscribe(projects => Projects.Reset(projects));
-
             ViewProjectDetails = ReactiveCommand.CreateFromTask<Project, Unit>(async project =>
             {
                 // TODO: Add project as parameter...
@@ -52,6 +35,21 @@ namespace ToolBelt.Views
 
                 return Unit.Default;
             });
+
+            Initialize = ReactiveCommand.CreateFromTask(async () =>
+            {
+                var random = new Random();
+                await Task.Delay(random.Next(400, 2000));
+
+                var projects = await projectDataStore.GetProjectsAsync().ConfigureAwait(false);
+                //Projects.Reset(projects);
+                foreach (var p in projects) Projects.Add(p);
+            });
+
+            // when the command is executing, update the busy state
+            Initialize.IsExecuting
+              .StartWith(false)
+              .ToProperty(this, x => x.IsBusy, out _isBusy);
         }
 
         /// <summary>
@@ -60,6 +58,8 @@ namespace ToolBelt.Views
         public bool IsBusy => _isBusy?.Value ?? false;
 
         public ReactiveList<Project> Projects { get; } = new ReactiveList<Project>();
+
+        public ReactiveCommand Initialize { get; }
 
         public ReactiveCommand<Project, Unit> ViewProjectDetails { get; }
     }
