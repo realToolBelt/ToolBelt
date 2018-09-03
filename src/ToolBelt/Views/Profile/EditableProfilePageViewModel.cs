@@ -1,4 +1,5 @@
 ﻿using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Prism.Navigation;
@@ -69,7 +70,8 @@ namespace ToolBelt.Views.Profile
                     }
                     else
                     {
-                        // permission was not granted.  Let the user know they can't pick a photo without permissions
+                        // permission was not granted. Let the user know they can't pick a photo
+                        // without permissions
                         await dialogService.DisplayAlertAsync(
                             "Photos Not Supported",
                             ":( Permission not granted to photos.",
@@ -78,11 +80,14 @@ namespace ToolBelt.Views.Profile
                         return;
                     }
                 }
+                catch (MediaPermissionException mediaException)
+                {
+                    await dialogService.DisplayAlertAsync("Permission Error", $"Permissions not granted: {string.Join(", ", mediaException.Permissions)}", "OK").ConfigureAwait(false);
+                }
                 catch (Exception ex)
                 {
                     // TODO: log the exception...
-                    await dialogService.DisplayAlertAsync("AnError", "An error has occurred.", "OK").ConfigureAwait(false);
-                    return;
+                    await dialogService.DisplayAlertAsync("Error", "An error has occurred.", "OK").ConfigureAwait(false);
                 }
             });
 
