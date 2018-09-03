@@ -62,6 +62,7 @@ namespace ToolBelt
 #endif
 
             containerRegistry.Register<IAuthenticatorFactory, AuthenticatorFactory>();
+            containerRegistry.Register<IPermissionsService, PermissionsService>();
 
             // TODO: REPLACE!
             containerRegistry.Register<IUserDataStore, FakeUserDataStore>();
