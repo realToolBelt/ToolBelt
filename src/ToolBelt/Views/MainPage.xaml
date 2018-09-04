@@ -21,7 +21,7 @@
 
             <Label x:Name="_lblDashboard"
                    HorizontalOptions="CenterAndExpand"
-                   Text="Dashboard">
+                   Text="Projects">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer />
                 </Label.GestureRecognizers>

@@ -20,10 +20,10 @@ namespace ToolBelt.Views.Profile
 {
     public class EditableProfilePageViewModel : BaseViewModel
     {
-        private readonly Plugin.Media.Abstractions.PickMediaOptions _pickOptions =
-            new Plugin.Media.Abstractions.PickMediaOptions
+        private readonly PickMediaOptions _pickOptions =
+            new PickMediaOptions
             {
-                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
+                PhotoSize = PhotoSize.Medium
             };
 
         private Stream _photo;
@@ -103,7 +103,7 @@ namespace ToolBelt.Views.Profile
 
             SelectCommunities = ReactiveCommand.CreateFromTask(async () =>
             {
-                NavigationParameters args = new NavigationParameters();
+                var args = new NavigationParameters();
                 args.Add(
                     "items",
                     (await projectDataStore.GetTradeSpecialtiesAsync()).Select(specialty => new SelectionViewModel<TradeSpecialty>(specialty)

@@ -20,7 +20,7 @@ namespace ToolBelt.Views
             INavigationService navigationService,
             IProjectDataStore projectDataStore) : base(navigationService)
         {
-            Title = "Dashboard";
+            Title = "Projects";
             _projectDataStore = projectDataStore;
 
             ViewProjectDetails = ReactiveCommand.CreateFromTask<Project, Unit>(async project =>
