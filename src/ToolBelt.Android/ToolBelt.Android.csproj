@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs">
+      <Version>7.0.1</Version>
+    </PackageReference>
     <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
     <PackageReference Include="Forms.Controls.FlexButton" Version="0.8.0" />
     <PackageReference Include="Plugin.CurrentActivity" Version="2.1.0.4" />

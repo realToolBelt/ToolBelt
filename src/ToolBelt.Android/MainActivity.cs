@@ -48,6 +48,9 @@ namespace ToolBelt.Droid
 
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            Acr.UserDialogs.UserDialogs.Init(this);
+
             //-----------------------------------------------------------------------------------------------
             // Xamarin.Auth initialization
 

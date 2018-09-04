@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />
     <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
     <PackageReference Include="Forms.Controls.FlexButton" Version="0.8.0" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.0.0.396" />
