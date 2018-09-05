@@ -56,5 +56,7 @@
 		<string>fontawesome.otf</string>
 		<string>fontawesome_brands.otf</string>
 	</array>
+	<key>XSLaunchImageAssets</key>
+	<string>Assets.xcassets/LaunchImages.launchimage</string>
 </dict>
 </plist>
