@@ -1,4 +1,7 @@
 ﻿using System;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
@@ -49,6 +52,11 @@ namespace ToolBelt
         protected override void OnStart()
         {
             // Handle when your app starts
+            AppCenter.Start(
+                "android=a54ecf68-25e1-4870-9193-5f65305a2c33;" +
+                "ios=c06cf109-e217-4550-a73b-5c55ccb7aabc;",
+                typeof(Analytics),
+                typeof(Crashes));
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -61,8 +69,13 @@ namespace ToolBelt
             containerRegistry.RegisterInstance<ILogger>(logger);
 #endif
 
+            // register the analytics and crash tracking services
+            containerRegistry.RegisterInstance<IAnalyticService>(new AnalyticService());
+            containerRegistry.RegisterInstance<ICrashService>(new CrashService());
+
             containerRegistry.Register<IAuthenticatorFactory, AuthenticatorFactory>();
             containerRegistry.Register<IPermissionsService, PermissionsService>();
+            containerRegistry.RegisterInstance<Acr.UserDialogs.IUserDialogs>(Acr.UserDialogs.UserDialogs.Instance);
 
             // TODO: REPLACE!
             containerRegistry.Register<IUserDataStore, FakeUserDataStore>();

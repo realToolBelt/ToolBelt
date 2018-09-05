@@ -1,12 +1,9 @@
 ﻿using Android.App;
-using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using FFImageLoading.Forms.Platform;
 using Plugin.Permissions;
-using System.IO;
-using System.Threading.Tasks;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace ToolBelt.Droid
@@ -20,7 +17,6 @@ namespace ToolBelt.Droid
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-
         public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
         {
             base.OnCreate(savedInstanceState, persistentState);
@@ -72,9 +68,7 @@ namespace ToolBelt.Droid
             color_xamarin_blue = new global::Android.Graphics.Color(0x34, 0x98, 0xdb);
             global::Xamarin.Auth.CustomTabsConfiguration.ToolbarColor = color_xamarin_blue;
 
-
-            // ActivityFlags for tweaking closing of CustomTabs
-            // please report findings!
+            // ActivityFlags for tweaking closing of CustomTabs please report findings!
             global::Xamarin.Auth.CustomTabsConfiguration.
                ActivityFlags =
                     global::Android.Content.ActivityFlags.NoHistory
@@ -86,8 +80,6 @@ namespace ToolBelt.Droid
 
             global::Xamarin.Auth.CustomTabsConfiguration.IsWarmUpUsed = true;
             global::Xamarin.Auth.CustomTabsConfiguration.IsPrefetchUsed = true;
-
-
 
             //-----------------------------------------------------------------------------------------------
 
