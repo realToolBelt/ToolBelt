@@ -53,8 +53,8 @@ namespace ToolBelt
         {
             // Handle when your app starts
             AppCenter.Start(
-                "android=a54ecf68-25e1-4870-9193-5f65305a2c33;" +
-                "ios=c06cf109-e217-4550-a73b-5c55ccb7aabc;",
+                $"android={AppSettings.AppCenterAnalyticsAndroid};" +
+                $"ios={AppSettings.AppCenterAnalyticsIos};",
                 typeof(Analytics),
                 typeof(Crashes));
         }
