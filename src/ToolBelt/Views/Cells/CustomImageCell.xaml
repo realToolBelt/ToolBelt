@@ -8,14 +8,14 @@
                        xmlns:viewModel="clr-namespace:ToolBelt.ViewModels"
                        x:TypeArguments="viewModel:IImageCellViewModel">
 
-    <Grid Padding="5" ColumnSpacing="2">
+    <Grid Padding="5,5,5,0" ColumnSpacing="2">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
@@ -31,19 +31,12 @@
             </ffimageloading:CachedImage.Transformations>
         </ffimageloading:CachedImage>
 
-        <Frame Grid.Column="1" BackgroundColor="Transparent">
-            <Frame.HasShadow>
-                <OnPlatform x:TypeArguments="x:Boolean">
-                    <On Platform="Android">true</On>
-                    <On Platform="iOS">false</On>
-                </OnPlatform>
-            </Frame.HasShadow>
-
-            <StackLayout>
-                <Label x:Name="_lblText" FontSize="{StaticResource LargeSize}" />
-                <Label x:Name="_lblDetail" FontSize="{StaticResource MidMediumSize}" />
-            </StackLayout>
-        </Frame>
+        <StackLayout Grid.Column="1"
+                     Margin="10,0,0,0"
+                     VerticalOptions="Center">
+            <Label x:Name="_lblText" FontSize="{StaticResource LargeSize}" />
+            <Label x:Name="_lblDetail" FontSize="{StaticResource MidMediumSize}" />
+        </StackLayout>
 
         <BoxView Grid.Row="1"
                  Grid.ColumnSpan="2"
