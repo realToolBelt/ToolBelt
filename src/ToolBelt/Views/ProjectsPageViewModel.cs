@@ -11,12 +11,12 @@ using ToolBelt.ViewModels;
 
 namespace ToolBelt.Views
 {
-    public class DashboardPageViewModel : BaseViewModel
+    public class ProjectsPageViewModel : BaseViewModel
     {
         private readonly IProjectDataStore _projectDataStore;
         private readonly ObservableAsPropertyHelper<bool> _isBusy;
 
-        public DashboardPageViewModel(
+        public ProjectsPageViewModel(
             INavigationService navigationService,
             IProjectDataStore projectDataStore) : base(navigationService)
         {

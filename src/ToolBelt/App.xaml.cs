@@ -1,11 +1,11 @@
-﻿using System;
-using Microsoft.AppCenter;
+﻿using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Splat;
+using System.Threading.Tasks;
 using ToolBelt.Services;
 using ToolBelt.Views;
 using ToolBelt.Views.About;
@@ -32,9 +32,18 @@ namespace ToolBelt
         {
         }
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
             InitializeComponent();
+
+#if DEBUG
+
+            // NOTE: When running in debug, we want to disable analytics and crash reporting
+            await Task.WhenAll(
+                Crashes.SetEnabledAsync(false),
+                Analytics.SetEnabledAsync(false)
+            );
+#endif
 
             NavigationService.NavigateAsync($"/NavigationPage/{nameof(ExtendedSplashPage)}");
         }
@@ -98,13 +107,16 @@ namespace ToolBelt
             containerRegistry.RegisterForNavigation<ItemDetailsPage, ItemDetailsPageViewModel>();
             containerRegistry.RegisterForNavigation<AboutUsPage, AboutUsPageViewModel>();
             containerRegistry.RegisterForNavigation<PrivacyPolicyPage, PrivacyPolicyPageViewModel>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<EditableProfilePage, EditableProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<MultiSelectListViewPage, MultiSelectListViewPageViewModel>();
             containerRegistry.RegisterForNavigation<ProjectDetailsPage, ProjectDetailsPageViewModel>();
 
             containerRegistry.RegisterForNavigation<ChatPage, ChatPageViewModel>();
+
+            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProjectsPage, ProjectsPageViewModel>();
+            containerRegistry.RegisterForNavigation<TradesmenPage, TradesmenPageViewModel>();
 
             RegisterSplatDependencies();
         }

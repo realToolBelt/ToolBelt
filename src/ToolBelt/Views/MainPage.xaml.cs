@@ -1,43 +1,29 @@
-﻿using ReactiveUI;
-using System.Reactive.Disposables;
+﻿using Prism.Navigation;
+using ReactiveUI.XamForms;
+using System.Linq;
 using Xamarin.Forms.Xaml;
 
 namespace ToolBelt.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainPage : ContentPageBase<MainPageViewModel>
+    public partial class MainPage : ReactiveTabbedPage<MainPageViewModel>, INavigatingAware
     {
         public MainPage()
         {
             InitializeComponent();
         }
 
-        protected override void OnAppearing()
+        public void OnNavigatingTo(NavigationParameters parameters)
         {
-            base.OnAppearing();
-
-            this.WhenActivated(disposable =>
+            // if we're given a page to navigate to, select that page
+            if (parameters.TryGetValue("page", out string pageName))
             {
-                this
-                    .OneWayBind(ViewModel, vm => vm.Pages, v => v._carousel.ItemsSource)
-                    .DisposeWith(disposable);
-
-                this
-                    .Bind(ViewModel, vm => vm.Position, v => v._carousel.Position)
-                    .DisposeWith(disposable);
-
-                this
-                    .BindCommand(ViewModel, vm => vm.ViewDashboard, v => v._lblDashboard.GestureRecognizers[0])
-                    .DisposeWith(disposable);
-
-                this
-                    .BindCommand(ViewModel, vm => vm.ViewMessages, v => v._lblMessages.GestureRecognizers[0])
-                    .DisposeWith(disposable);
-
-                this
-                    .BindCommand(ViewModel, vm => vm.ViewReviews, v => v._lblReviews.GestureRecognizers[0])
-                    .DisposeWith(disposable);
-            });
+                var pageToView = Children.FirstOrDefault(p => p.GetType().Name == pageName);
+                if (pageToView != null)
+                {
+                    SelectedItem = pageToView;
+                }
+            }
         }
     }
 }

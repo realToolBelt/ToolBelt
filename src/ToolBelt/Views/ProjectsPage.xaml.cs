@@ -1,5 +1,4 @@
 ﻿using ReactiveUI;
-using ReactiveUI.XamForms;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Xamarin.Forms;
@@ -8,17 +7,11 @@ using Xamarin.Forms.Xaml;
 namespace ToolBelt.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class DashboardPage : ReactiveContentView<DashboardPageViewModel>
+    public partial class ProjectsPage : ContentPageBase<ProjectsPageViewModel>
     {
-        public DashboardPage(DashboardPageViewModel viewModel)
+        public ProjectsPage()
         {
             InitializeComponent();
-            BindingContext = viewModel;
-        }
-
-        protected override void OnParentSet()
-        {
-            base.OnParentSet();
 
             this.WhenActivated(disposable =>
             {

@@ -1,75 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:ContentPageBase x:Class="ToolBelt.Views.MainPage"
-                       xmlns="http://xamarin.com/schemas/2014/forms"
-                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                       xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
-                       xmlns:local="clr-namespace:ToolBelt.Views"
-                       xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-                       xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
-                       prism:ViewModelLocator.AutowireViewModel="True"
-                       x:TypeArguments="local:MainPageViewModel">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <StackLayout Padding="0,10"
-                     BackgroundColor="Black"
-                     HorizontalOptions="FillAndExpand"
-                     Orientation="Horizontal">
-
-            <Label x:Name="_lblDashboard"
-                   HorizontalOptions="CenterAndExpand"
-                   Text="Projects">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer />
-                </Label.GestureRecognizers>
-                <Label.Triggers>
-                    <DataTrigger Binding="{Binding Position, Source={x:Reference _carousel}}"
-                                 TargetType="Label"
-                                 Value="0">
-                        <Setter Property="TextColor" Value="{DynamicResource accentColor}" />
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
-
-            <Label x:Name="_lblMessages"
-                   HorizontalOptions="CenterAndExpand"
-                   Text="Messages">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer />
-                </Label.GestureRecognizers>
-                <Label.Triggers>
-                    <DataTrigger Binding="{Binding Position, Source={x:Reference _carousel}}"
-                                 TargetType="Label"
-                                 Value="1">
-                        <Setter Property="TextColor" Value="{DynamicResource accentColor}" />
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
-
-            <Label x:Name="_lblReviews"
-                   HorizontalOptions="CenterAndExpand"
-                   Text="Reviews">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer />
-                </Label.GestureRecognizers>
-                <Label.Triggers>
-                    <DataTrigger Binding="{Binding Position, Source={x:Reference _carousel}}"
-                                 TargetType="Label"
-                                 Value="2">
-                        <Setter Property="TextColor" Value="{DynamicResource accentColor}" />
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
-        </StackLayout>
-
-        <carousel:CarouselViewControl x:Name="_carousel"
-                                      Grid.Row="1"
-                                      HorizontalOptions="FillAndExpand"
-                                      InterPageSpacing="10"
-                                      Orientation="Horizontal"
-                                      VerticalOptions="FillAndExpand" />
-    </Grid>
-</local:ContentPageBase>
+<rxui:ReactiveTabbedPage x:Class="ToolBelt.Views.MainPage"
+                         xmlns="http://xamarin.com/schemas/2014/forms"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                         xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+                         xmlns:local="clr-namespace:ToolBelt.Views"
+                         xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                         xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                         prism:ViewModelLocator.AutowireViewModel="True"
+                         x:TypeArguments="local:MainPageViewModel">
+    <local:ProjectsPage />
+    <local:TradesmenPage />
+</rxui:ReactiveTabbedPage>

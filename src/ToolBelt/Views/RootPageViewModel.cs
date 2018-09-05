@@ -26,7 +26,7 @@ namespace ToolBelt.Views
                 {
                     Title = "Home",
                     IconSource = "\xf015",
-                    TapCommand = CreateNavigationCommand($"Details/{nameof(MainPage)}?page={nameof(DashboardPage)}")
+                    TapCommand = CreateNavigationCommand($"Details/{nameof(MainPage)}?page={nameof(ProjectsPage)}")
                 },
                 new CustomMenuItem
                 {
