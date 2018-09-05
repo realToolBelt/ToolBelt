@@ -7,28 +7,24 @@
                        xmlns:local="clr-namespace:ToolBelt.Views"
                        xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                        xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                       Padding="20"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        x:TypeArguments="local:ProjectsPageViewModel">
-    <Grid Padding="20">
-        <ListView x:Name="_lstProjects"
-                  BackgroundColor="Transparent"
-                  HasUnevenRows="True"
-                  SeparatorVisibility="None"
-                  VerticalOptions="FillAndExpand">
-            <ListView.Header>
-                <Label Margin="0,5"
-                       FontSize="{StaticResource LargeSize}"
-                       Text="Projects" />
-            </ListView.Header>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <cells:ProjectSummaryCellView ViewModel="{Binding .}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-        <ActivityIndicator x:Name="_activityIndicator"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center" />
-    </Grid>
+    <ListView x:Name="_lstProjects"
+              BackgroundColor="Transparent"
+              HasUnevenRows="True"
+              IsPullToRefreshEnabled="True"
+              SeparatorVisibility="None"
+              VerticalOptions="FillAndExpand">
+        <ListView.Header>
+            <Label Margin="0,5"
+                   FontSize="{StaticResource LargeSize}"
+                   Text="Projects" />
+        </ListView.Header>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <cells:ProjectSummaryCellView ViewModel="{Binding .}" />
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </local:ContentPageBase>

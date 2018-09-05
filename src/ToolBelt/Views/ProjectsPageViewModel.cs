@@ -1,7 +1,7 @@
 ﻿using Prism.Navigation;
 using ReactiveUI;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -13,8 +13,8 @@ namespace ToolBelt.Views
 {
     public class ProjectsPageViewModel : BaseViewModel
     {
-        private readonly IProjectDataStore _projectDataStore;
         private readonly ObservableAsPropertyHelper<bool> _isBusy;
+        private readonly IProjectDataStore _projectDataStore;
 
         public ProjectsPageViewModel(
             INavigationService navigationService,
@@ -36,18 +36,18 @@ namespace ToolBelt.Views
                 return Unit.Default;
             });
 
-            Initialize = ReactiveCommand.CreateFromTask(async () =>
+            LoadProjects = ReactiveCommand.CreateFromTask(async _ =>
             {
                 var random = new Random();
-                await Task.Delay(random.Next(400, 2000));
+                await Task.Delay(random.Next(400, 2000)).ConfigureAwait(false);
 
-                var projects = await projectDataStore.GetProjectsAsync().ConfigureAwait(false);
-                //Projects.Reset(projects);
-                foreach (var p in projects) Projects.Add(p);
+                return await projectDataStore.GetProjectsAsync().ConfigureAwait(false);
             });
 
+            LoadProjects.Subscribe(projects => Projects.Reset(projects));
+
             // when the command is executing, update the busy state
-            Initialize.IsExecuting
+            LoadProjects.IsExecuting
               .StartWith(false)
               .ToProperty(this, x => x.IsBusy, out _isBusy);
         }
@@ -57,9 +57,9 @@ namespace ToolBelt.Views
         /// </summary>
         public bool IsBusy => _isBusy?.Value ?? false;
 
-        public ReactiveList<Project> Projects { get; } = new ReactiveList<Project>();
+        public ReactiveCommand<Unit, IEnumerable<Project>> LoadProjects { get; }
 
-        public ReactiveCommand Initialize { get; }
+        public ReactiveList<Project> Projects { get; } = new ReactiveList<Project>();
 
         public ReactiveCommand<Project, Unit> ViewProjectDetails { get; }
     }

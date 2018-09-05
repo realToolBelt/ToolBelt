@@ -19,14 +19,6 @@ namespace ToolBelt.Views
                     .OneWayBind(ViewModel, vm => vm.Projects, v => v._lstProjects.ItemsSource)
                     .DisposeWith(disposable);
 
-                this
-                    .OneWayBind(ViewModel, vm => vm.IsBusy, v => v._activityIndicator.IsRunning)
-                    .DisposeWith(disposable);
-
-                this
-                    .OneWayBind(ViewModel, vm => vm.IsBusy, v => v._activityIndicator.IsVisible)
-                    .DisposeWith(disposable);
-
                 _lstProjects
                     .ItemTappedToCommandBehavior(ViewModel, vm => vm.ViewProjectDetails)
                     .DisposeWith(disposable);
@@ -39,7 +31,13 @@ namespace ToolBelt.Views
                     .WhenAnyValue(x => x.ViewModel)
                     .Where(vm => vm != null)
                     .ToSignal()
-                    .InvokeCommand(this, x => x.ViewModel.Initialize)
+                    .Merge(
+                        _lstProjects
+                            .Events()
+                            .Refreshing
+                            .ToSignal()
+                    )
+                    .InvokeCommand(this, x => x.ViewModel.LoadProjects)
                     .DisposeWith(disposable);
             });
         }
