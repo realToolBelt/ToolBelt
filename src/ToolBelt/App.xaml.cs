@@ -5,6 +5,7 @@ using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Splat;
+using System;
 using System.Threading.Tasks;
 using ToolBelt.Services;
 using ToolBelt.Views;
@@ -89,6 +90,7 @@ namespace ToolBelt
             // TODO: REPLACE!
             containerRegistry.Register<IUserDataStore, FakeUserDataStore>();
             containerRegistry.Register<IProjectDataStore, FakeProjectDataStore>();
+            containerRegistry.Register<IAlbumDataStore, FakeAlbumDataStore>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<ModalNavigationPage, ModalNavigationPageViewModel>();
@@ -107,10 +109,13 @@ namespace ToolBelt
             containerRegistry.RegisterForNavigation<ItemDetailsPage, ItemDetailsPageViewModel>();
             containerRegistry.RegisterForNavigation<AboutUsPage, AboutUsPageViewModel>();
             containerRegistry.RegisterForNavigation<PrivacyPolicyPage, PrivacyPolicyPageViewModel>();
-            containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
-            containerRegistry.RegisterForNavigation<EditableProfilePage, EditableProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<MultiSelectListViewPage, MultiSelectListViewPageViewModel>();
             containerRegistry.RegisterForNavigation<ProjectDetailsPage, ProjectDetailsPageViewModel>();
+
+            containerRegistry.RegisterForNavigation<ProfileViewTabbedPage, ProfileViewTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
+            containerRegistry.RegisterForNavigation<EditableProfilePage, EditableProfilePageViewModel>();
+            containerRegistry.RegisterForNavigation<GalleriesPage, GalleriesPageViewModel>();
 
             containerRegistry.RegisterForNavigation<ChatPage, ChatPageViewModel>();
 

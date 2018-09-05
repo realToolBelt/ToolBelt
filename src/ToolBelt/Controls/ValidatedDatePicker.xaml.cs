@@ -42,14 +42,6 @@ namespace ToolBelt.Controls
             this.WhenActivated(disposable =>
             {
                 this
-                    .OneWayBind(this, vm => vm.MaximumDate, v => v._datePicker.MaximumDate)
-                    .DisposeWith(disposable);
-
-                this
-                    .OneWayBind(this, vm => vm.MinimumDate, v => v._datePicker.MinimumDate)
-                    .DisposeWith(disposable);
-
-                this
                     .Bind(ViewModel, vm => vm.Value, v => v._datePicker.NullableDate)
                     .DisposeWith(disposable);
 

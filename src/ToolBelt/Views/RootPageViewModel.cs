@@ -83,7 +83,7 @@ namespace ToolBelt.Views
                 };
 
                 await NavigationService
-                    .NavigateAsync($"{nameof(ModalNavigationPage)}/{nameof(ProfilePage)}", parameters, useModalNavigation: true)
+                    .NavigateAsync($"NavigationPage/{nameof(ProfileViewTabbedPage)}", parameters, useModalNavigation: true)
                     .ConfigureAwait(false);
             });
 
