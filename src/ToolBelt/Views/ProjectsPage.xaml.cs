@@ -27,16 +27,27 @@ namespace ToolBelt.Views
                     .OneWayBind(ViewModel, vm => vm.IsBusy, v => v._lstProjects.IsRefreshing)
                     .DisposeWith(disposable);
 
-                this
-                    .WhenAnyValue(x => x.ViewModel)
-                    .Where(vm => vm != null)
+                _lstProjects
+                    .Events()
+                    .Refreshing
                     .ToSignal()
                     .Merge(
-                        _lstProjects
-                            .Events()
-                            .Refreshing
+                        this
+                            .WhenAnyValue(x => x.ViewModel)
+                            .Where(vm => vm?.Projects.Count == 0)
+                            .Take(1)
                             .ToSignal()
                     )
+                    .ObserveOn(RxApp.TaskpoolScheduler)
+                    .InvokeCommand(this, x => x.ViewModel.RefreshProjects)
+                    .DisposeWith(disposable);
+
+                _lstProjects
+                    .Events()
+                    .ItemAppearing
+                    .Where(_ => !ViewModel.IsBusy && ViewModel.Projects.Count > 0)
+                    .Where(args => args.Item == ViewModel.Projects[ViewModel.Projects.Count - 1])
+                    .ToSignal()
                     .ObserveOn(RxApp.TaskpoolScheduler)
                     .InvokeCommand(this, x => x.ViewModel.LoadProjects)
                     .DisposeWith(disposable);

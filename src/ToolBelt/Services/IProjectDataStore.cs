@@ -8,9 +8,34 @@ namespace ToolBelt.Services
 {
     public interface IProjectDataStore
     {
-        Task<IEnumerable<Project>> GetProjectsAsync();
-
         Task<IEnumerable<TradeSpecialty>> GetTradeSpecialtiesAsync();
+
+        /// <summary>
+        /// Loads the new projects.
+        /// </summary>
+        /// <param name="itemsPerPage">The maximum number of items to load.</param>
+        /// <returns>The projects.</returns>
+        Task<IEnumerable<Project>> LoadNewProjects(int itemsPerPage);
+
+        /// <summary>
+        /// Loads projects newer than the given <paramref name="project" />.
+        /// </summary>
+        /// <param name="project">
+        /// The project that will be the origin point for determining "new" projects.
+        /// </param>
+        /// <param name="itemsPerPage">The maximum number of items to load.</param>
+        /// <returns>The projects.</returns>
+        Task<IEnumerable<Project>> LoadNewProjects(Project project, int itemsPerPage);
+
+        /// <summary>
+        /// Loads projects older than the given <paramref name="project" />.
+        /// </summary>
+        /// <param name="project">
+        /// The project that will be the origin point for determining "older" projects.
+        /// </param>
+        /// <param name="itemsPerPage">The maximum number of items to load.</param>
+        /// <returns>The projects.</returns>
+        Task<IEnumerable<Project>> LoadOldProjects(Project project, int itemsPerPage);
     }
 
     public class FakeProjectDataStore : IProjectDataStore
@@ -20,24 +45,6 @@ namespace ToolBelt.Services
         public FakeProjectDataStore()
         {
             _random = new Random();
-        }
-
-        private async Task RandomDelay() => await Task.Delay(_random.Next(2000, 10000)).ConfigureAwait(false);
-
-        public async Task<IEnumerable<Project>> GetProjectsAsync()
-        {
-            // introduce a delay to emulate network latency
-            await RandomDelay().ConfigureAwait(false);
-
-            return await Task.FromResult(
-                Enumerable.Range(0, 20)
-                .Select(idx => new Project
-                {
-                    Id = idx,
-                    Name = $"Project {idx}",
-                    EstimatedStartDate = DateTime.Now.AddDays(idx),
-                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30)
-                })).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<TradeSpecialty>> GetTradeSpecialtiesAsync()
@@ -91,5 +98,58 @@ namespace ToolBelt.Services
                 }
                 .Select((specialty, index) => new TradeSpecialty(index, specialty))).ConfigureAwait(false);
         }
+
+        public async Task<IEnumerable<Project>> LoadNewProjects(int itemsPerPage)
+        {
+            // introduce a delay to emulate network latency
+            await RandomDelay().ConfigureAwait(false);
+
+            return await Task.FromResult(
+                Enumerable.Range(0, itemsPerPage)
+                .Reverse()
+                .Select(idx => new Project
+                {
+                    Id = idx,
+                    Name = $"Project {idx}",
+                    EstimatedStartDate = DateTime.Now.AddDays(idx),
+                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30)
+                })).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<Project>> LoadNewProjects(Project project, int itemsPerPage)
+        {
+            // introduce a delay to emulate network latency
+            await RandomDelay().ConfigureAwait(false);
+
+            return await Task.FromResult(
+                Enumerable.Range(project.Id + 1, itemsPerPage)
+                .Reverse()
+                .Select(idx => new Project
+                {
+                    Id = idx,
+                    Name = $"Project {idx}",
+                    EstimatedStartDate = DateTime.Now.AddDays(idx),
+                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30)
+                })).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<Project>> LoadOldProjects(Project project, int itemsPerPage)
+        {
+            // introduce a delay to emulate network latency
+            await RandomDelay().ConfigureAwait(false);
+
+            return await Task.FromResult(
+                Enumerable.Range(project.Id - itemsPerPage, itemsPerPage)
+                .Reverse()
+                .Select(idx => new Project
+                {
+                    Id = idx,
+                    Name = $"Project {idx}",
+                    EstimatedStartDate = DateTime.Now.AddDays(idx),
+                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30)
+                })).ConfigureAwait(false);
+        }
+
+        private async Task RandomDelay() => await Task.Delay(_random.Next(2000, 10000)).ConfigureAwait(false);
     }
 }
