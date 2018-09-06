@@ -46,6 +46,11 @@ namespace ToolBelt.Views
                 return Unit.Default;
             });
 
+            AddProject = ReactiveCommand.CreateFromTask(async () =>
+            {
+                await NavigationService.NavigateAsync($"NavigationPage/{nameof(CreateProjectPage)}", useModalNavigation: true).ConfigureAwait(false);
+            });
+
             // set up the command used to load projects
             LoadProjects = ReactiveCommand.CreateFromTask(_ =>
             {
@@ -136,5 +141,7 @@ namespace ToolBelt.Views
         public ReactiveCommand<Unit, IEnumerable<Project>> RefreshProjects { get; }
 
         public ReactiveCommand<Project, Unit> ViewProjectDetails { get; }
+
+        public ReactiveCommand AddProject { get; }
     }
 }

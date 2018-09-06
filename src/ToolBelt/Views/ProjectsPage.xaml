@@ -10,6 +10,11 @@
                        Padding="20"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        x:TypeArguments="local:ProjectsPageViewModel">
+    <ContentPage.ToolbarItems>
+        <!--  TODO: This should be a FAB on Android...  -->
+        <ToolbarItem x:Name="_miAddProject" Text="Add" />
+    </ContentPage.ToolbarItems>
+
     <ListView x:Name="_lstProjects"
               BackgroundColor="Transparent"
               HasUnevenRows="True"

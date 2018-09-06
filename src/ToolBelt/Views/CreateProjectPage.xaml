@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:ContentPageBase x:Class="ToolBelt.Views.CreateProjectPage"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:cells="clr-namespace:ToolBelt.Views.Cells"
+                       xmlns:controls="clr-namespace:ToolBelt.Controls"
+                       xmlns:local="clr-namespace:ToolBelt.Views"
+                       xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                       xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                       Padding="20"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:TypeArguments="local:CreateProjectPageViewModel">
+    <ContentPage.Resources>
+
+        <Style x:Key="HeaderTextStyle"
+               BasedOn="{StaticResource BaseLabelStyle}"
+               TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource textColor}" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+        </Style>
+
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="_miSave" Icon="ic_action_save" />
+        <ToolbarItem x:Name="_miCancel" Icon="ic_action_close" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <StackLayout Margin="20">
+            <controls:ValidatedEntry x:Name="_projectNameControl"
+                                     HeaderText="Project Name:"
+                                     PlaceholderText="Project Name" />
+
+            <controls:ValidatedDatePicker x:Name="_startDateControl"
+                                          HeaderText="Start Date (estimated):"
+                                          VerticalOptions="Start" />
+
+            <controls:ValidatedDatePicker x:Name="_endDateControl"
+                                          HeaderText="End Date (estimated):"
+                                          VerticalOptions="Start" />
+
+        </StackLayout>
+    </ScrollView>
+</local:ContentPageBase>

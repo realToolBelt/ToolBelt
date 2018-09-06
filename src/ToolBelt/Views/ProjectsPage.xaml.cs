@@ -19,6 +19,10 @@ namespace ToolBelt.Views
                     .OneWayBind(ViewModel, vm => vm.Projects, v => v._lstProjects.ItemsSource)
                     .DisposeWith(disposable);
 
+                this
+                    .BindCommand(ViewModel, vm => vm.AddProject, v => v._miAddProject)
+                    .DisposeWith(disposable);
+
                 _lstProjects
                     .ItemTappedToCommandBehavior(ViewModel, vm => vm.ViewProjectDetails)
                     .DisposeWith(disposable);
