@@ -107,8 +107,12 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\fontawesome.otf" />
-    <AndroidAsset Include="Assets\fontawesome_brands.otf" />
+    <AndroidAsset Include="..\CommonResources\Fonts\FontAwesome\fontawesome.otf">
+      <Link>Assets\fontawesome.otf</Link>
+    </AndroidAsset>
+    <AndroidAsset Include="..\CommonResources\Fonts\FontAwesome\fontawesome_brands.otf">
+      <Link>Assets\fontawesome_brands.otf</Link>
+    </AndroidAsset>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml">

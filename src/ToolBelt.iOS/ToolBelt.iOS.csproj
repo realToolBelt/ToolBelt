@@ -74,13 +74,15 @@
     </Compile>
     <Compile Include="Renderers\ExtendedDatePickerRenderer.cs" />
     <Compile Include="Renderers\ExtendedEntryRenderer.cs" />
+    <BundleResource Include="..\CommonResources\Fonts\FontAwesome\fontawesome.otf">
+      <Link>Resources\fontawesome.otf</Link>
+    </BundleResource>
+    <BundleResource Include="..\CommonResources\Fonts\FontAwesome\fontawesome_brands.otf">
+      <Link>Resources\fontawesome_brands.otf</Link>
+    </BundleResource>
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <BundleResource Include="Resources\fontawesome.otf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </BundleResource>
-    <BundleResource Include="Resources\fontawesome_brands.otf" />
     <BundleResource Include="Resources\ic_action_close%402x.png" />
     <BundleResource Include="Resources\ic_action_close%403x.png" />
     <BundleResource Include="Resources\ic_action_edit%402x.png" />
