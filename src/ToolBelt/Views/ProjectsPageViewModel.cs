@@ -103,12 +103,25 @@ namespace ToolBelt.Views
                     }
                 });
 
-            // when the command is executing, update the busy state
+            // when either of the commands are executing, update the busy state
             this.WhenAnyObservable(
                 x => x.LoadProjects.IsExecuting,
-                x => x.RefreshProjects.IsExecuting)
-              .StartWith(false)
-              .ToProperty(this, x => x.IsBusy, out _isBusy, scheduler: RxApp.MainThreadScheduler);
+                x => x.RefreshProjects.IsExecuting,
+                (isLoadExecuting, isRefreshExecuting) => isLoadExecuting || isRefreshExecuting)
+                .DistinctUntilChanged()
+                .StartWith(false)
+                .ToProperty(this, x => x.IsBusy, out _isBusy, scheduler: RxApp.MainThreadScheduler);
+
+            // When an exception is thrown for either command, log the error and let the user handle
+            // the exception
+            LoadProjects.ThrownExceptions
+                .Merge(RefreshProjects.ThrownExceptions)
+                .SelectMany(exception =>
+                {
+                    this.Log().ErrorException("Error loading or refreshing data", exception);
+                    return SharedInteractions.Error.Handle(exception);
+                })
+                .Subscribe();
         }
 
         /// <summary>

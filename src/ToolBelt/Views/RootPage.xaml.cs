@@ -54,14 +54,28 @@ namespace ToolBelt.Views
                     })
                     .DisposeWith(disposable);
 
-                // NOTE: BindCommand isn't working for the cached image.  Need to handle another way
+                // NOTE: BindCommand isn't working for the cached image. Need to handle another way
                 ((TapGestureRecognizer)_imgProfile.GestureRecognizers[0])
                     .Events()
                     .Tapped
                     .ToSignal()
                     .InvokeCommand(ViewModel, vm => vm.ViewProfile)
                     .DisposeWith(disposable);
+
+                // register handlers for shared interactions
+                RegisterSharedInteractionHandlers(disposable);
             });
+        }
+
+        private void RegisterSharedInteractionHandlers(CompositeDisposable disposable)
+        {
+            SharedInteractions.Error.RegisterHandler(
+                async interaction =>
+                {
+                    await DisplayAlert("Unexpected Error", "Sorry, we've run into unexpected problems. Apologies for the inconvenience.", "OK");
+                    interaction.SetOutput(System.Reactive.Unit.Default);
+                })
+                .DisposeWith(disposable);
         }
     }
 }
