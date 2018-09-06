@@ -37,6 +37,7 @@ namespace ToolBelt.Views
                             .Refreshing
                             .ToSignal()
                     )
+                    .ObserveOn(RxApp.TaskpoolScheduler)
                     .InvokeCommand(this, x => x.ViewModel.LoadProjects)
                     .DisposeWith(disposable);
             });

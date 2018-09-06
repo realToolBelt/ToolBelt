@@ -1,6 +1,7 @@
 ﻿using Prism.Navigation;
 using ReactiveUI;
 using System;
+using System.Diagnostics;
 using System.Reactive.Subjects;
 
 namespace ToolBelt.ViewModels
@@ -94,5 +95,14 @@ namespace ToolBelt.ViewModels
         }
 
         #endregion
+
+        /// <summary>
+        /// When called, asserts that the current code is executing on a background thread.
+        /// </summary>
+        [Conditional("DEBUG")]
+        protected void AssertRunningOnBackgroundThread()
+        {
+            Debug.Assert(System.Threading.Thread.CurrentThread.IsBackground);
+        }
     }
 }

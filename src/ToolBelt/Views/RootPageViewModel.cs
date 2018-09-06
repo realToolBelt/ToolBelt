@@ -28,18 +28,18 @@ namespace ToolBelt.Views
                     IconSource = "\xf015",
                     TapCommand = CreateNavigationCommand($"Details/{nameof(MainPage)}?page={nameof(ProjectsPage)}")
                 },
-                new CustomMenuItem
-                {
-                    Title = "Messages",
-                    IconSource = "\xf0e0",
-                    TapCommand = CreateNavigationCommand($"Details/{nameof(MainPage)}?page={nameof(Messages.MessagesPage)}")
-                },
-                new CustomMenuItem
-                {
-                    Title = "Communities",
-                    IconSource = "\xf0c0",
-                    TapCommand = CreateNavigationCommand($"Details/{nameof(CommunitiesPage)}")
-                },
+                //new CustomMenuItem
+                //{
+                //    Title = "Messages",
+                //    IconSource = "\xf0e0",
+                //    TapCommand = CreateNavigationCommand($"Details/{nameof(Messages.MessagesPage)}")
+                //},
+                //new CustomMenuItem
+                //{
+                //    Title = "Communities",
+                //    IconSource = "\xf0c0",
+                //    TapCommand = CreateNavigationCommand($"Details/{nameof(CommunitiesPage)}")
+                //},
                 new CustomMenuItem
                 {
                     Title = "Explore",

@@ -1,10 +1,12 @@
 ﻿using Prism.Navigation;
 using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
+using System.Threading;
+using ToolBelt.Extensions;
 using ToolBelt.Models;
 using ToolBelt.Services;
 using ToolBelt.ViewModels;
@@ -36,20 +38,20 @@ namespace ToolBelt.Views
                 return Unit.Default;
             });
 
-            LoadProjects = ReactiveCommand.CreateFromTask(async _ =>
+            // set up the command used to load projects
+            LoadProjects = ReactiveCommand.CreateFromTask(_ =>
             {
-                var random = new Random();
-                await Task.Delay(random.Next(400, 2000)).ConfigureAwait(false);
-
-                return await projectDataStore.GetProjectsAsync().ConfigureAwait(false);
+                this.Log().Debug($"Loading projects on thread: {Thread.CurrentThread.ManagedThreadId}, IsBackground = {Thread.CurrentThread.IsBackground}");
+                AssertRunningOnBackgroundThread();
+                return projectDataStore.GetProjectsAsync();
             });
 
-            LoadProjects.Subscribe(projects => Projects.Reset(projects));
+            LoadProjects.SubscribeSafe(projects => Projects.Reset(projects));
 
             // when the command is executing, update the busy state
             LoadProjects.IsExecuting
               .StartWith(false)
-              .ToProperty(this, x => x.IsBusy, out _isBusy);
+              .ToProperty(this, x => x.IsBusy, out _isBusy, scheduler: RxApp.MainThreadScheduler);
         }
 
         /// <summary>

@@ -15,9 +15,21 @@ namespace ToolBelt.Services
 
     public class FakeProjectDataStore : IProjectDataStore
     {
-        public Task<IEnumerable<Project>> GetProjectsAsync()
+        private readonly Random _random;
+
+        public FakeProjectDataStore()
         {
-            return Task.FromResult(
+            _random = new Random();
+        }
+
+        private async Task RandomDelay() => await Task.Delay(_random.Next(2000, 10000)).ConfigureAwait(false);
+
+        public async Task<IEnumerable<Project>> GetProjectsAsync()
+        {
+            // introduce a delay to emulate network latency
+            await RandomDelay().ConfigureAwait(false);
+
+            return await Task.FromResult(
                 Enumerable.Range(0, 20)
                 .Select(idx => new Project
                 {
@@ -25,12 +37,15 @@ namespace ToolBelt.Services
                     Name = $"Project {idx}",
                     EstimatedStartDate = DateTime.Now.AddDays(idx),
                     EstimatedEndDate = DateTime.Now.AddDays(idx + 30)
-                }));
+                })).ConfigureAwait(false);
         }
 
-        public Task<IEnumerable<TradeSpecialty>> GetTradeSpecialtiesAsync()
+        public async Task<IEnumerable<TradeSpecialty>> GetTradeSpecialtiesAsync()
         {
-            return Task.FromResult(
+            // introduce a delay to emulate network latency
+            await RandomDelay().ConfigureAwait(false);
+
+            return await Task.FromResult(
                 new[]
                 {
                     "Laborer",
@@ -74,7 +89,7 @@ namespace ToolBelt.Services
                     "Boilermaker",
                     "Other"
                 }
-                .Select((specialty, index) => new TradeSpecialty(index, specialty)));
+                .Select((specialty, index) => new TradeSpecialty(index, specialty))).ConfigureAwait(false);
         }
     }
 }

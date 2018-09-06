@@ -148,7 +148,11 @@ namespace ToolBelt.Controls
             base.OnBindingContextChanged();
             if (BindingContext != null)
             {
-                OriginalFormat = Format;
+                if (OriginalFormat == null)
+                {
+                    OriginalFormat = Format;
+                }
+
                 UpdateDate();
             }
         }
