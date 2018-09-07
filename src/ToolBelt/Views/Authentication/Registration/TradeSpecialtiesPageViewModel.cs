@@ -1,5 +1,5 @@
-﻿using Prism.Navigation;
-using Prism.Services;
+﻿using Acr.UserDialogs;
+using Prism.Navigation;
 using ReactiveUI;
 using System.Linq;
 using System.Reactive.Linq;
@@ -14,7 +14,7 @@ namespace ToolBelt.Views.Authentication.Registration
     {
         public TradeSpecialtiesPageViewModel(
             INavigationService navigationService,
-            IPageDialogService dialogService,
+            IUserDialogs dialogService,
             IProjectDataStore projectDataStore) : base(navigationService)
         {
             Title = "Trade Specialties";
@@ -37,14 +37,19 @@ namespace ToolBelt.Views.Authentication.Registration
 
             Next = ReactiveCommand.CreateFromTask(async () =>
             {
-                // if there are no items selected, they can't move on.  Must select at least one specialty
+                // if there are no items selected, they can't move on. Must select at least one specialty
                 if (!Items.Any(item => item.IsSelected))
                 {
-                    await dialogService.DisplayAlertAsync("Error", "You must select at least one trade specialty", "OK").ConfigureAwait(false);
+                    await dialogService.AlertAsync(
+                        new AlertConfig
+                        {
+                            Title = "Error",
+                            Message = "You must select at least one trade specialty",
+                            OkText = "OK"
+                        }).ConfigureAwait(false);
                 }
 
                 // TODO: ...
-
             });
 
             projectDataStore

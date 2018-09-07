@@ -1,12 +1,7 @@
-﻿using Prism.Navigation;
-using Prism.Services;
+﻿using Acr.UserDialogs;
+using Prism.Navigation;
 using ReactiveUI;
-using Splat;
-using System;
-using System.Diagnostics;
 using System.Reactive;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
 using ToolBelt.ViewModels;
 using ToolBelt.Views.Authentication.Registration;
 
@@ -18,7 +13,7 @@ namespace ToolBelt.Views.Authentication
 
         public SignupPageViewModel(
             INavigationService navigationService,
-            IPageDialogService dialogService) : base(navigationService)
+            IUserDialogs dialogService) : base(navigationService)
         {
             Title = "Sign Up";
 
@@ -26,7 +21,13 @@ namespace ToolBelt.Views.Authentication
             {
                 if (!AgreeWithTermsAndConditions)
                 {
-                    await dialogService.DisplayAlertAsync("Missing information", "You must agree to the terms and conditions", "OK").ConfigureAwait(false);
+                    await dialogService.AlertAsync(
+                        new AlertConfig
+                        {
+                            Title = "Missing information",
+                            Message = "You must agree to the terms and conditions",
+                            OkText = "OK"
+                        }).ConfigureAwait(false);
                 }
 
                 // TODO:
@@ -37,7 +38,13 @@ namespace ToolBelt.Views.Authentication
             {
                 if (!AgreeWithTermsAndConditions)
                 {
-                    await dialogService.DisplayAlertAsync("Missing information", "You must agree to the terms and conditions", "OK").ConfigureAwait(false);
+                    await dialogService.AlertAsync(
+                        new AlertConfig
+                        {
+                            Title = "Missing information",
+                            Message = "You must agree to the terms and conditions",
+                            OkText = "OK"
+                        }).ConfigureAwait(false);
                 }
 
                 // TODO:

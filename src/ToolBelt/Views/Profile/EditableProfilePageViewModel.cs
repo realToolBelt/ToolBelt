@@ -1,9 +1,9 @@
-﻿using Plugin.Media;
+﻿using Acr.UserDialogs;
+using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Prism.Navigation;
-using Prism.Services;
 using ReactiveUI;
 using System;
 using System.Collections;
@@ -30,7 +30,7 @@ namespace ToolBelt.Views.Profile
 
         public EditableProfilePageViewModel(
             INavigationService navigationService,
-            IPageDialogService dialogService,
+            IUserDialogs dialogService,
             IProjectDataStore projectDataStore,
             IPermissionsService permissionsService) : base(navigationService)
         {
@@ -72,22 +72,37 @@ namespace ToolBelt.Views.Profile
                     {
                         // permission was not granted. Let the user know they can't pick a photo
                         // without permissions
-                        await dialogService.DisplayAlertAsync(
-                            "Photos Not Supported",
-                            ":( Permission not granted to photos.",
-                            "OK").ConfigureAwait(false);
+                        await dialogService.AlertAsync(
+                            new AlertConfig
+                            {
+                                Title = "Photos Not Supported",
+                                Message = ":( Permission not granted to photos.",
+                                OkText = "OK"
+                            }).ConfigureAwait(false);
 
                         return;
                     }
                 }
                 catch (MediaPermissionException mediaException)
                 {
-                    await dialogService.DisplayAlertAsync("Permission Error", $"Permissions not granted: {string.Join(", ", mediaException.Permissions)}", "OK").ConfigureAwait(false);
+                    await dialogService.AlertAsync(
+                        new AlertConfig
+                        {
+                            Title = "Permission Error",
+                            Message = $"Permissions not granted: {string.Join(", ", mediaException.Permissions)}",
+                            OkText = "OK"
+                        }).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
                     // TODO: log the exception...
-                    await dialogService.DisplayAlertAsync("Error", "An error has occurred.", "OK").ConfigureAwait(false);
+                    await dialogService.AlertAsync(
+                        new AlertConfig
+                        {
+                            Title = "Error",
+                            Message = "An error has occurred.",
+                            OkText = "OK"
+                        }).ConfigureAwait(false);
                 }
             });
 

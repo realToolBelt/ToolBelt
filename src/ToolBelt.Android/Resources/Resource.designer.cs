@@ -4814,26 +4814,26 @@ namespace ToolBelt.Droid
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
+			// aapt resource value: 0x7f020140
+			public const int avd_hide_password_1 = 2130837824;
+			
 			// aapt resource value: 0x7f020141
-			public const int avd_hide_password_1 = 2130837825;
+			public const int avd_hide_password_2 = 2130837825;
 			
 			// aapt resource value: 0x7f020142
-			public const int avd_hide_password_2 = 2130837826;
-			
-			// aapt resource value: 0x7f020143
-			public const int avd_hide_password_3 = 2130837827;
+			public const int avd_hide_password_3 = 2130837826;
 			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
 			
+			// aapt resource value: 0x7f020143
+			public const int avd_show_password_1 = 2130837827;
+			
 			// aapt resource value: 0x7f020144
-			public const int avd_show_password_1 = 2130837828;
+			public const int avd_show_password_2 = 2130837828;
 			
 			// aapt resource value: 0x7f020145
-			public const int avd_show_password_2 = 2130837829;
-			
-			// aapt resource value: 0x7f020146
-			public const int avd_show_password_3 = 2130837830;
+			public const int avd_show_password_3 = 2130837829;
 			
 			// aapt resource value: 0x7f020055
 			public const int background_dialog = 2130837589;
@@ -5507,11 +5507,11 @@ namespace ToolBelt.Droid
 			// aapt resource value: 0x7f020134
 			public const int notification_icon_background = 2130837812;
 			
-			// aapt resource value: 0x7f02013f
-			public const int notification_template_icon_bg = 2130837823;
+			// aapt resource value: 0x7f02013e
+			public const int notification_template_icon_bg = 2130837822;
 			
-			// aapt resource value: 0x7f020140
-			public const int notification_template_icon_low_bg = 2130837824;
+			// aapt resource value: 0x7f02013f
+			public const int notification_template_icon_low_bg = 2130837823;
 			
 			// aapt resource value: 0x7f020135
 			public const int notification_tile_bg = 2130837813;
@@ -5529,19 +5529,16 @@ namespace ToolBelt.Droid
 			public const int roundedbgdark = 2130837817;
 			
 			// aapt resource value: 0x7f02013a
-			public const int toolbeltIcon = 2130837818;
+			public const int tooltip_frame_dark = 2130837818;
 			
 			// aapt resource value: 0x7f02013b
-			public const int tooltip_frame_dark = 2130837819;
+			public const int tooltip_frame_light = 2130837819;
 			
 			// aapt resource value: 0x7f02013c
-			public const int tooltip_frame_light = 2130837820;
+			public const int Up = 2130837820;
 			
 			// aapt resource value: 0x7f02013d
-			public const int Up = 2130837821;
-			
-			// aapt resource value: 0x7f02013e
-			public const int xamarin_logo = 2130837822;
+			public const int xamarin_logo = 2130837821;
 			
 			static Drawable()
 			{

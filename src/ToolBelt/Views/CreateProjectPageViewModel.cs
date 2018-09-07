@@ -1,5 +1,5 @@
-﻿using Prism.Navigation;
-using Prism.Services;
+﻿using Acr.UserDialogs;
+using Prism.Navigation;
 using ReactiveUI;
 using System;
 using ToolBelt.Services;
@@ -13,7 +13,7 @@ namespace ToolBelt.Views
     {
         public CreateProjectPageViewModel(
             INavigationService navigationService,
-            IPageDialogService dialogService,
+            IUserDialogs dialogService,
             IAnalyticService analyticService) : base(navigationService)
         {
             Title = "New Project";
@@ -40,11 +40,14 @@ namespace ToolBelt.Views
                     || StartDate.IsChanged
                     || EndDate.IsChanged)
                 {
-                    bool keepEditing = await dialogService.DisplayAlertAsync(
-                        "Unsaved changes",
-                        "Are you sure you want to discard this project?",
-                        "Keep Editing",
-                        "Discard");
+                    bool keepEditing = await dialogService.ConfirmAsync(
+                        new ConfirmConfig
+                        {
+                            Title = "Unsaved changes",
+                            Message = "Are you sure you want to discard this project?",
+                            OkText = "Keep Editing",
+                            CancelText = "Discard"
+                        });
                     if (keepEditing)
                     {
                         // the user has chosen the option to continue editing

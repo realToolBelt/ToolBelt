@@ -16,14 +16,14 @@
         </Grid.RowDefinitions>
 
         <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-            <ffimageloading:CachedImage Margin="0,0,15,0"
+            <!--<ffimageloading:CachedImage Margin="0,0,15,0"
                                         Aspect="AspectFit"
                                         DownsampleToViewSize="true"
                                         HeightRequest="{StaticResource ExtraBigSize}"
                                         HorizontalOptions="Center"
-                                        Source="toolbeltIcon.png"
+                                        Source="ic_launcher.png"
                                         VerticalOptions="Center"
-                                        WidthRequest="{StaticResource ExtraBigSize}" />
+                                        WidthRequest="{StaticResource ExtraBigSize}" />-->
             <controls:ToolBeltLabel FontAttributes="Bold"
                                     FontSize="{StaticResource ExtraBigSize}"
                                     HorizontalOptions="Center" />

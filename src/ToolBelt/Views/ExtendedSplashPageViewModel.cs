@@ -1,6 +1,6 @@
-﻿using Prism.Ioc;
+﻿using Acr.UserDialogs;
+using Prism.Ioc;
 using Prism.Navigation;
-using Prism.Services;
 using ReactiveUI;
 using System;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace ToolBelt.Views
     {
         private readonly AccountStore _accountStore;
         private readonly IContainerRegistry _containerRegistry;
-        private readonly IPageDialogService _dialogService;
+        private readonly IUserDialogs _dialogService;
         private readonly ObservableAsPropertyHelper<bool> _isBusy;
         private readonly IUserDataStore _userDataStore;
 
@@ -26,7 +26,7 @@ namespace ToolBelt.Views
             IAuthenticatorFactory authenticatorFactory,
             IContainerRegistry containerRegistry,
             IUserDataStore userDataStore,
-            IPageDialogService dialogService) : base(navigationService)
+            IUserDialogs dialogService) : base(navigationService)
         {
             _accountStore = AccountStore.Create();
             _containerRegistry = containerRegistry;
@@ -98,7 +98,13 @@ namespace ToolBelt.Views
             {
                 // This should only happen if we successfully authenticate with the OAuth process,
                 // but fail to retrieve the user from the database. Just show that login failed
-                await _dialogService.DisplayAlertAsync("Login Failed", "Failed to log in.  Please try again.", "OK").ConfigureAwait(false);
+                await _dialogService.AlertAsync(
+                    new AlertConfig
+                    {
+                        Title = "Login Failed",
+                        Message = "Failed to log in.  Please try again.",
+                        OkText = "OK"
+                    }).ConfigureAwait(false);
             }
         }
 
