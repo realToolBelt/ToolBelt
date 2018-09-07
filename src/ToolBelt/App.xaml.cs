@@ -79,8 +79,16 @@ namespace ToolBelt
             containerRegistry.RegisterInstance<ILogger>(logger);
 #endif
 
-            // register the analytics and crash tracking services
+#if DEBUG
+
+            // in the debug configuration, register our services used for debugging
+            containerRegistry.RegisterInstance<IAnalyticService>(new DebugAnalyticService());
+#else
+
+            // in non-debug configurations, register the real services
             containerRegistry.RegisterInstance<IAnalyticService>(new AnalyticService());
+#endif
+
             containerRegistry.RegisterInstance<ICrashService>(new CrashService());
 
             containerRegistry.Register<IAuthenticatorFactory, AuthenticatorFactory>();

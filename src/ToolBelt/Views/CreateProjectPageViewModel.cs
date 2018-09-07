@@ -2,6 +2,7 @@
 using Prism.Services;
 using ReactiveUI;
 using System;
+using ToolBelt.Services;
 using ToolBelt.Validation;
 using ToolBelt.Validation.Rules;
 using ToolBelt.ViewModels;
@@ -12,9 +13,11 @@ namespace ToolBelt.Views
     {
         public CreateProjectPageViewModel(
             INavigationService navigationService,
-            IPageDialogService dialogService) : base(navigationService)
+            IPageDialogService dialogService,
+            IAnalyticService analyticService) : base(navigationService)
         {
             Title = "New Project";
+            analyticService.TrackScreen("create-project-page");
 
             AddValidationRules();
 
@@ -24,6 +27,8 @@ namespace ToolBelt.Views
                 {
                     return;
                 }
+
+                analyticService.TrackTapEvent("save");
 
                 // TODO: perform save
                 await NavigationService.GoBackAsync(useModalNavigation: true).ConfigureAwait(false);
@@ -39,14 +44,15 @@ namespace ToolBelt.Views
                         "Unsaved changes",
                         "Are you sure you want to discard this project?",
                         "Keep Editing",
-                        "Discard")
-                        .ConfigureAwait(false);
+                        "Discard");
                     if (keepEditing)
                     {
                         // the user has chosen the option to continue editing
                         return;
                     }
                 }
+
+                analyticService.TrackTapEvent("cancel");
 
                 // if there are no changes, or the user chooses to discard, go back to the previous screen
                 await NavigationService.GoBackAsync(useModalNavigation: true).ConfigureAwait(false);
