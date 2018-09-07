@@ -112,7 +112,8 @@ namespace ToolBelt.Services
                     Id = idx,
                     Name = $"Project {idx}",
                     EstimatedStartDate = DateTime.Now.AddDays(idx),
-                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30)
+                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30),
+                    CreateDate = DateTime.Now.AddDays(idx + 30)
                 })).ConfigureAwait(false);
         }
 
@@ -129,7 +130,8 @@ namespace ToolBelt.Services
                     Id = idx,
                     Name = $"Project {idx}",
                     EstimatedStartDate = DateTime.Now.AddDays(idx),
-                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30)
+                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30),
+                    CreateDate = DateTime.Now.AddDays(idx + 30)
                 })).ConfigureAwait(false);
         }
 
@@ -146,7 +148,8 @@ namespace ToolBelt.Services
                     Id = idx,
                     Name = $"Project {idx}",
                     EstimatedStartDate = DateTime.Now.AddDays(idx),
-                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30)
+                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30),
+                    CreateDate = DateTime.Now.AddDays(idx + 30)
                 })).ConfigureAwait(false);
         }
 

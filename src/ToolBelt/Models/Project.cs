@@ -6,10 +6,25 @@ namespace ToolBelt.Models
     // TODO: Replace with the real data...
     public class Project : ReactiveObject
     {
+        private DateTime _createDate;
         private DateTime _estimatedEndDate;
         private DateTime _estimatedStartDate;
         private int _id;
         private string _name;
+
+        public Project()
+        {
+            CreateDate = DateTime.UtcNow;
+        }
+
+        /// <summary>
+        /// Gets or sets the date the project was created.
+        /// </summary>
+        public DateTime CreateDate
+        {
+            get => _createDate;
+            set => this.RaiseAndSetIfChanged(ref _createDate, value);
+        }
 
         public DateTime EstimatedEndDate
         {

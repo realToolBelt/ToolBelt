@@ -79,9 +79,9 @@ namespace ToolBelt.Views
                         projects = projects.ExceptBy(Projects, p => p.Id);
 
                         // get the oldest and newest projects from the new data set. Age is simply
-                        // determined by Id for our purposes
-                        var oldProject = projects.MinBy(p => p.Id).First();
-                        var newProject = projects.MaxBy(p => p.Id).First();
+                        // determined by the date the project was created
+                        var oldProject = projects.MinBy(p => p.CreateDate).First();
+                        var newProject = projects.MaxBy(p => p.CreateDate).First();
 
                         if (_oldestProject == null && _newestProject == null)
                         {
@@ -91,14 +91,14 @@ namespace ToolBelt.Views
                             // first projects being added. Add them to the list
                             Projects.AddRange(projects);
                         }
-                        else if (_oldestProject?.Id > oldProject.Id)
+                        else if (_oldestProject?.CreateDate > oldProject.CreateDate)
                         {
                             _oldestProject = oldProject;
 
                             // if the projects are older, add them to the end of the list
                             Projects.AddRange(projects);
                         }
-                        else if (_newestProject?.Id < newProject.Id)
+                        else if (_newestProject?.CreateDate < newProject.CreateDate)
                         {
                             _newestProject = newProject;
 

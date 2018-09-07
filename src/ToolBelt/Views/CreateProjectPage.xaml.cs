@@ -15,8 +15,8 @@ namespace ToolBelt.Views
             using (this.Log().Perf($"{nameof(CreateProjectPage)}: Initialize component."))
             {
                 InitializeComponent();
-                _startDateControl.MaximumDate = DateTime.Today;
-                _endDateControl.MaximumDate = DateTime.Today;
+                _startDateControl.MinimumDate = DateTime.Today;
+                _endDateControl.MinimumDate = DateTime.Today;
             }
 
             this.WhenActivated(disposable =>

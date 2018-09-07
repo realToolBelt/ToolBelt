@@ -33,24 +33,44 @@ namespace ToolBelt.Views
             });
         }
 
+        /// <summary>
+        /// Gets the command used to cancel editing of the data.
+        /// </summary>
         public ReactiveCommand Cancel { get; }
 
         public ValidatableObject<DateTime?> EndDate { get; } = new ValidatableObject<DateTime?>();
 
         public ValidatableObject<string> ProjectName { get; } = new ValidatableObject<string>();
 
+        /// <summary>
+        /// Gets the command used to save the data.
+        /// </summary>
         public ReactiveCommand Save { get; }
 
         public ValidatableObject<DateTime?> StartDate { get; } = new ValidatableObject<DateTime?>();
 
+        /// <summary>
+        /// Adds the validation rules for this instance.
+        /// </summary>
         private void AddValidationRules()
         {
             ProjectName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "Project name cannot be empty" });
-
             StartDate.Validations.Add(new IsNotNullRule<DateTime?> { ValidationMessage = "Start date cannot be empty" });
             EndDate.Validations.Add(new IsNotNullRule<DateTime?> { ValidationMessage = "End date cannot be empty" });
+
+            StartDate.Validations.Add(new ActionValidationRule<DateTime?>(
+                startDate => !EndDate.Value.HasValue || !startDate.HasValue || startDate.Value < EndDate.Value.Value,
+                "Start date cannot come after the end date"));
+
+            EndDate.Validations.Add(new ActionValidationRule<DateTime?>(
+                endDate => !StartDate.Value.HasValue || !endDate.HasValue || endDate.Value > StartDate.Value.Value,
+                "End date cannot come before the start date"));
         }
 
+        /// <summary>
+        /// Returns <c>true</c> if the data is considered valid in it's current state.
+        /// </summary>
+        /// <returns><c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         private bool IsValid()
         {
             // NOTE: Validate each control individually so we get error indicators for all
