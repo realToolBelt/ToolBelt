@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -12,9 +13,10 @@ namespace ToolBelt.Validation
     /// <typeparam name="T">The type of the value held by the object.</typeparam>
     /// <seealso cref="ReactiveUI.ReactiveObject" />
     /// <seealso cref="ToolBelt.Validation.IValidity" />
-    public class ValidatableObject<T> : ReactiveObject, IValidity
+    public class ValidatableObject<T> : ReactiveObject, IValidity, IChangeTracking
     {
         private readonly ObservableAsPropertyHelper<bool> _isValid;
+        private T _initialValue;
         private T _value;
 
         public ValidatableObject()
@@ -25,6 +27,15 @@ namespace ToolBelt.Validation
         }
 
         public ReactiveList<string> Errors { get; } = new ReactiveList<string>();
+
+        /// <summary>
+        /// Gets the object's changed status.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if the object’s content has changed since the last call to
+        /// <see cref="IChangeTracking.AcceptChanges" />; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsChanged => !EqualityComparer<T>.Default.Equals(_initialValue, Value);
 
         /// <summary>
         /// Gets a value indicating whether or not the value held by this instance is valie.
@@ -41,6 +52,17 @@ namespace ToolBelt.Validation
         {
             get => _value;
             set => this.RaiseAndSetIfChanged(ref _value, value);
+        }
+
+        /// <summary>
+        /// Resets the object’s state to unchanged by accepting the modifications.
+        /// </summary>
+        public void AcceptChanges()
+        {
+            // NOTE: We're using extremely simple change tracking here. Simply set the "initial
+            //       value" to the current value. When determining whether the object has changes,
+            //       we'll simply compare these two values.
+            _initialValue = Value;
         }
 
         /// <summary>

@@ -129,6 +129,8 @@ namespace ToolBelt.Views
                 .Subscribe();
         }
 
+        public ReactiveCommand AddProject { get; }
+
         /// <summary>
         /// Gets a value indicating whether this instance is busy performing work.
         /// </summary>
@@ -141,7 +143,5 @@ namespace ToolBelt.Views
         public ReactiveCommand<Unit, IEnumerable<Project>> RefreshProjects { get; }
 
         public ReactiveCommand<Project, Unit> ViewProjectDetails { get; }
-
-        public ReactiveCommand AddProject { get; }
     }
 }

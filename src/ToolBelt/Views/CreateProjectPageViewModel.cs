@@ -1,4 +1,5 @@
 ﻿using Prism.Navigation;
+using Prism.Services;
 using ReactiveUI;
 using System;
 using ToolBelt.Validation;
@@ -9,7 +10,9 @@ namespace ToolBelt.Views
 {
     public class CreateProjectPageViewModel : BaseViewModel
     {
-        public CreateProjectPageViewModel(INavigationService navigationService) : base(navigationService)
+        public CreateProjectPageViewModel(
+            INavigationService navigationService,
+            IPageDialogService dialogService) : base(navigationService)
         {
             Title = "New Project";
 
@@ -28,9 +31,31 @@ namespace ToolBelt.Views
 
             Cancel = ReactiveCommand.CreateFromTask(async () =>
             {
-                // TODO: Prompt user to confirm cancel (if fields are modified)...
+                if (ProjectName.IsChanged
+                    || StartDate.IsChanged
+                    || EndDate.IsChanged)
+                {
+                    bool keepEditing = await dialogService.DisplayAlertAsync(
+                        "Unsaved changes",
+                        "Are you sure you want to discard this project?",
+                        "Keep Editing",
+                        "Discard")
+                        .ConfigureAwait(false);
+                    if (keepEditing)
+                    {
+                        // the user has chosen the option to continue editing
+                        return;
+                    }
+                }
+
+                // if there are no changes, or the user chooses to discard, go back to the previous screen
                 await NavigationService.GoBackAsync(useModalNavigation: true).ConfigureAwait(false);
             });
+
+            // accept changes so we can determine whether they've been changed later on
+            ProjectName.AcceptChanges();
+            StartDate.AcceptChanges();
+            EndDate.AcceptChanges();
         }
 
         /// <summary>
