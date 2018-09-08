@@ -130,7 +130,6 @@ namespace ToolBelt.Views.Profile
             });
         }
 
-        public ValidatableObject<DateTime?> BirthDate { get; } = new ValidatableObject<DateTime?>();
 
         public ReactiveCommand Cancel { get; }
 
@@ -183,8 +182,6 @@ namespace ToolBelt.Views.Profile
             FirstName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "First Name cannot be empty" });
             LastName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "Last Name cannot be empty" });
             Phone.Validations.Add(new PhoneRule { ValidationMessage = "Invalid phone number" });
-
-            BirthDate.Validations.Add(new IsNotNullRule<DateTime?> { ValidationMessage = "Birth Date cannot be empty" });
         }
 
         private bool IsValid()
@@ -194,13 +191,11 @@ namespace ToolBelt.Views.Profile
             FirstName.Validate();
             LastName.Validate();
             Phone.Validate();
-            BirthDate.Validate();
 
             return Email.IsValid
                 && FirstName.IsValid
                 && LastName.IsValid
-                && Phone.IsValid
-                && BirthDate.IsValid;
+                && Phone.IsValid;
         }
     }
 }

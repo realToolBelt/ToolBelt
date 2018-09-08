@@ -28,8 +28,6 @@ namespace ToolBelt.Views.Authentication.Registration
             });
         }
 
-        public ValidatableObject<DateTime?> BirthDate { get; } = new ValidatableObject<DateTime?>();
-
         public ValidatableObject<string> Email { get; } = new ValidatableObject<string>();
 
         public ValidatableObject<string> FirstName { get; } = new ValidatableObject<string>();
@@ -49,7 +47,6 @@ namespace ToolBelt.Views.Authentication.Registration
             LastName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "Last Name cannot be empty" });
             Phone.Validations.Add(new PhoneRule { ValidationMessage = "Invalid phone number" });
 
-            BirthDate.Validations.Add(new IsNotNullRule<DateTime?> { ValidationMessage = "Birth Date cannot be empty" });
         }
 
         private bool IsValid()
@@ -59,13 +56,11 @@ namespace ToolBelt.Views.Authentication.Registration
             FirstName.Validate();
             LastName.Validate();
             Phone.Validate();
-            BirthDate.Validate();
 
             return Email.IsValid
                 && FirstName.IsValid
                 && LastName.IsValid
-                && Phone.IsValid
-                && BirthDate.IsValid;
+                && Phone.IsValid;
         }
     }
 }

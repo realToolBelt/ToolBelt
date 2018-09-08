@@ -39,10 +39,6 @@
                                          Keyboard="Telephone"
                                          PlaceholderText="Phone"
                                          VerticalOptions="Start" />
-
-                <controls:ValidatedDatePicker x:Name="_birthDateControl"
-                                              HeaderText="Birth Date:"
-                                              VerticalOptions="Start" />
             </StackLayout>
         </ScrollView>
 

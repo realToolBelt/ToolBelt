@@ -1,6 +1,5 @@
 ﻿using ReactiveUI;
 using Splat;
-using System;
 using System.Reactive.Disposables;
 using ToolBelt.Extensions;
 using Xamarin.Forms.Xaml;
@@ -15,7 +14,6 @@ namespace ToolBelt.Views.Authentication.Registration
             using (this.Log().Perf($"{nameof(BasicInformationPage)}: Initialize component."))
             {
                 InitializeComponent();
-                _birthDateControl.MaximumDate = DateTime.Today;
             }
 
             this.WhenActivated(disposable =>
@@ -39,10 +37,6 @@ namespace ToolBelt.Views.Authentication.Registration
 
                     this
                         .OneWayBind(ViewModel, vm => vm.Phone, v => v._phoneControl.ViewModel)
-                        .DisposeWith(disposable);
-
-                    this
-                        .OneWayBind(ViewModel, vm => vm.BirthDate, v => v._birthDateControl.ViewModel)
                         .DisposeWith(disposable);
                 }
             });

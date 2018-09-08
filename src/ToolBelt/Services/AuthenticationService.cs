@@ -27,8 +27,6 @@ namespace ToolBelt.Services
         public string Email { get; set; }
 
         public string AvatarUrl { get; set; }
-
-        public DateTime? BirthDate { get; set; }
     }
 
     public interface IUserService
@@ -64,8 +62,7 @@ namespace ToolBelt.Services
                 Id = 1,
                 Name = "John",
                 LastName = "Doe",
-                Email = "john.doe@fakeemail.com",
-                BirthDate = new DateTime(1985, 6, 15)
+                Email = "john.doe@fakeemail.com"
             });
         }
     }

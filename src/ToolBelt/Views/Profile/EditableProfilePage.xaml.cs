@@ -1,6 +1,5 @@
 ﻿using ReactiveUI;
 using Splat;
-using System;
 using System.Reactive.Disposables;
 using ToolBelt.Extensions;
 using Xamarin.Forms;
@@ -16,7 +15,6 @@ namespace ToolBelt.Views.Profile
             using (this.Log().Perf($"{nameof(EditableProfilePage)}: Initialize component."))
             {
                 InitializeComponent();
-                _birthDateControl.MaximumDate = DateTime.Today;
             }
         }
 
@@ -61,10 +59,6 @@ namespace ToolBelt.Views.Profile
 
                     this
                         .BindCommand(ViewModel, vm => vm.Cancel, v => v._miCancel)
-                        .DisposeWith(disposable);
-
-                    this
-                        .OneWayBind(ViewModel, vm => vm.BirthDate, v => v._birthDateControl.ViewModel)
                         .DisposeWith(disposable);
 
                     //this

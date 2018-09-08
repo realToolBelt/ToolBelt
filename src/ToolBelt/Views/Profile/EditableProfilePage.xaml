@@ -64,10 +64,6 @@
                                      Keyboard="Telephone"
                                      PlaceholderText="Phone" />
 
-            <controls:ValidatedDatePicker x:Name="_birthDateControl"
-                                          HeaderText="Birth Date:"
-                                          VerticalOptions="Start" />
-
             <StackLayout Orientation="Horizontal">
                 <Label HorizontalOptions="StartAndExpand"
                        Text="Trade Specialties"
