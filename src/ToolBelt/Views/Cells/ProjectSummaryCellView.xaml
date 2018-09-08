@@ -7,14 +7,15 @@
                        x:TypeArguments="model:Project">
     <Frame Margin="0,5"
            BackgroundColor="Black"
-           CornerRadius="10" VerticalOptions="FillAndExpand">
-    <Grid>
+           CornerRadius="10"
+           VerticalOptions="FillAndExpand">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-        <!--  TODO: Finish this...  -->
-            <Label x:Name="_lblProjectName" />
+            <!--  TODO: Finish this...  -->
+            <Label x:Name="_lblProjectName" FontSize="{StaticResource LargeSize}" />
             <Label x:Name="_lblProjectStartDate" Grid.Row="1" />
         </Grid>
     </Frame>

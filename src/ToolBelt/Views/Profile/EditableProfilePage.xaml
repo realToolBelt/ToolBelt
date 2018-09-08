@@ -70,7 +70,7 @@
 
             <StackLayout Orientation="Horizontal">
                 <Label HorizontalOptions="StartAndExpand"
-                       Text="Communities"
+                       Text="Trade Specialties"
                        TextColor="{DynamicResource accentColor}" />
                 <Button x:Name="_btnSelectCommunities" Text="Select" />
             </StackLayout>
