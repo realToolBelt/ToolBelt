@@ -36,6 +36,7 @@
 
                 <controls:ValidatedEntry x:Name="_phoneControl"
                                          HeaderText="Phone:"
+                                         Keyboard="Telephone"
                                          PlaceholderText="Phone"
                                          VerticalOptions="Start" />
 

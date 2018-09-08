@@ -61,6 +61,7 @@
 
             <controls:ValidatedEntry x:Name="_phoneControl"
                                      HeaderText="Phone:"
+                                     Keyboard="Telephone"
                                      PlaceholderText="Phone" />
 
             <controls:ValidatedDatePicker x:Name="_birthDateControl"
