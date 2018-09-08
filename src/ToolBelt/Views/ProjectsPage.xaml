@@ -21,11 +21,6 @@
               IsPullToRefreshEnabled="True"
               SeparatorVisibility="None"
               VerticalOptions="FillAndExpand">
-        <ListView.Header>
-            <Label Margin="0,5"
-                   FontSize="{StaticResource LargeSize}"
-                   Text="Projects" />
-        </ListView.Header>
         <ListView.ItemTemplate>
             <DataTemplate>
                 <cells:ProjectSummaryCellView ViewModel="{Binding .}" />
