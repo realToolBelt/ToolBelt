@@ -21,24 +21,25 @@
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center" />
             <StackLayout Grid.Row="1">
-                <Label FontAttributes="Bold"
-                       FontSize="{StaticResource MediumSize}"
-                       Text="Name:"
-                       VerticalOptions="Center" />
-                <Entry x:Name="_txtName" VerticalOptions="Center" />
-                <Label FontAttributes="Bold"
-                       FontSize="{StaticResource MediumSize}"
-                       Text="Email:"
-                       VerticalOptions="Center" />
-                <Entry x:Name="_txtEmail" VerticalOptions="Center" />
-                <Label FontAttributes="Bold"
-                       FontSize="{StaticResource MediumSize}"
-                       Text="Message:"
-                       VerticalOptions="Center" />
-                <Editor x:Name="_txtMessage" VerticalOptions="FillAndExpand" />
+                <controls:ValidatedEntry x:Name="_nameControl"
+                                         HeaderText="Name:"
+                                         PlaceholderText="Name"
+                                         VerticalOptions="Start" />
+
+                <controls:ValidatedEntry x:Name="_emailControl"
+                                         HeaderText="Email:"
+                                         Keyboard="Email"
+                                         PlaceholderText="Email"
+                                         VerticalOptions="Start" />
+
+                <controls:ValidatedEditor x:Name="_messageControl"
+                                          HeaderText="Message:"
+                                          VerticalOptions="FillAndExpand" />
+
                 <Button x:Name="_btnSubmit"
+                        HorizontalOptions="Center"
                         Text="Submit"
-                        VerticalOptions="Center" />
+                        VerticalOptions="End" />
             </StackLayout>
 
             <ActivityIndicator x:Name="_activityIndicator" Grid.RowSpan="2" />

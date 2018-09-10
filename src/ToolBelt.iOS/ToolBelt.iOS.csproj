@@ -75,6 +75,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Renderers\ExtendedDatePickerRenderer.cs" />
+    <Compile Include="Renderers\ExtendedEditorRenderer.cs" />
     <Compile Include="Renderers\ExtendedEntryRenderer.cs" />
     <BundleResource Include="..\CommonResources\Fonts\FontAwesome\fontawesome.otf">
       <Link>Resources\fontawesome.otf</Link>

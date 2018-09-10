@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<controls:BaseValidatedEntry x:Class="ToolBelt.Controls.ValidatedEditor"
+                             xmlns="http://xamarin.com/schemas/2014/forms"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                             xmlns:controls="clr-namespace:ToolBelt.Controls"
+                             x:Name="_control">
+
+    <StackLayout VerticalOptions="FillAndExpand">
+        <Label FontAttributes="Bold"
+               Style="{StaticResource HeaderTextStyle}"
+               Text="{Binding HeaderText, Source={x:Reference _control}}"
+               TextColor="{Binding LineColorToApply, Source={Reference _txtEntry}}"
+               VerticalOptions="Start" />
+        <controls:ExtendedEditor x:Name="_txtEntry" VerticalOptions="FillAndExpand" />
+        <Label x:Name="_lblEntryError"
+               Style="{StaticResource ValidationErrorLabelStyle}"
+               VerticalOptions="End" />
+    </StackLayout>
+</controls:BaseValidatedEntry>

@@ -23,15 +23,14 @@ namespace ToolBelt.Views
                     .DisposeWith(disposable);
 
                 this
-                    .Bind(ViewModel, vm => vm.Name, v => v._txtName.Text)
+                    .OneWayBind(ViewModel, vm => vm.Name, v => v._nameControl.ViewModel)
+                    .DisposeWith(disposable);
+                this
+                    .OneWayBind(ViewModel, vm => vm.Email, v => v._emailControl.ViewModel)
                     .DisposeWith(disposable);
 
                 this
-                    .Bind(ViewModel, vm => vm.Email, v => v._txtEmail.Text)
-                    .DisposeWith(disposable);
-
-                this
-                    .Bind(ViewModel, vm => vm.Message, v => v._txtMessage.Text)
+                    .Bind(ViewModel, vm => vm.Message, v => v._messageControl.ViewModel)
                     .DisposeWith(disposable);
 
                 this

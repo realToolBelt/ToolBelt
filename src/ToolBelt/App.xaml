@@ -202,6 +202,27 @@
             <!--  Default style for Extended Entry controls  -->
             <Style BasedOn="{StaticResource BaseEntryStyle}" TargetType="{x:Type controls:ExtendedEntry}" />
 
+            <!--  Base style to use for Extended Editor controls  -->
+            <Style x:Key="BaseEditorStyle" TargetType="{x:Type controls:ExtendedEditor}">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="{StaticResource textColor}" />
+                <Setter Property="HeightRequest" Value="44" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Opacity" Value="0.6" />
+                <Setter Property="FocusLineColor" Value="{StaticResource accentColor}" />
+                <Setter Property="InvalidLineColor" Value="{StaticResource ValidationErrorColor}" />
+                <Style.Triggers>
+                    <Trigger TargetType="Editor" Property="IsFocused" Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!--  Default style for Extended Entry controls  -->
+            <Style BasedOn="{StaticResource BaseEditorStyle}" TargetType="{x:Type controls:ExtendedEditor}" />
+
 
             <!--  Base style to use for Extended DatePicker controls  -->
             <Style x:Key="BaseExtendedDatePickerStyle" TargetType="{x:Type controls:ExtendedDatePicker}">
