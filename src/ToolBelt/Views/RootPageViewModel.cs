@@ -1,6 +1,10 @@
 ﻿using Prism.Navigation;
 using ReactiveUI;
+using Splat;
+using System;
+using System.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
 using ToolBelt.Extensions;
 using ToolBelt.Models;
 using ToolBelt.Services;
@@ -8,6 +12,7 @@ using ToolBelt.Services.Authentication;
 using ToolBelt.ViewModels;
 using ToolBelt.Views.About;
 using ToolBelt.Views.Profile;
+using ToolBelt.Views.Projects;
 
 namespace ToolBelt.Views
 {
@@ -28,6 +33,7 @@ namespace ToolBelt.Views
                     IconSource = "\xf015",
                     TapCommand = CreateNavigationCommand($"Details/{nameof(MainPage)}?page={nameof(ProjectsPage)}")
                 },
+
                 //new CustomMenuItem
                 //{
                 //    Title = "Messages",
@@ -86,6 +92,30 @@ namespace ToolBelt.Views
                     .NavigateAsync($"Details/{nameof(ProfileViewTabbedPage)}", parameters)
                     .ConfigureAwait(false);
             });
+
+            IObservable<Exception> commandObservable = null;
+            foreach (var item in MenuItems.Where(x => x.TapCommand != null))
+            {
+                if (commandObservable == null)
+                {
+                    commandObservable = item.TapCommand.ThrownExceptions;
+                }
+                else
+                {
+                    commandObservable = commandObservable.Merge(item.TapCommand.ThrownExceptions);
+                }
+            }
+
+            if (commandObservable != null)
+            {
+                commandObservable
+                    .SelectMany(exception =>
+                    {
+                        this.Log().ErrorException("Error in menu items", exception);
+                        return SharedInteractions.Error.Handle(exception);
+                    })
+                    .Subscribe();
+            }
 
             ReactiveCommand<Unit, Unit> CreateNavigationCommand(string path, bool? useModalNavigation = null)
             {

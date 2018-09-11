@@ -50,7 +50,7 @@ namespace ToolBelt.Services
         public async Task<IEnumerable<TradeSpecialty>> GetTradeSpecialtiesAsync()
         {
             // introduce a delay to emulate network latency
-            await RandomDelay().ConfigureAwait(false);
+            //await RandomDelay().ConfigureAwait(false);
 
             return await Task.FromResult(
                 new[]

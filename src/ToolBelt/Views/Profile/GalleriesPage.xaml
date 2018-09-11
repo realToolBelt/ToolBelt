@@ -6,22 +6,51 @@
                     xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                     xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
                     xmlns:local="clr-namespace:ToolBelt.Views.Profile"
+                    xmlns:models="clr-namespace:ToolBelt.Models"
                     xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                     xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                     xmlns:vw="clr-namespace:ToolBelt.Views"
+                    x:Name="_control"
                     prism:ViewModelLocator.AutowireViewModel="True"
                     x:TypeArguments="local:GalleriesPageViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <models:BindingProxy x:Key="Proxy" Data="{Binding Source={x:Reference _control}, Path=BindingContext}" />
+
+            <local:GalleryCellDataTemplateSelector x:Key="ImageCellDataTemplateSelector">
+                <local:GalleryCellDataTemplateSelector.DeletableTemplate>
+                    <DataTemplate>
+                        <cells:CustomImageCell ViewModel="{Binding .}">
+                            <cells:CustomImageCell.ContextActions>
+                                <MenuItem Command="{Binding Data.Delete, Source={StaticResource Proxy}}"
+                                          CommandParameter="{Binding .}"
+                                          IsDestructive="true"
+                                          Text="Delete" />
+                            </cells:CustomImageCell.ContextActions>
+                        </cells:CustomImageCell>
+                    </DataTemplate>
+                </local:GalleryCellDataTemplateSelector.DeletableTemplate>
+                <local:GalleryCellDataTemplateSelector.ReadOnlyTemplate>
+                    <DataTemplate>
+                        <cells:CustomImageCell ViewModel="{Binding .}" />
+                    </DataTemplate>
+                </local:GalleryCellDataTemplateSelector.ReadOnlyTemplate>
+            </local:GalleryCellDataTemplateSelector>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <!--  TODO: This should be a FAB on Android...  -->
+        <ToolbarItem x:Name="_miAddAlbum" Text="Add" />
+    </ContentPage.ToolbarItems>
+
+
     <Grid Padding="20">
         <ListView x:Name="_lstAlbums"
                   BackgroundColor="Transparent"
                   HasUnevenRows="True"
+                  ItemTemplate="{StaticResource ImageCellDataTemplateSelector}"
                   SeparatorVisibility="None"
-                  VerticalOptions="FillAndExpand">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <cells:CustomImageCell ViewModel="{Binding .}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                  VerticalOptions="FillAndExpand" />
     </Grid>
 </vw:ContentPageBase>

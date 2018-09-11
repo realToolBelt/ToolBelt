@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<vw:ContentPageBase x:Class="ToolBelt.Views.Projects.ProjectsPage"
+                    xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:local="clr-namespace:ToolBelt.Views.Projects"
+                    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                    xmlns:vw="clr-namespace:ToolBelt.Views"
+                    Padding="20"
+                    prism:ViewModelLocator.AutowireViewModel="True"
+                    x:TypeArguments="local:ProjectsPageViewModel">
+    <ContentPage.ToolbarItems>
+        <!--  TODO: This should be a FAB on Android...  -->
+        <ToolbarItem x:Name="_miFilter" Icon="ic_action_tune" />
+        <ToolbarItem x:Name="_miAddProject" Text="Add" />
+    </ContentPage.ToolbarItems>
+
+    <ListView x:Name="_lstProjects"
+              BackgroundColor="Transparent"
+              HasUnevenRows="True"
+              IsPullToRefreshEnabled="True"
+              SeparatorVisibility="None"
+              VerticalOptions="FillAndExpand">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <local:ProjectSummaryCellView ViewModel="{Binding .}" />
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</vw:ContentPageBase>

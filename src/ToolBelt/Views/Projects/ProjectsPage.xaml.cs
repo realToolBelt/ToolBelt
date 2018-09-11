@@ -4,7 +4,7 @@ using System.Reactive.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ToolBelt.Views
+namespace ToolBelt.Views.Projects
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProjectsPage : ContentPageBase<ProjectsPageViewModel>
@@ -21,6 +21,10 @@ namespace ToolBelt.Views
 
                 this
                     .BindCommand(ViewModel, vm => vm.AddProject, v => v._miAddProject)
+                    .DisposeWith(disposable);
+
+                this
+                    .BindCommand(ViewModel, vm => vm.Filter, v => v._miFilter)
                     .DisposeWith(disposable);
 
                 _lstProjects

@@ -4,7 +4,7 @@ using System.Reactive.Disposables;
 using ToolBelt.Extensions;
 using Xamarin.Forms.Xaml;
 
-namespace ToolBelt.Views
+namespace ToolBelt.Views.Projects
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProjectDetailsPage : ContentPageBase<ProjectDetailsPageViewModel>

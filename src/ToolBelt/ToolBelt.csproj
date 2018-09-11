@@ -17,6 +17,8 @@
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.9.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.9.0" />
     <PackageReference Include="morelinq" Version="3.0.0" />
+    <PackageReference Include="Polly" Version="6.1.0" />
+    <PackageReference Include="Polly.Caching.Memory" Version="2.0.0" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.0.0.396" />
     <PackageReference Include="Prism.Forms" Version="7.0.0.396" />
     <PackageReference Include="ReactiveUI.Events.XamForms" Version="8.7.2" />
@@ -37,7 +39,7 @@
     <Compile Update="Views\Profile\ProfileViewTabbedPage.xaml.cs">
       <DependentUpon>ProfileViewTabbedPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\ProjectsPage.xaml.cs">
+    <Compile Update="Views\Projects\ProjectsPage.xaml.cs">
       <DependentUpon>ProjectsPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\CustomMenuItemCellView.xaml.cs">
@@ -73,7 +75,7 @@
     <EmbeddedResource Update="Views\Cells\CustomImageCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Cells\ProjectSummaryCellView.xaml">
+    <EmbeddedResource Update="Views\Projects\ProjectSummaryCellView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\CreateProjectPage.xaml">
@@ -130,13 +132,19 @@
     <EmbeddedResource Update="Views\Profile\GalleriesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Profile\GalleryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Profile\ProfileViewTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Profile\ProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProjectDetailsPage.xaml">
+    <EmbeddedResource Update="Views\Projects\ProjectDetailsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Projects\ProjectFilterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ReviewsPage.xaml">
@@ -145,7 +153,7 @@
     <EmbeddedResource Update="Views\RootPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProjectsPage.xaml">
+    <EmbeddedResource Update="Views\Projects\ProjectsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Authentication\SignupPage.xaml">

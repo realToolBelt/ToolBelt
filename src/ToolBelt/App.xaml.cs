@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using ToolBelt.Services;
 using ToolBelt.Views;
 using ToolBelt.Views.About;
+using ToolBelt.Views.Projects;
 using ToolBelt.Views.Authentication;
 using ToolBelt.Views.Authentication.Registration;
 using ToolBelt.Views.Messages;
@@ -46,7 +47,7 @@ namespace ToolBelt
             );
 #endif
 
-            NavigationService.NavigateAsync($"/NavigationPage/{nameof(ExtendedSplashPage)}");
+            NavigationService.NavigateAsync($"/Root/Details/{nameof(MainPage)}");
         }
 
         protected override void OnResume()
@@ -100,6 +101,16 @@ namespace ToolBelt
             containerRegistry.Register<IProjectDataStore, FakeProjectDataStore>();
             containerRegistry.Register<IAlbumDataStore, FakeAlbumDataStore>();
 
+            AuthenticationState.Authenticator = new AuthenticatorFactory().GetAuthenticationService(Services.Authentication.AuthenticationProviderType.Google, null);
+            containerRegistry.RegisterInstance(AuthenticationState.Authenticator);
+            containerRegistry.RegisterInstance<IUserService>(new UserService(new User
+            {
+                Id = 1,
+                Name = "John",
+                LastName = "Doe",
+                Email = "john.doe@fakeemail.com"
+            }));
+
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<ModalNavigationPage, ModalNavigationPageViewModel>();
             containerRegistry.RegisterForNavigation<TabbedPage>();
@@ -124,12 +135,14 @@ namespace ToolBelt
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<EditableProfilePage, EditableProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<GalleriesPage, GalleriesPageViewModel>();
+            containerRegistry.RegisterForNavigation<GalleryPage, GalleryPageViewModel>();
 
             containerRegistry.RegisterForNavigation<ChatPage, ChatPageViewModel>();
 
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<ProjectsPage, ProjectsPageViewModel>();
             containerRegistry.RegisterForNavigation<TradesmenPage, TradesmenPageViewModel>();
+            containerRegistry.RegisterForNavigation<ProjectFilterPage, ProjectFilterPageViewModel>();
 
             containerRegistry.RegisterForNavigation<CreateProjectPage, CreateProjectPageViewModel>();
 

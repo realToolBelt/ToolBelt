@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<vw:ContentPageBase x:Class="ToolBelt.Views.Projects.ProjectFilterPage"
+                    xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:cells="clr-namespace:ToolBelt.Views.Cells"
+                    xmlns:controls="clr-namespace:ToolBelt.Controls"
+                    xmlns:local="clr-namespace:ToolBelt.Views.Projects"
+                    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                    xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                    xmlns:vw="clr-namespace:ToolBelt.Views"
+                    Padding="20"
+                    prism:ViewModelLocator.AutowireViewModel="True"
+                    x:TypeArguments="local:ProjectFilterPageViewModel">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="_miCancel" Icon="ic_action_close" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout>
+        <TableView Intent="Settings" VerticalOptions="FillAndExpand">
+            <TableRoot>
+                <TableSection Title="Filters">
+                    <ViewCell x:Name="_vcTrades">
+                        <Label HorizontalOptions="StartAndExpand"
+                               Text="Trades"
+                               VerticalOptions="Center"
+                               VerticalTextAlignment="Center" />
+                    </ViewCell>
+                    <ViewCell>
+                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <Label HorizontalOptions="Start"
+                                   Text="Start Date"
+                                   VerticalOptions="Center"
+                                   VerticalTextAlignment="Center" />
+                            <Picker x:Name="_startDateComparisonTypePicker"
+                                    Margin="10,0"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="Center" />
+                            <DatePicker x:Name="_startDatePicker"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center" />
+                        </StackLayout>
+                    </ViewCell>
+                    <ViewCell>
+                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <Label HorizontalOptions="Start"
+                                   Text="End Date"
+                                   VerticalOptions="Center"
+                                   VerticalTextAlignment="Center" />
+                            <Picker x:Name="_endDateComparisonTypePicker"
+                                    Margin="10,0"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="Center" />
+                            <DatePicker x:Name="_endDatePicker"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center" />
+                        </StackLayout>
+                    </ViewCell>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+
+
+        <Button x:Name="_btnApply"
+                Text="Apply"
+                VerticalOptions="End" />
+    </StackLayout>
+</vw:ContentPageBase>

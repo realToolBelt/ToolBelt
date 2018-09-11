@@ -5,7 +5,7 @@ using System.Reactive.Linq;
 using ToolBelt.Models;
 using ToolBelt.ViewModels;
 
-namespace ToolBelt.Views
+namespace ToolBelt.Views.Projects
 {
     public class ProjectDetailsPageViewModel : BaseViewModel
     {

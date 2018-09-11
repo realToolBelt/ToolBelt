@@ -6,7 +6,7 @@ using ToolBelt.Extensions;
 using ToolBelt.Models;
 using Xamarin.Forms.Xaml;
 
-namespace ToolBelt.Views.Cells
+namespace ToolBelt.Views.Projects
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProjectSummaryCellView : ReactiveViewCell<Project>, IEnableLogger
@@ -18,12 +18,14 @@ namespace ToolBelt.Views.Cells
                 InitializeComponent();
             }
 
-            // on iOS, waiting to bind until "WhenActivated" causes the list items to
-            // be sized incorrectly.  We can bind here, then add the composite disposable
-            // to the "activated" disposable
+            // on iOS, waiting to bind until "WhenActivated" causes the list items to be sized
+            // incorrectly. We can bind here, then add the composite disposable to the "activated" disposable
             CompositeDisposable disposables = new CompositeDisposable(
-                this.OneWayBind(ViewModel, vm => vm.Name, v => v._lblProjectName.Text),
-                this.OneWayBind(ViewModel, vm => vm.EstimatedStartDate, v => v._lblProjectStartDate.Text, date => $"{date:d}"));
+                this
+                    .OneWayBind(ViewModel, vm => vm.Name, v => v._lblProjectName.Text),
+                this
+                    .WhenAnyValue(v => v.ViewModel.EstimatedStartDate, v => v.ViewModel.EstimatedEndDate, (start, end) => $"{start:d} - {end:d}")
+                    .BindTo(this, v => v._lblProjectDates.Text));
 
             // handle when the view is activated
             this.WhenActivated(disposable =>

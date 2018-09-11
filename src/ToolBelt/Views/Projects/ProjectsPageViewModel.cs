@@ -13,7 +13,7 @@ using ToolBelt.Models;
 using ToolBelt.Services;
 using ToolBelt.ViewModels;
 
-namespace ToolBelt.Views
+namespace ToolBelt.Views.Projects
 {
     public class ProjectsPageViewModel : BaseViewModel
     {
@@ -49,6 +49,11 @@ namespace ToolBelt.Views
             AddProject = ReactiveCommand.CreateFromTask(async () =>
             {
                 await NavigationService.NavigateAsync($"NavigationPage/{nameof(CreateProjectPage)}", useModalNavigation: true).ConfigureAwait(false);
+            });
+
+            Filter = ReactiveCommand.CreateFromTask(async () =>
+            {
+                await NavigationService.NavigateAsync($"NavigationPage/{nameof(ProjectFilterPage)}", useModalNavigation: true).ConfigureAwait(false);
             });
 
             // set up the command used to load projects
@@ -143,5 +148,7 @@ namespace ToolBelt.Views
         public ReactiveCommand<Unit, IEnumerable<Project>> RefreshProjects { get; }
 
         public ReactiveCommand<Project, Unit> ViewProjectDetails { get; }
+
+        public ReactiveCommand Filter { get; }
     }
 }

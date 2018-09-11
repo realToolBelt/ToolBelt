@@ -11,6 +11,7 @@ namespace ToolBelt.Models
         private DateTime _estimatedStartDate;
         private int _id;
         private string _name;
+        private string _description;
 
         public Project()
         {
@@ -48,6 +49,12 @@ namespace ToolBelt.Models
         {
             get => _name;
             set => this.RaiseAndSetIfChanged(ref _name, value);
+        }
+
+        public string Description
+        {
+            get => _description;
+            set => this.RaiseAndSetIfChanged(ref _description, value);
         }
     }
 }
