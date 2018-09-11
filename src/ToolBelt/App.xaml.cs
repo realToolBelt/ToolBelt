@@ -47,7 +47,7 @@ namespace ToolBelt
             );
 #endif
 
-            NavigationService.NavigateAsync($"/Root/Details/{nameof(MainPage)}");
+            NavigationService.NavigateAsync($"/NavigationPage/{nameof(ExtendedSplashPage)}");
         }
 
         protected override void OnResume()
@@ -100,16 +100,6 @@ namespace ToolBelt
             containerRegistry.Register<IUserDataStore, FakeUserDataStore>();
             containerRegistry.Register<IProjectDataStore, FakeProjectDataStore>();
             containerRegistry.Register<IAlbumDataStore, FakeAlbumDataStore>();
-
-            AuthenticationState.Authenticator = new AuthenticatorFactory().GetAuthenticationService(Services.Authentication.AuthenticationProviderType.Google, null);
-            containerRegistry.RegisterInstance(AuthenticationState.Authenticator);
-            containerRegistry.RegisterInstance<IUserService>(new UserService(new User
-            {
-                Id = 1,
-                Name = "John",
-                LastName = "Doe",
-                Email = "john.doe@fakeemail.com"
-            }));
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<ModalNavigationPage, ModalNavigationPageViewModel>();

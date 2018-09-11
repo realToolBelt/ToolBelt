@@ -92,7 +92,7 @@ namespace ToolBelt.Views
                 _containerRegistry.RegisterInstance<IUserService>(new UserService(user));
 
                 // the user is already registered. Show the main page.
-                await NavigationService.NavigateAsync($"/Root/Details/{nameof(MainPage)}").ConfigureAwait(false);
+                await NavigationService.NavigateHomeAsync().ConfigureAwait(false);
             }
             else
             {

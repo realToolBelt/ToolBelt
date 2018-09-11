@@ -6,6 +6,11 @@
     public class AuthenticationProviderUser
     {
         /// <summary>
+        /// Gets or sets the email address for the user.
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
         /// Gets or sets the unique id for the user from the authentication provider.
         /// </summary>
         public string Id { get; set; }

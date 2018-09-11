@@ -1,8 +1,10 @@
 ﻿using Acr.UserDialogs;
 using Prism.Navigation;
 using ReactiveUI;
+using System;
 using System.Linq;
 using System.Reactive.Linq;
+using ToolBelt.Extensions;
 using ToolBelt.Models;
 using ToolBelt.Services;
 using ToolBelt.ViewModels;
@@ -12,6 +14,8 @@ namespace ToolBelt.Views.Authentication.Registration
     // TODO: Most of this page should be moved into a content view rather than a page.  Then we could share it across the registration and profile editing pages.
     public class TradeSpecialtiesPageViewModel : BaseViewModel
     {
+        private User _user;
+
         public TradeSpecialtiesPageViewModel(
             INavigationService navigationService,
             IUserDialogs dialogService,
@@ -50,6 +54,7 @@ namespace ToolBelt.Views.Authentication.Registration
                 }
 
                 // TODO: ...
+                await NavigationService.NavigateHomeAsync().ConfigureAwait(false);
             });
 
             projectDataStore
@@ -63,6 +68,13 @@ namespace ToolBelt.Views.Authentication.Registration
                             {
                                 DisplayValue = specialty.Name
                             }));
+                });
+
+            NavigatingTo
+                .Select(args => (User)args["user"])
+                .Subscribe(user =>
+                {
+                    _user = user;
                 });
         }
 

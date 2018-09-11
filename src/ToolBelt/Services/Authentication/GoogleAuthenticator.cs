@@ -47,7 +47,8 @@ namespace ToolBelt.Services.Authentication
             return new AuthenticationProviderUser
             {
                 Id = value.GetValue("sub").Value<string>(),
-                ProviderType = ProviderType
+                ProviderType = ProviderType,
+                Email = value.GetValue("email").Value<string>()
             };
         }
 

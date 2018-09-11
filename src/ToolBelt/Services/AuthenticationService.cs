@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using ToolBelt.Models;
 using ToolBelt.Services.Authentication;
 using Xamarin.Auth;
 using Xamarin.Forms;
@@ -27,6 +28,8 @@ namespace ToolBelt.Services
         public string Email { get; set; }
 
         public string AvatarUrl { get; set; }
+
+        public AccountType AccountType { get; set; }
     }
 
     public interface IUserService
@@ -80,7 +83,7 @@ namespace ToolBelt.Services
             {
                 case AuthenticationProviderType.Google:
                     return new GoogleAuthenticator(
-                        "257760628057-c9r0419lehhcbhqprcvhue87i86hl422.apps.googleusercontent.com",
+                        "59954122652-tcgdvnlbd18pkucfuih43csfru3tq6gg.apps.googleusercontent.com",
                         "email",
                         "com.toolbelt.toolbelt:/oauth2redirect",
                         authenticationDelegate);

@@ -20,7 +20,7 @@ namespace ToolBelt.Droid
             DataSchemes = new[]
                     {
                     "com.toolbelt.toolbelt",
-                    "com.googleusercontent.apps.257760628057-c9r0419lehhcbhqprcvhue87i86hl422",
+                    "com.googleusercontent.apps.59954122652-tcgdvnlbd18pkucfuih43csfru3tq6gg",
                     "fb1324833817652478",
                     "xamarin-auth",
                 /*
