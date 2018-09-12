@@ -3,6 +3,14 @@ using System;
 
 namespace ToolBelt.Models
 {
+    public enum ProjectStatus
+    {
+        // NOTE: We want to explicitly set the values here to match what we have in the database
+        Open = 1,
+        Closed = 2,
+        Deleted = 3
+    }
+
     // TODO: Replace with the real data...
     public class Project : ReactiveObject
     {
@@ -13,9 +21,12 @@ namespace ToolBelt.Models
         private string _name;
         private string _description;
 
+        private ProjectStatus _status;
+
         public Project()
         {
             CreateDate = DateTime.UtcNow;
+            Status = ProjectStatus.Open;
         }
 
         /// <summary>
@@ -31,6 +42,12 @@ namespace ToolBelt.Models
         {
             get => _estimatedEndDate;
             set => this.RaiseAndSetIfChanged(ref _estimatedEndDate, value);
+        }
+
+        public ProjectStatus Status
+        {
+            get => _status;
+            set => this.RaiseAndSetIfChanged(ref _status, value);
         }
 
         public DateTime EstimatedStartDate

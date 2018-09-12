@@ -2,7 +2,6 @@
 <rxui:ReactiveTabbedPage x:Class="ToolBelt.Views.MainPage"
                          xmlns="http://xamarin.com/schemas/2014/forms"
                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                         xmlns:carousel="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
                          xmlns:local="clr-namespace:ToolBelt.Views"
                          xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                          xmlns:projects="clr-namespace:ToolBelt.Views.Projects"
@@ -10,5 +9,5 @@
                          prism:ViewModelLocator.AutowireViewModel="True"
                          x:TypeArguments="local:MainPageViewModel">
     <projects:ProjectsPage />
-    <local:TradesmenPage />
+    <projects:MyProjectsPage />
 </rxui:ReactiveTabbedPage>

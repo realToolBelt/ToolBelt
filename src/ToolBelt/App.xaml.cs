@@ -5,16 +5,16 @@ using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Splat;
-using System;
 using System.Threading.Tasks;
+using ToolBelt.Extensions;
 using ToolBelt.Services;
 using ToolBelt.Views;
 using ToolBelt.Views.About;
-using ToolBelt.Views.Projects;
 using ToolBelt.Views.Authentication;
 using ToolBelt.Views.Authentication.Registration;
 using ToolBelt.Views.Messages;
 using ToolBelt.Views.Profile;
+using ToolBelt.Views.Projects;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -131,6 +131,7 @@ namespace ToolBelt
 
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<ProjectsPage, ProjectsPageViewModel>();
+            containerRegistry.RegisterForNavigation<MyProjectsPage, MyProjectsPageViewModel>();
             containerRegistry.RegisterForNavigation<TradesmenPage, TradesmenPageViewModel>();
             containerRegistry.RegisterForNavigation<ProjectFilterPage, ProjectFilterPageViewModel>();
 

@@ -36,6 +36,13 @@ namespace ToolBelt.Services
         /// <param name="itemsPerPage">The maximum number of items to load.</param>
         /// <returns>The projects.</returns>
         Task<IEnumerable<Project>> LoadOldProjects(Project project, int itemsPerPage);
+
+        /// <summary>
+        /// Loads projects for a given user.
+        /// </summary>
+        /// <param name="userId">The ID of the user to load projects for.</param>
+        /// <returns>The projects for the user.</returns>
+        Task<IEnumerable<Project>> LoadProjectsForUser(string userId);
     }
 
     public class FakeProjectDataStore : IProjectDataStore
@@ -142,6 +149,24 @@ namespace ToolBelt.Services
 
             return await Task.FromResult(
                 Enumerable.Range(project.Id - itemsPerPage, itemsPerPage)
+                .Reverse()
+                .Select(idx => new Project
+                {
+                    Id = idx,
+                    Name = $"Project {idx}",
+                    EstimatedStartDate = DateTime.Now.AddDays(idx),
+                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30),
+                    CreateDate = DateTime.Now.AddDays(idx + 30)
+                })).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<Project>> LoadProjectsForUser(string userId)
+        {
+            // introduce a delay to emulate network latency
+            await RandomDelay().ConfigureAwait(false);
+
+            return await Task.FromResult(
+                Enumerable.Range(0, 10)
                 .Reverse()
                 .Select(idx => new Project
                 {
