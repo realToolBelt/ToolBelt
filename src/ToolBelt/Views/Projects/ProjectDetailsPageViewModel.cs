@@ -3,6 +3,7 @@ using ReactiveUI;
 using System;
 using System.Reactive.Linq;
 using ToolBelt.Models;
+using ToolBelt.Services;
 using ToolBelt.ViewModels;
 
 namespace ToolBelt.Views.Projects
@@ -11,9 +12,12 @@ namespace ToolBelt.Views.Projects
     {
         private Project _project;
 
-        public ProjectDetailsPageViewModel(INavigationService navigationService) : base(navigationService)
+        public ProjectDetailsPageViewModel(
+            INavigationService navigationService,
+            IAnalyticService analyticService) : base(navigationService)
         {
             Title = "Project Details";
+            analyticService.TrackScreen("project-detail");
 
             NavigatedTo
                 .Take(1)

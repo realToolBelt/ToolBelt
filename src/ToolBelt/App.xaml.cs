@@ -135,7 +135,7 @@ namespace ToolBelt
             containerRegistry.RegisterForNavigation<TradesmenPage, TradesmenPageViewModel>();
             containerRegistry.RegisterForNavigation<ProjectFilterPage, ProjectFilterPageViewModel>();
 
-            containerRegistry.RegisterForNavigation<CreateProjectPage, CreateProjectPageViewModel>();
+            containerRegistry.RegisterForNavigation<EditProjectPage, EditProjectPageViewModel>();
 
             RegisterSplatDependencies();
         }

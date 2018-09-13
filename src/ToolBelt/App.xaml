@@ -11,6 +11,7 @@
             <Color x:Key="primaryBackgroundColor">#353535</Color>
             <Color x:Key="primaryBackgroundColorDark">#0F0F0F</Color>
             <Color x:Key="primaryBackgroundColorLight">#5F5F5F</Color>
+            <Color x:Key="primaryBackgroundColorLightLight">#777777</Color>
             <Color x:Key="accentColor">#FFC600</Color>
             <Color x:Key="textColor">White</Color>
             <Color x:Key="buttonBackground">#ffc600</Color>

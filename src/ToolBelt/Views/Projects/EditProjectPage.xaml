@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<local:ContentPageBase x:Class="ToolBelt.Views.CreateProjectPage"
-                       xmlns="http://xamarin.com/schemas/2014/forms"
-                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                       xmlns:cells="clr-namespace:ToolBelt.Views.Cells"
-                       xmlns:controls="clr-namespace:ToolBelt.Controls"
-                       xmlns:local="clr-namespace:ToolBelt.Views"
-                       xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-                       xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
-                       Padding="20"
-                       prism:ViewModelLocator.AutowireViewModel="True"
-                       x:TypeArguments="local:CreateProjectPageViewModel">
+<vw:ContentPageBase x:Class="ToolBelt.Views.Projects.EditProjectPage"
+                    xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:cells="clr-namespace:ToolBelt.Views.Cells"
+                    xmlns:controls="clr-namespace:ToolBelt.Controls"
+                    xmlns:local="clr-namespace:ToolBelt.Views.Projects"
+                    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                    xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                    xmlns:vw="clr-namespace:ToolBelt.Views"
+                    Padding="20"
+                    prism:ViewModelLocator.AutowireViewModel="True"
+                    x:TypeArguments="local:EditProjectPageViewModel">
     <ContentPage.Resources>
 
         <Style x:Key="HeaderTextStyle"
@@ -43,4 +44,4 @@
 
         </StackLayout>
     </ScrollView>
-</local:ContentPageBase>
+</vw:ContentPageBase>

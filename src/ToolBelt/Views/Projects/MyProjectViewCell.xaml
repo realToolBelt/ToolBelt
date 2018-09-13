@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<rxui:ReactiveViewCell x:Class="ToolBelt.Views.Projects.MyProjectViewCell"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:local="clr-namespace:ToolBelt.Views.Projects"
+                       xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                       x:TypeArguments="local:MyProjectViewModel">
+    <Frame Margin="10"
+           Padding="0"
+           BackgroundColor="{StaticResource primaryBackgroundColorLightLight}"
+           HasShadow="True"
+           IsClippedToBounds="True"
+           OutlineColor="{StaticResource primaryBackgroundColorDark}">
+        <Grid>
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <Style x:Key="ButtonLabelStyle"
+                           BasedOn="{StaticResource BaseLabelStyle}"
+                           TargetType="{x:Type Label}">
+                        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                        <Setter Property="HorizontalTextAlignment" Value="Center" />
+                        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                    </Style>
+                </ResourceDictionary>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackLayout Grid.ColumnSpan="3" Padding="20">
+                <Label x:Name="_lblProjectName" FontSize="{StaticResource LargeSize}">
+                    <Label.LineBreakMode>
+                        <OnPlatform x:TypeArguments="LineBreakMode">
+                            <On Platform="Android" Value="NoWrap" />
+                            <On Platform="iOS" Value="TailTruncation" />
+                        </OnPlatform>
+                    </Label.LineBreakMode>
+                </Label>
+                <Label x:Name="_lblProjectDescription" />
+                <Label x:Name="_lblDateRange" />
+            </StackLayout>
+
+            <BoxView Grid.Row="1"
+                     Grid.ColumnSpan="3"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand"
+                     Color="{StaticResource primaryBackgroundColorLight}" />
+
+            <ContentView Grid.Row="1"
+                         Grid.Column="0"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="_tgrEdit" />
+                </ContentView.GestureRecognizers>
+
+                <Label Style="{StaticResource ButtonLabelStyle}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span FontFamily="{StaticResource FontAwesomeSolid}" Text="&#xf304;" />
+                            <Span Text=" Edit" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </ContentView>
+
+            <ContentView Grid.Row="1"
+                         Grid.Column="1"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="_tgrClose" />
+                </ContentView.GestureRecognizers>
+
+                <Label Style="{StaticResource ButtonLabelStyle}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span FontAttributes="Bold" Text="X" />
+                            <Span Text=" Close" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </ContentView>
+
+            <ContentView Grid.Row="1"
+                         Grid.Column="2"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand">
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="_tgrDelete" />
+                </ContentView.GestureRecognizers>
+                <Label Style="{StaticResource ButtonLabelStyle}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span FontFamily="{StaticResource FontAwesomeSolid}" Text="&#xf1f8;" />
+                            <Span Text=" Delete" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </ContentView>
+        </Grid>
+    </Frame>
+</rxui:ReactiveViewCell>

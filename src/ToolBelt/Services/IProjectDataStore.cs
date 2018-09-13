@@ -8,6 +8,13 @@ namespace ToolBelt.Services
 {
     public interface IProjectDataStore
     {
+        /// <summary>
+        /// Deletes the given <paramref name="project" /> asynchronously.
+        /// </summary>
+        /// <param name="project">The project to delete.</param>
+        /// <returns>An awaitable task.</returns>
+        Task DeleteProjectAsync(Project project);
+
         Task<IEnumerable<TradeSpecialty>> GetTradeSpecialtiesAsync();
 
         /// <summary>
@@ -52,6 +59,14 @@ namespace ToolBelt.Services
         public FakeProjectDataStore()
         {
             _random = new Random();
+        }
+
+        public Task DeleteProjectAsync(Project project)
+        {
+            project.Status = ProjectStatus.Deleted;
+
+            // delete...
+            return Task.CompletedTask;
         }
 
         public async Task<IEnumerable<TradeSpecialty>> GetTradeSpecialtiesAsync()

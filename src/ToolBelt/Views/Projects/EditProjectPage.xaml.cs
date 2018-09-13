@@ -5,14 +5,14 @@ using System.Reactive.Disposables;
 using ToolBelt.Extensions;
 using Xamarin.Forms.Xaml;
 
-namespace ToolBelt.Views
+namespace ToolBelt.Views.Projects
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateProjectPage : ContentPageBase<CreateProjectPageViewModel>
+    public partial class EditProjectPage : ContentPageBase<EditProjectPageViewModel>
     {
-        public CreateProjectPage()
+        public EditProjectPage()
         {
-            using (this.Log().Perf($"{nameof(CreateProjectPage)}: Initialize component."))
+            using (this.Log().Perf($"{nameof(EditProjectPage)}: Initialize component."))
             {
                 InitializeComponent();
                 _startDateControl.MinimumDate = DateTime.Today;
@@ -21,7 +21,7 @@ namespace ToolBelt.Views
 
             this.WhenActivated(disposable =>
             {
-                using (this.Log().Perf($"{nameof(CreateProjectPage)}: Activate."))
+                using (this.Log().Perf($"{nameof(EditProjectPage)}: Activate."))
                 {
                     this
                         .OneWayBind(ViewModel, vm => vm.ProjectName, v => v._projectNameControl.ViewModel)

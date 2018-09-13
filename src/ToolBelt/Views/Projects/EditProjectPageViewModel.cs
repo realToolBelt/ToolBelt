@@ -2,22 +2,36 @@
 using Prism.Navigation;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Linq;
+using ToolBelt.Models;
 using ToolBelt.Services;
 using ToolBelt.Validation;
 using ToolBelt.Validation.Rules;
 using ToolBelt.ViewModels;
 
-namespace ToolBelt.Views
+namespace ToolBelt.Views.Projects
 {
-    public class CreateProjectPageViewModel : BaseViewModel
+    public class EditProjectPageViewModel : BaseViewModel
     {
-        public CreateProjectPageViewModel(
+        private readonly IEnumerable<IValidity> _validatableFields;
+
+        public EditProjectPageViewModel(
             INavigationService navigationService,
             IUserDialogs dialogService,
             IAnalyticService analyticService) : base(navigationService)
         {
             Title = "New Project";
             analyticService.TrackScreen("create-project-page");
+
+            // store the fields in an enumerable for easy use later on in this class
+            _validatableFields = new IValidity[]
+            {
+                ProjectName,
+                StartDate,
+                EndDate
+            };
 
             AddValidationRules();
 
@@ -36,9 +50,7 @@ namespace ToolBelt.Views
 
             Cancel = ReactiveCommand.CreateFromTask(async () =>
             {
-                if (ProjectName.IsChanged
-                    || StartDate.IsChanged
-                    || EndDate.IsChanged)
+                if (_validatableFields.Any(field => field.IsChanged))
                 {
                     bool keepEditing = await dialogService.ConfirmAsync(
                         new ConfirmConfig
@@ -61,10 +73,29 @@ namespace ToolBelt.Views
                 await NavigationService.GoBackAsync(useModalNavigation: true).ConfigureAwait(false);
             });
 
+            NavigatingTo
+                .Take(1)
+                .Where(args => args.ContainsKey("project"))
+                .Select(args => (Project)args["project"])
+                .Subscribe(project =>
+                {
+                    // map the project being edited to the local fields
+                    ProjectName.Value = project.Name;
+                    StartDate.Value = project.EstimatedStartDate;
+                    EndDate.Value = project.EstimatedEndDate;
+
+                    // accept changes for all fields
+                    foreach (var field in _validatableFields)
+                    {
+                        field.AcceptChanges();
+                    }
+                });
+
             // accept changes so we can determine whether they've been changed later on
-            ProjectName.AcceptChanges();
-            StartDate.AcceptChanges();
-            EndDate.AcceptChanges();
+            foreach (var field in _validatableFields)
+            {
+                field.AcceptChanges();
+            }
         }
 
         /// <summary>
@@ -108,13 +139,12 @@ namespace ToolBelt.Views
         private bool IsValid()
         {
             // NOTE: Validate each control individually so we get error indicators for all
-            ProjectName.Validate();
-            StartDate.Validate();
-            EndDate.Validate();
+            foreach (var field in _validatableFields)
+            {
+                field.Validate();
+            }
 
-            return ProjectName.IsValid
-                && StartDate.IsValid
-                && EndDate.IsValid;
+            return _validatableFields.All(field => field.IsValid);
         }
     }
 }

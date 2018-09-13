@@ -1,9 +1,12 @@
 ﻿using Acr.UserDialogs;
 using Prism.Navigation;
 using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ToolBelt.Models;
 using ToolBelt.Services;
@@ -11,7 +14,7 @@ using ToolBelt.ViewModels;
 
 namespace ToolBelt.Views.Projects
 {
-    public class MyProjectsPageViewModel : BaseViewModel
+    public class MyProjectsPageViewModel : BaseViewModel, IDestructible
     {
         public MyProjectsPageViewModel(
             INavigationService navigationService,
@@ -22,38 +25,69 @@ namespace ToolBelt.Views.Projects
         {
             Title = "My Projects";
 
-            Initialize = ReactiveCommand.CreateFromTask<Unit, IEnumerable<Project>>(_ =>
+            this.WhenActivated((CompositeDisposable _) =>
+            {
+                // track every time this screen is activated
+                analyticService.TrackScreen("my-projects");
+            });
+
+            var initialize = ReactiveCommand.CreateFromTask<Unit, IEnumerable<Project>>(_ =>
             {
                 AssertRunningOnBackgroundThread();
                 return projectDataStore.LoadProjectsForUser("");
             });
 
-            Initialize
+            initialize
                 .Subscribe(projects =>
                 {
-                    Projects.Reset(projects);
+                    Projects.Reset(projects.Select(proj => new MyProjectViewModel(proj, Delete, Close, Edit)));
                 });
 
-            Observable
-                .Return(Unit.Default)
+            Projects.ActOnEveryObject(
+                _ =>
+                {
+                    this.Log().Debug("Item added");
+                },
+                projViewModel =>
+                {
+                    this.Log().Debug("Item removed");
+
+                    // make sure we dispose of the item to release the subscription from the item's
+                    // commands to our commands
+                    projViewModel.Dispose();
+                });
+
+            // When an exception is thrown while loading data, log the error and let the user handle
+            // the exception
+            initialize.ThrownExceptions
+                .SelectMany(exception =>
+                {
+                    this.Log().ErrorException("Error loading or refreshing data", exception);
+                    return SharedInteractions.Error.Handle(exception);
+                })
+                .Subscribe();
+
+            Activator
+                .Activated
                 .Take(1)
                 .ObserveOn(RxApp.TaskpoolScheduler)
-                .InvokeCommand(Initialize);
+                .InvokeCommand(initialize);
 
-            ViewProjectDetails = ReactiveCommand.CreateFromTask<Project, Unit>(async project =>
+            ViewProjectDetails = ReactiveCommand.CreateFromTask<MyProjectViewModel, Unit>(async project =>
             {
-                // TODO: Add project as parameter...
+                analyticService.TrackTapEvent("view-project");
+
                 await NavigationService.NavigateAsync(
                     nameof(ProjectDetailsPage),
                     new NavigationParameters
                     {
-                        { "project", project }
+                        { "project", project.Project }
                     }).ConfigureAwait(false);
 
                 return Unit.Default;
             });
 
-            Delete = ReactiveCommand.CreateFromTask<Project, Unit>(async project =>
+            Delete = ReactiveCommand.CreateFromTask<MyProjectViewModel, Unit>(async project =>
             {
                 bool shouldDelete = await dialogService.ConfirmAsync(
                     new ConfirmConfig
@@ -69,14 +103,16 @@ namespace ToolBelt.Views.Projects
 
                 analyticService.TrackTapEvent("delete-project");
 
-                project.Status = ProjectStatus.Deleted;
+                // remove the project
+                await projectDataStore.DeleteProjectAsync(project.Project);
+                Projects.Remove(project);
 
-                // TODO: Save to the database
+                dialogService.Toast(new ToastConfig("Project deleted successfully!"));
 
                 return Unit.Default;
             });
 
-            Close = ReactiveCommand.CreateFromTask<Project, Unit>(async project =>
+            Close = ReactiveCommand.CreateFromTask<MyProjectViewModel, Unit>(async project =>
             {
                 bool shouldDelete = await dialogService.ConfirmAsync(
                     new ConfirmConfig
@@ -92,22 +128,115 @@ namespace ToolBelt.Views.Projects
 
                 analyticService.TrackTapEvent("close-project");
 
-                project.Status = ProjectStatus.Closed;
+                project.Project.Status = ProjectStatus.Closed;
 
                 // TODO: Save to the database
 
                 return Unit.Default;
             });
+
+            Edit = ReactiveCommand.CreateFromTask<MyProjectViewModel, Unit>(async project =>
+            {
+                analyticService.TrackTapEvent("edit-project");
+
+                await NavigationService.NavigateAsync(
+                    $"NavigationPage/{nameof(EditProjectPage)}",
+                    new NavigationParameters
+                    {
+                        { "project", project.Project }
+                    },
+                    useModalNavigation: true).ConfigureAwait(false);
+
+                return Unit.Default;
+            });
         }
 
-        public ReactiveCommand<Project, Unit> Close { get; }
+        public ReactiveCommand<MyProjectViewModel, Unit> Close { get; }
 
-        public ReactiveCommand<Project, Unit> Delete { get; }
+        public ReactiveCommand<MyProjectViewModel, Unit> Delete { get; }
 
-        public ReactiveList<Project> Projects { get; } = new ReactiveList<Project>();
+        public ReactiveCommand<MyProjectViewModel, Unit> Edit { get; }
 
-        public ReactiveCommand<Project, Unit> ViewProjectDetails { get; }
+        public ReactiveList<MyProjectViewModel> Projects { get; } = new ReactiveList<MyProjectViewModel>();
 
-        private ReactiveCommand<Unit, IEnumerable<Project>> Initialize { get; }
+        public ReactiveCommand<MyProjectViewModel, Unit> ViewProjectDetails { get; }
+
+        public void Destroy()
+        {
+            Projects.Clear();
+        }
+    }
+
+    /// <summary>
+    /// View-model that wraps a project and adds additional behavior for a user's projects.
+    /// </summary>
+    /// <seealso cref="ReactiveUI.ReactiveObject" />
+    /// <seealso cref="System.IDisposable" />
+    public class MyProjectViewModel : ReactiveObject, IDisposable
+    {
+        private CompositeDisposable _disposables;
+
+        public MyProjectViewModel(
+            Project project,
+            ReactiveCommand<MyProjectViewModel, Unit> delete,
+            ReactiveCommand<MyProjectViewModel, Unit> close,
+            ReactiveCommand<MyProjectViewModel, Unit> edit)
+        {
+            Project = project;
+            Delete = ReactiveCommand.Create<Unit, MyProjectViewModel>(_ => this);
+            Close = ReactiveCommand.Create<Unit, MyProjectViewModel>(_ => this);
+            Edit = ReactiveCommand.Create<Unit, MyProjectViewModel>(_ => this);
+
+            // hook the observables up to the higher-level observables
+            _disposables = new CompositeDisposable(
+                Delete.InvokeCommand(delete),
+                Close.InvokeCommand(close),
+                Edit.InvokeCommand(edit));
+        }
+
+        /// <summary>
+        /// Gets the command used to close the project associated with this instance.
+        /// </summary>
+        public ReactiveCommand<Unit, MyProjectViewModel> Close { get; }
+
+        /// <summary>
+        /// Gets the command used to delete the project associated with this instance.
+        /// </summary>
+        public ReactiveCommand<Unit, MyProjectViewModel> Delete { get; }
+
+        /// <summary>
+        /// Gets the command used to edit the project associated with this instance.
+        /// </summary>
+        public ReactiveCommand<Unit, MyProjectViewModel> Edit { get; }
+
+        /// <summary>
+        /// Gets the project associated with this instance.
+        /// </summary>
+        public Project Project { get; }
+
+        #region IDisposable Support
+
+        private bool IsDisposed { get; set; }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!IsDisposed)
+            {
+                if (disposing)
+                {
+                    _disposables.Dispose();
+                    _disposables = null;
+                }
+
+                IsDisposed = true;
+            }
+        }
+
+        #endregion
     }
 }

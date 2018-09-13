@@ -39,6 +39,12 @@
     <Compile Update="Views\Profile\ProfileViewTabbedPage.xaml.cs">
       <DependentUpon>ProfileViewTabbedPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Projects\EditProjectPage.xaml.cs">
+      <DependentUpon>EditProjectPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Projects\MyProjectViewCell.xaml.cs">
+      <DependentUpon>MyProjectViewCell.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Projects\MyProjectsPage.xaml.cs">
       <DependentUpon>MyProjectsPage.xaml</DependentUpon>
     </Compile>
@@ -78,13 +84,16 @@
     <EmbeddedResource Update="Views\Cells\CustomImageCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Projects\MyProjectViewCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Projects\MyProjectsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Projects\ProjectSummaryCellView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\CreateProjectPage.xaml">
+    <EmbeddedResource Update="Views\Projects\EditProjectPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ExtendedSplashPage.xaml">

@@ -27,17 +27,7 @@
               VerticalOptions="FillAndExpand">
         <ListView.ItemTemplate>
             <DataTemplate>
-                <local:ProjectSummaryCellView ViewModel="{Binding .}">
-                    <local:ProjectSummaryCellView.ContextActions>
-                        <MenuItem Command="{Binding Data.Close, Source={StaticResource Proxy}}"
-                                  CommandParameter="{Binding .}"
-                                  Text="Close" />
-                        <MenuItem Command="{Binding Data.Delete, Source={StaticResource Proxy}}"
-                                  CommandParameter="{Binding .}"
-                                  IsDestructive="true"
-                                  Text="Delete" />
-                    </local:ProjectSummaryCellView.ContextActions>
-                </local:ProjectSummaryCellView>
+                <local:MyProjectViewCell ViewModel="{Binding .}" />
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
 using ToolBelt.Extensions;
@@ -29,13 +30,21 @@ namespace ToolBelt.Views.Projects
 
         public ProjectsPageViewModel(
             INavigationService navigationService,
-            IProjectDataStore projectDataStore) : base(navigationService)
+            IProjectDataStore projectDataStore,
+            IAnalyticService analyticService) : base(navigationService)
         {
             Title = "Projects";
 
+            this.WhenActivated((CompositeDisposable _) =>
+            {
+                // track every time this screen is activated
+                analyticService.TrackScreen("my-projects");
+            });
+
             ViewProjectDetails = ReactiveCommand.CreateFromTask<Project, Unit>(async project =>
             {
-                // TODO: Add project as parameter...
+                analyticService.TrackTapEvent("view-project");
+
                 await NavigationService.NavigateAsync(
                     nameof(ProjectDetailsPage),
                     new NavigationParameters
@@ -48,11 +57,13 @@ namespace ToolBelt.Views.Projects
 
             AddProject = ReactiveCommand.CreateFromTask(async () =>
             {
-                await NavigationService.NavigateAsync($"NavigationPage/{nameof(CreateProjectPage)}", useModalNavigation: true).ConfigureAwait(false);
+                analyticService.TrackTapEvent("new-project");
+                await NavigationService.NavigateAsync($"NavigationPage/{nameof(EditProjectPage)}", useModalNavigation: true).ConfigureAwait(false);
             });
 
             Filter = ReactiveCommand.CreateFromTask(async () =>
             {
+                // TODO: Finish this
                 await NavigationService.NavigateAsync($"NavigationPage/{nameof(ProjectFilterPage)}", useModalNavigation: true).ConfigureAwait(false);
             });
 
@@ -67,6 +78,7 @@ namespace ToolBelt.Views.Projects
             // set up the command used to refresh projects
             RefreshProjects = ReactiveCommand.CreateFromTask(_ =>
             {
+                // TODO: Should track this with analytics?
                 this.Log().Debug($"Refreshing projects on thread: {Thread.CurrentThread.ManagedThreadId}, IsBackground = {Thread.CurrentThread.IsBackground}");
                 AssertRunningOnBackgroundThread();
                 return _newestProject != null ?
