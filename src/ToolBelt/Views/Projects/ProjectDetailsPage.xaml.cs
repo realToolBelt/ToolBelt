@@ -31,6 +31,10 @@ namespace ToolBelt.Views.Projects
                     this
                         .OneWayBind(ViewModel, vm => vm.Project.EstimatedEndDate, v => v._lblEndDate.Text, date => $"{date:d}")
                         .DisposeWith(disposable);
+
+                    this
+                        .OneWayBind(ViewModel, vm => vm.Project.Description, v => v._lblDescription.Text)
+                        .DisposeWith(disposable);
                 }
             });
         }

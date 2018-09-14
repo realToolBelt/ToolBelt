@@ -59,7 +59,6 @@ namespace ToolBelt.Views.Messages
                         platformConfig.UseWindowSoftInputModeAdjust(softInputMode);
                     })
                     .DisposeWith(disposable);
-
                 }
             });
         }

@@ -24,7 +24,7 @@ namespace ToolBelt.Views.Projects
             IAnalyticService analyticService) : base(navigationService)
         {
             Title = "New Project";
-            analyticService.TrackScreen("create-project-page");
+            analyticService.TrackScreen("edit-project-page");
 
             // store the fields in an enumerable for easy use later on in this class
             _validatableFields = new IValidity[]

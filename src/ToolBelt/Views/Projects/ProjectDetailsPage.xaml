@@ -8,26 +8,18 @@
                     xmlns:vw="clr-namespace:ToolBelt.Views"
                     prism:ViewModelLocator.AutowireViewModel="True"
                     x:TypeArguments="local:ProjectDetailsPageViewModel">
-    <StackLayout Padding="20">
-        <Label x:Name="_lblProjectName"
-               FontSize="{StaticResource LargerSize}"
-               HorizontalOptions="Center"
-               HorizontalTextAlignment="Center" />
+    <ScrollView>
+        <StackLayout Padding="20">
+            <Label x:Name="_lblProjectName" FontSize="{StaticResource LargerSize}" />
 
-        <Label HorizontalOptions="Center"
-               HorizontalTextAlignment="Center"
-               Text="Estimated Start Date:"
-               TextColor="{StaticResource accentColor}" />
-        <Label x:Name="_lblStartDate"
-               HorizontalOptions="Center"
-               HorizontalTextAlignment="Center" />
+            <Label Text="Estimated Start Date:" TextColor="{StaticResource accentColor}" />
+            <Label x:Name="_lblStartDate" />
 
-        <Label HorizontalOptions="Center"
-               HorizontalTextAlignment="Center"
-               Text="Estimated End Date:"
-               TextColor="{StaticResource accentColor}" />
-        <Label x:Name="_lblEndDate"
-               HorizontalOptions="Center"
-               HorizontalTextAlignment="Center" />
-    </StackLayout>
+            <Label Text="Estimated End Date:" TextColor="{StaticResource accentColor}" />
+            <Label x:Name="_lblEndDate" />
+
+            <Label Text="Description:" TextColor="{StaticResource accentColor}" />
+            <Label x:Name="_lblDescription" VerticalOptions="StartAndExpand" />
+        </StackLayout>
+    </ScrollView>
 </vw:ContentPageBase>

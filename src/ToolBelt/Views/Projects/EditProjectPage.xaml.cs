@@ -3,6 +3,8 @@ using Splat;
 using System;
 using System.Reactive.Disposables;
 using ToolBelt.Extensions;
+using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xamarin.Forms.Xaml;
 
 namespace ToolBelt.Views.Projects
@@ -46,6 +48,19 @@ namespace ToolBelt.Views.Projects
                     this
                         .BindCommand(ViewModel, vm => vm.Cancel, v => v._miCancel)
                         .DisposeWith(disposable);
+
+                    if (Device.RuntimePlatform == Device.Android)
+                    {
+                        var platformConfig = Xamarin.Forms.Application.Current.On<Xamarin.Forms.PlatformConfiguration.Android>();
+                        var softInputMode = platformConfig.GetWindowSoftInputModeAdjust();
+                        platformConfig.UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Pan);
+                        Disposable.Create(() =>
+                        {
+                            // restore the original soft input mode
+                            platformConfig.UseWindowSoftInputModeAdjust(softInputMode);
+                        })
+                        .DisposeWith(disposable);
+                    }
                 }
             });
         }

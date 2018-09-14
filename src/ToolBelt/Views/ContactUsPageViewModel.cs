@@ -67,7 +67,7 @@ namespace ToolBelt.Views
             Email.Validations.Add(new EmailRule { ValidationMessage = "Email should be an email address" });
 
             Name.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "Name cannot be empty" });
-            Message.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "Name cannot be empty" });
+            Message.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "Message cannot be empty" });
         }
 
         private bool IsValid()

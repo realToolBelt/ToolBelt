@@ -45,6 +45,9 @@
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <LangVersion>7.2</LangVersion>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -225,7 +228,9 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_action_edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
+    <LinkDescription Include="Linker.xml">
+      <SubType>Designer</SubType>
+    </LinkDescription>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\xml\file_paths.xml">

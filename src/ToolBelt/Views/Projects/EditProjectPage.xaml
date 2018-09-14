@@ -28,8 +28,8 @@
         <ToolbarItem x:Name="_miCancel" Icon="ic_action_close" />
     </ContentPage.ToolbarItems>
 
-    <ScrollView>
-        <StackLayout Margin="20">
+    <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <StackLayout Margin="20" VerticalOptions="FillAndExpand">
             <controls:ValidatedEntry x:Name="_projectNameControl"
                                      HeaderText="Project Name:"
                                      PlaceholderText="Project Name"
