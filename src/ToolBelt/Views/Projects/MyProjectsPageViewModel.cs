@@ -16,6 +16,8 @@ namespace ToolBelt.Views.Projects
 {
     public class MyProjectsPageViewModel : BaseViewModel, IDestructible
     {
+        private readonly ObservableAsPropertyHelper<bool> _isBusy;
+
         public MyProjectsPageViewModel(
             INavigationService navigationService,
             IProjectDataStore projectDataStore,
@@ -149,6 +151,10 @@ namespace ToolBelt.Views.Projects
 
                 return Unit.Default;
             });
+
+            initialize.IsExecuting
+                .StartWith(false)
+                .ToProperty(this, x => x.IsBusy, out _isBusy, scheduler: RxApp.MainThreadScheduler);
         }
 
         public ReactiveCommand<MyProjectViewModel, Unit> Close { get; }
@@ -156,6 +162,8 @@ namespace ToolBelt.Views.Projects
         public ReactiveCommand<MyProjectViewModel, Unit> Delete { get; }
 
         public ReactiveCommand<MyProjectViewModel, Unit> Edit { get; }
+
+        public bool IsBusy => _isBusy?.Value ?? false;
 
         public ReactiveList<MyProjectViewModel> Projects { get; } = new ReactiveList<MyProjectViewModel>();
 

@@ -19,16 +19,20 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ListView x:Name="_lstProjects"
-              BackgroundColor="Transparent"
-              HasUnevenRows="True"
-              IsPullToRefreshEnabled="False"
-              SeparatorVisibility="None"
-              VerticalOptions="FillAndExpand">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <local:MyProjectViewCell ViewModel="{Binding .}" />
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+    <Grid>
+        <ListView x:Name="_lstProjects"
+                  BackgroundColor="Transparent"
+                  HasUnevenRows="True"
+                  IsPullToRefreshEnabled="False"
+                  SeparatorVisibility="None"
+                  VerticalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:MyProjectViewCell ViewModel="{Binding .}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <ActivityIndicator x:Name="_activityIndicator" />
+    </Grid>
 </vw:ContentPageBase>

@@ -16,6 +16,7 @@ namespace ToolBelt.Views.Projects
     public class EditProjectPageViewModel : BaseViewModel
     {
         private readonly IEnumerable<IValidity> _validatableFields;
+        private Project _project;
 
         public EditProjectPageViewModel(
             INavigationService navigationService,
@@ -30,7 +31,8 @@ namespace ToolBelt.Views.Projects
             {
                 ProjectName,
                 StartDate,
-                EndDate
+                EndDate,
+                Description
             };
 
             AddValidationRules();
@@ -44,7 +46,26 @@ namespace ToolBelt.Views.Projects
 
                 analyticService.TrackTapEvent("save");
 
-                // TODO: perform save
+                if (_project != null)
+                {
+                    // if the product was being edited, map the local fields back to the project and
+                    // save it
+                    _project.Name = ProjectName.Value;
+                    _project.EstimatedStartDate = StartDate.Value.Value;
+                    _project.EstimatedEndDate = EndDate.Value.Value;
+                    _project.Description = Description.Value;
+
+                    // TODO: projectDataStore.Update(_project);
+                }
+                else
+                {
+                    // the project was a new project. Save it
+
+                    // TODO: projectDataStore.Save(_project);
+                }
+
+                // TODO: Return the project in the navigation parameters so we can refresh it in the UI of the calling page.
+
                 await NavigationService.GoBackAsync(useModalNavigation: true).ConfigureAwait(false);
             });
 
@@ -79,10 +100,15 @@ namespace ToolBelt.Views.Projects
                 .Select(args => (Project)args["project"])
                 .Subscribe(project =>
                 {
+                    // store the project being edited
+                    _project = project;
+                    Title = "Edit Project";
+
                     // map the project being edited to the local fields
                     ProjectName.Value = project.Name;
                     StartDate.Value = project.EstimatedStartDate;
                     EndDate.Value = project.EstimatedEndDate;
+                    Description.Value = project.Description;
 
                     // accept changes for all fields
                     foreach (var field in _validatableFields)
@@ -102,6 +128,8 @@ namespace ToolBelt.Views.Projects
         /// Gets the command used to cancel editing of the data.
         /// </summary>
         public ReactiveCommand Cancel { get; }
+
+        public ValidatableObject<string> Description { get; } = new ValidatableObject<string>();
 
         public ValidatableObject<DateTime?> EndDate { get; } = new ValidatableObject<DateTime?>();
 

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ToolBelt.Models;
@@ -59,6 +62,38 @@ namespace ToolBelt.Services
         public FakeProjectDataStore()
         {
             _random = new Random();
+        }
+        public partial class MockProjectData
+        {
+            [JsonProperty("projects")]
+            public Project[] Projects { get; set; }
+        }
+
+        internal static class Converter
+        {
+            public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Include,
+                MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
+                DateParseHandling = DateParseHandling.DateTime,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                Converters = {
+                    new IsoDateTimeConverter { DateTimeFormat = "MM/dd/yyyy" }
+                },
+            };
+        }
+
+        private async Task<IEnumerable<Project>> LoadProjects()
+        {
+            var assembly = typeof(FakeProjectDataStore).Assembly;
+            using (Stream stream = assembly.GetManifestResourceStream("ToolBelt.MOCK_PROJECT_DATA.json"))
+            {
+                using (StreamReader sr = new StreamReader(stream))
+                {
+                    string data = await sr.ReadToEndAsync().ConfigureAwait(false);
+                    return await Task.Run(() => JsonConvert.DeserializeObject<MockProjectData>(data, Converter.Settings).Projects).ConfigureAwait(false);
+                }
+            }
         }
 
         public Task DeleteProjectAsync(Project project)
@@ -123,74 +158,23 @@ namespace ToolBelt.Services
 
         public async Task<IEnumerable<Project>> LoadNewProjects(int itemsPerPage)
         {
-            // introduce a delay to emulate network latency
-            await RandomDelay().ConfigureAwait(false);
-
-            return await Task.FromResult(
-                Enumerable.Range(0, itemsPerPage)
-                .Reverse()
-                .Select(idx => new Project
-                {
-                    Id = idx,
-                    Name = $"Project {idx}",
-                    EstimatedStartDate = DateTime.Now.AddDays(idx),
-                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30),
-                    CreateDate = DateTime.Now.AddDays(idx + 30)
-                })).ConfigureAwait(false);
+            return (await LoadProjects()).Skip(50).Take(itemsPerPage).ToArray();
         }
 
         public async Task<IEnumerable<Project>> LoadNewProjects(Project project, int itemsPerPage)
         {
-            // introduce a delay to emulate network latency
-            await RandomDelay().ConfigureAwait(false);
-
-            return await Task.FromResult(
-                Enumerable.Range(project.Id + 1, itemsPerPage)
-                .Reverse()
-                .Select(idx => new Project
-                {
-                    Id = idx,
-                    Name = $"Project {idx}",
-                    EstimatedStartDate = DateTime.Now.AddDays(idx),
-                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30),
-                    CreateDate = DateTime.Now.AddDays(idx + 30)
-                })).ConfigureAwait(false);
+            return (await LoadProjects()).TakeWhile(p => p.Id < project.Id).Reverse().Take(itemsPerPage).ToArray();
         }
 
         public async Task<IEnumerable<Project>> LoadOldProjects(Project project, int itemsPerPage)
         {
-            // introduce a delay to emulate network latency
-            await RandomDelay().ConfigureAwait(false);
-
-            return await Task.FromResult(
-                Enumerable.Range(project.Id - itemsPerPage, itemsPerPage)
-                .Reverse()
-                .Select(idx => new Project
-                {
-                    Id = idx,
-                    Name = $"Project {idx}",
-                    EstimatedStartDate = DateTime.Now.AddDays(idx),
-                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30),
-                    CreateDate = DateTime.Now.AddDays(idx + 30)
-                })).ConfigureAwait(false);
+            return (await LoadProjects()).SkipWhile(p => p.Id <= project.Id).Take(itemsPerPage).ToArray();
         }
 
         public async Task<IEnumerable<Project>> LoadProjectsForUser(string userId)
         {
-            // introduce a delay to emulate network latency
-            await RandomDelay().ConfigureAwait(false);
-
-            return await Task.FromResult(
-                Enumerable.Range(0, 10)
-                .Reverse()
-                .Select(idx => new Project
-                {
-                    Id = idx,
-                    Name = $"Project {idx}",
-                    EstimatedStartDate = DateTime.Now.AddDays(idx),
-                    EstimatedEndDate = DateTime.Now.AddDays(idx + 30),
-                    CreateDate = DateTime.Now.AddDays(idx + 30)
-                })).ConfigureAwait(false);
+            // just return a random subset of projects
+            return (await LoadProjects()).OrderBy(x => _random.Next()).Take(15).ToArray();
         }
 
         private async Task RandomDelay() => await Task.Delay(_random.Next(2000, 10000)).ConfigureAwait(false);

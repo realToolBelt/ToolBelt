@@ -27,6 +27,7 @@ namespace ToolBelt.Views.Projects
         private Project _newestProject;
 
         private Project _oldestProject;
+        private ProjectFilter _filter = new ProjectFilter();
 
         public ProjectsPageViewModel(
             INavigationService navigationService,
@@ -64,7 +65,13 @@ namespace ToolBelt.Views.Projects
             Filter = ReactiveCommand.CreateFromTask(async () =>
             {
                 // TODO: Finish this
-                await NavigationService.NavigateAsync($"NavigationPage/{nameof(ProjectFilterPage)}", useModalNavigation: true).ConfigureAwait(false);
+                await NavigationService.NavigateAsync(
+                    $"NavigationPage/{nameof(ProjectFilterPage)}",
+                    new NavigationParameters
+                    {
+                        { "filter", _filter }
+                    },
+                    useModalNavigation: true).ConfigureAwait(false);
             });
 
             // set up the command used to load projects

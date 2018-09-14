@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using Newtonsoft.Json;
+using ReactiveUI;
 using System;
 
 namespace ToolBelt.Models
@@ -15,12 +16,11 @@ namespace ToolBelt.Models
     public class Project : ReactiveObject
     {
         private DateTime _createDate;
+        private string _description;
         private DateTime _estimatedEndDate;
         private DateTime _estimatedStartDate;
         private int _id;
         private string _name;
-        private string _description;
-
         private ProjectStatus _status;
 
         public Project()
@@ -32,46 +32,52 @@ namespace ToolBelt.Models
         /// <summary>
         /// Gets or sets the date the project was created.
         /// </summary>
+        [JsonProperty("create_date")]
         public DateTime CreateDate
         {
             get => _createDate;
             set => this.RaiseAndSetIfChanged(ref _createDate, value);
         }
 
+        [JsonProperty("description")]
+        public string Description
+        {
+            get => _description;
+            set => this.RaiseAndSetIfChanged(ref _description, value);
+        }
+
+        [JsonProperty("end_date")]
         public DateTime EstimatedEndDate
         {
             get => _estimatedEndDate;
             set => this.RaiseAndSetIfChanged(ref _estimatedEndDate, value);
         }
 
-        public ProjectStatus Status
-        {
-            get => _status;
-            set => this.RaiseAndSetIfChanged(ref _status, value);
-        }
-
+        [JsonProperty("start_date")]
         public DateTime EstimatedStartDate
         {
             get => _estimatedStartDate;
             set => this.RaiseAndSetIfChanged(ref _estimatedStartDate, value);
         }
 
+        [JsonProperty("id")]
         public int Id
         {
             get => _id;
             set => this.RaiseAndSetIfChanged(ref _id, value);
         }
 
+        [JsonProperty("name")]
         public string Name
         {
             get => _name;
             set => this.RaiseAndSetIfChanged(ref _name, value);
         }
 
-        public string Description
+        public ProjectStatus Status
         {
-            get => _description;
-            set => this.RaiseAndSetIfChanged(ref _description, value);
+            get => _status;
+            set => this.RaiseAndSetIfChanged(ref _status, value);
         }
     }
 }

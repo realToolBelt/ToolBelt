@@ -32,7 +32,8 @@
         <StackLayout Margin="20">
             <controls:ValidatedEntry x:Name="_projectNameControl"
                                      HeaderText="Project Name:"
-                                     PlaceholderText="Project Name" />
+                                     PlaceholderText="Project Name"
+                                     VerticalOptions="Start" />
 
             <controls:ValidatedDatePicker x:Name="_startDateControl"
                                           HeaderText="Start Date (estimated):"
@@ -41,6 +42,10 @@
             <controls:ValidatedDatePicker x:Name="_endDateControl"
                                           HeaderText="End Date (estimated):"
                                           VerticalOptions="Start" />
+
+            <controls:ValidatedEditor x:Name="_projectDescriptionControl"
+                                      HeaderText="Description:"
+                                      VerticalOptions="FillAndExpand" />
 
         </StackLayout>
     </ScrollView>

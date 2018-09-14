@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using Splat;
+using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ToolBelt.Extensions;
@@ -40,19 +41,23 @@ namespace ToolBelt.Views.Projects
                         .DisposeWith(disposable);
 
                     this
-                        .Bind(ViewModel, vm => vm.SelectedStartDateComparisonType, v => v._startDateComparisonTypePicker.SelectedItem)
+                        .Bind(ViewModel, vm => vm.SelectedStartDateComparisonType, v => v._startDateComparisonTypePicker.SelectedItem,
+                            vmToViewConverter: x => x.ToString(),
+                            viewToVmConverter: v => (DateComparisonType)Enum.Parse(typeof(DateComparisonType), v.ToString()))
                         .DisposeWith(disposable);
 
                     this
-                        .Bind(ViewModel, vm => vm.SelectedEndDateComparisonType, v => v._endDateComparisonTypePicker.SelectedItem)
+                        .Bind(ViewModel, vm => vm.SelectedEndDateComparisonType, v => v._endDateComparisonTypePicker.SelectedItem,
+                            vmToViewConverter: x => x.ToString(),
+                            viewToVmConverter: v => (DateComparisonType)Enum.Parse(typeof(DateComparisonType), v.ToString()))
                         .DisposeWith(disposable);
 
                     this
-                        .Bind(ViewModel, vm => vm.SelectedStartDate, v => v._startDatePicker.Date)
+                        .Bind(ViewModel, vm => vm.SelectedStartDate, v => v._startDatePicker.NullableDate)
                         .DisposeWith(disposable);
 
                     this
-                        .Bind(ViewModel, vm => vm.SelectedEndDate, v => v._endDatePicker.Date)
+                        .Bind(ViewModel, vm => vm.SelectedEndDate, v => v._endDatePicker.NullableDate)
                         .DisposeWith(disposable);
 
                     _vcTrades

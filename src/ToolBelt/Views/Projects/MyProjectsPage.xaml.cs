@@ -28,6 +28,14 @@ namespace ToolBelt.Views.Projects
                     _lstProjects
                         .ItemTappedToCommandBehavior(ViewModel, vm => vm.ViewProjectDetails)
                         .DisposeWith(disposable);
+
+                    this
+                        .OneWayBind(ViewModel, vm => vm.IsBusy, v => v._activityIndicator.IsRunning)
+                        .DisposeWith(disposable);
+
+                    this
+                        .OneWayBind(ViewModel, vm => vm.IsBusy, v => v._activityIndicator.IsVisible)
+                        .DisposeWith(disposable);
                 }
             });
         }
