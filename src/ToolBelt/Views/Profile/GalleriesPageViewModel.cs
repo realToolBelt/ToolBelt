@@ -140,7 +140,7 @@ namespace ToolBelt.Views.Profile
         {
             base.OnNavigatingTo(parameters);
             var user = parameters["user"] as User;
-            if (user?.Id == _userService.AuthenticatedUser.Id)
+            if (user?.Uid == _userService.AuthenticatedUser.Uid)
             {
                 CanEdit = true;
                 this.RaisePropertyChanged(nameof(Albums));

@@ -8,8 +8,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using ToolBelt.Models;
-using ToolBelt.Services.Authentication;
-using Xamarin.Auth;
 using Xamarin.Forms;
 
 namespace ToolBelt.Services
@@ -17,17 +15,11 @@ namespace ToolBelt.Services
         // TODO: Should be INPC...I think...
     public class User
     {
-        public int Id { get; set; }
-
-        public AuthToken Token { get; set; }
+        public string Uid { get; set; }
 
         public string Name { get; set; }
 
-        public string LastName { get; set; }
-
         public string Email { get; set; }
-
-        public string AvatarUrl { get; set; }
 
         public AccountType AccountType { get; set; }
     }
@@ -51,70 +43,20 @@ namespace ToolBelt.Services
 
     public interface IUserDataStore
     {
-        Task<User> GetUserFromProvider(AuthenticationProviderUser providerUser);
+        Task<User> GetUserById(string uid);
     }
 
     public class FakeUserDataStore : IUserDataStore
     {
-        public Task<User> GetUserFromProvider(AuthenticationProviderUser providerUser)
+        public Task<User> GetUserById(string uid)
         {
-            return Task.FromResult((User)null);
-
             return Task.FromResult(new User
             {
-                Id = 1,
+                Uid = "1234",
                 Name = "John",
-                LastName = "Doe",
-                Email = "john.doe@fakeemail.com"
+                Email = "john.doe@fakeemail.com",
+                AccountType = AccountType.Contractor
             });
         }
-    }
-
-    public interface IAuthenticatorFactory
-    {
-        IAuthenticator GetAuthenticationService(AuthenticationProviderType provider, IAuthenticationDelegate authenticationDelegate);
-    }
-
-    public class AuthenticatorFactory : IAuthenticatorFactory
-    {
-        public IAuthenticator GetAuthenticationService(AuthenticationProviderType provider, IAuthenticationDelegate authenticationDelegate)
-        {
-            switch (provider)
-            {
-                case AuthenticationProviderType.Google:
-                    return new GoogleAuthenticator(
-                        "59954122652-tcgdvnlbd18pkucfuih43csfru3tq6gg.apps.googleusercontent.com",
-                        "email",
-                        "com.toolbelt.toolbelt:/oauth2redirect",
-                        authenticationDelegate);
-
-                case AuthenticationProviderType.Facebook:
-                    return new FacebookAuthenticator(
-                    "1324833817652478",
-                    "email",
-                    authenticationDelegate);
-
-                default:
-                    throw new InvalidEnumArgumentException(
-                        nameof(provider),
-                        (int)provider,
-                        typeof(AuthenticationProviderType));
-            }
-        }
-    }
-
-
-    
-
-
-    public class AuthenticationState
-    {
-        /// <summary>
-        /// The authenticator.
-        /// </summary>
-        // TODO:
-        // Oauth1Authenticator inherits from WebAuthenticator
-        // Oauth2Authenticator inherits from WebRedirectAuthenticator
-        public static IAuthenticator Authenticator;
     }
 }

@@ -36,10 +36,6 @@ namespace ToolBelt.Views.Profile
                     this
                         .OneWayBind(ViewModel, vm => vm.User.Name, v => v._lblFirstName.Text)
                         .DisposeWith(disposable);
-
-                    this
-                        .OneWayBind(ViewModel, vm => vm.User.LastName, v => v._lblLastName.Text)
-                        .DisposeWith(disposable);
                 }
             });
         }

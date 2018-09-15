@@ -20,6 +20,11 @@
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidSigningKeyStore>C:\Users\ep031022\AppData\Local\Xamarin\Mono for Android\Keystore\ToolBelt-Release\ToolBelt-Release.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>T((lB3lt</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>ToolBelt-Release</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>T((lB3lt</AndroidSigningKeyPass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -91,7 +96,6 @@
       <Version>3.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="27.0.2.1" />
-    <PackageReference Include="Xamarin.Auth" Version="1.6.0.2" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.3.840" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.3.840" />
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.3.840" />
@@ -101,10 +105,16 @@
     <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="27.0.2.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Xamarin.Firebase.Auth">
+      <Version>60.1142.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
+    <PackageReference Include="Xamarin.GooglePlayServices.Auth">
+      <Version>60.1142.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActivityCustomUrlSchemeInterceptor.cs" />
+    <Compile Include="Activities\GoogleLoginActivity.cs" />
     <Compile Include="AndroidInitializer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MainApplication.cs" />
@@ -117,6 +127,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
+    <Compile Include="Services\FirebaseAuthService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="..\CommonResources\Fonts\FontAwesome\fontawesome.otf">
@@ -130,6 +141,12 @@
     <None Include="Properties\AndroidManifest.xml">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)'=='Debug' ">
+    <GoogleServicesJson Include="google-services.debug.json" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)'=='Release' ">
+    <GoogleServicesJson Include="google-services.release.json" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "59954122652",
+    "firebase_url": "https://toolbelt-app.firebaseio.com",
+    "project_id": "toolbelt-app",
+    "storage_bucket": "toolbelt-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59954122652:android:09a3c126e798bd59",
+        "android_client_info": {
+          "package_name": "com.toolbelt.toolbelt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59954122652-tcgdvnlbd18pkucfuih43csfru3tq6gg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.toolbelt.toolbelt",
+            "certificate_hash": "9e4158d382cbf17f99d5d97eabd2dc1772169cd5"
+          }
+        },
+        {
+          "client_id": "59954122652-54snfl95i3cigj67phdjpvovvrokn4ec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKOmt8vzMTgonmEqDovDIsXEL2F9IQ0As"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59954122652-54snfl95i3cigj67phdjpvovvrokn4ec.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

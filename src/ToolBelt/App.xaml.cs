@@ -92,7 +92,6 @@ namespace ToolBelt
 
             containerRegistry.RegisterInstance<ICrashService>(new CrashService());
 
-            containerRegistry.Register<IAuthenticatorFactory, AuthenticatorFactory>();
             containerRegistry.Register<IPermissionsService, PermissionsService>();
             containerRegistry.RegisterInstance<Acr.UserDialogs.IUserDialogs>(Acr.UserDialogs.UserDialogs.Instance);
 

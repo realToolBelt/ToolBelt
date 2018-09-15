@@ -12,4 +12,8 @@
     <assembly fullname="Splat">
         <type fullname="*"/>
     </assembly>
+
+    <assembly fullname="Xamarin.GooglePlayServices.Auth">
+        <type fullname="*"/>
+    </assembly>
 </linker>

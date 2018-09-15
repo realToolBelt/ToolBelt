@@ -1,5 +1,6 @@
 ﻿using Prism;
 using Prism.Ioc;
+using ToolBelt.iOS.Services;
 using ToolBelt.Services;
 
 namespace ToolBelt.iOS
@@ -8,6 +9,7 @@ namespace ToolBelt.iOS
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register<IFirebaseAuthService, FirebaseAuthService>();
         }
     }
 }

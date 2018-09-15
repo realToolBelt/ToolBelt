@@ -36,7 +36,7 @@ namespace ToolBelt.Views.Projects
             var initialize = ReactiveCommand.CreateFromTask<Unit, IEnumerable<Project>>(_ =>
             {
                 AssertRunningOnBackgroundThread();
-                return projectDataStore.LoadProjectsForUser("");
+                return projectDataStore.LoadProjectsForUser(userService.AuthenticatedUser.Uid);
             });
 
             initialize

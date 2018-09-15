@@ -8,7 +8,6 @@ using System.Reactive.Linq;
 using ToolBelt.Extensions;
 using ToolBelt.Models;
 using ToolBelt.Services;
-using ToolBelt.Services.Authentication;
 using ToolBelt.ViewModels;
 using ToolBelt.Views.About;
 using ToolBelt.Views.Profile;
@@ -20,8 +19,8 @@ namespace ToolBelt.Views
     {
         public RootPageViewModel(
             INavigationService navigationService,
-            IAuthenticator authenticator,
-            IUserService userService) : base(navigationService)
+            IUserService userService,
+            IFirebaseAuthService firebaseAuthService) : base(navigationService)
         {
             User = userService.AuthenticatedUser;
 
@@ -75,7 +74,7 @@ namespace ToolBelt.Views
                     IconSource = "\xf2f5",
                     TapCommand = ReactiveCommand.CreateFromTask(async () =>
                     {
-                        await authenticator.LogOut();
+                        await firebaseAuthService.Logout();
                         await NavigationService.NavigateToLoginPageAsync().ConfigureAwait(false);
                     })
                 }

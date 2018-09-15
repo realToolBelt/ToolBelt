@@ -83,6 +83,7 @@
     <BundleResource Include="..\CommonResources\Fonts\FontAwesome\fontawesome_brands.otf">
       <Link>Resources\fontawesome_brands.otf</Link>
     </BundleResource>
+    <Compile Include="Services\FirebaseAuthService.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +97,12 @@
     <BundleResource Include="Resources\ic_action_search%403x.png" />
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)'=='Debug' ">
+    <BundleResource Include="GoogleService-Info.debug.plist" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)'=='Release' ">
+    <BundleResource Include="GoogleService-Info.release.plist" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -231,6 +238,9 @@
     <PackageReference Include="Xamarin.FFImageLoading.Transformations">
       <Version>2.4.3.840</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.Firebase.iOS.Auth">
+      <Version>5.0.2</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Plugin.Permissions">
@@ -250,7 +260,5 @@
   <ItemGroup>
     <BundleResource Include="Resources\hamburger.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

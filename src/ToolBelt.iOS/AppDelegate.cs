@@ -1,6 +1,7 @@
-﻿using System;
-using FFImageLoading.Forms.Platform;
+﻿using FFImageLoading.Forms.Platform;
 using Foundation;
+using System;
+using ToolBelt.iOS.Services;
 using UIKit;
 
 namespace ToolBelt.iOS
@@ -19,8 +20,7 @@ namespace ToolBelt.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
-            // initialize authentication
-            global::Xamarin.Auth.Presenters.XamarinIOS.AuthenticationConfiguration.Init();
+            Firebase.Core.App.Configure();
 
             Flex.FlexButton.Init();
             CachedImageRenderer.Init();
@@ -30,16 +30,24 @@ namespace ToolBelt.iOS
             return base.FinishedLaunching(app, options);
         }
 
-        public override bool OpenUrl(
-           UIApplication application,
-           NSUrl url,
-           string sourceApplication,
-           NSObject annotation)
+        // For iOS 9 or newer
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
         {
-            // Convert iOS NSUrl to C#/netxf/BCL System.Uri
-            var uri_netfx = new Uri(url.AbsoluteString);
+            return OpenUrl(url);
+        }
 
-            Services.AuthenticationState.Authenticator.OnPageLoading(uri_netfx);
+        // For iOS 8 and older
+        public override bool OpenUrl(UIApplication application, NSUrl url, string sourceApplication, NSObject annotation)
+        {
+            return OpenUrl(url);
+        }
+
+        private static bool OpenUrl(NSUrl url)
+        {
+            Uri uri_netfx = new Uri(url.AbsoluteString);
+
+            // load redirect_url Page for parsing
+            FirebaseAuthService.XAuth.OnPageLoading(uri_netfx);
 
             return true;
         }
