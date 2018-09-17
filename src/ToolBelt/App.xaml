@@ -23,55 +23,55 @@
             <!--<Color x:Key="ValidationErrorColor">#FF5252</Color>-->
 
             <!--  FONTS  -->
-            <OnPlatform x:Key="FontAwesomeBrands" x:TypeArguments="x:String">
-                <On Platform="Android">fontawesome_brands.otf#Font Awesome 5 Brands Regular</On>
-                <On Platform="iOS">FontAwesome5BrandsRegular</On>
-            </OnPlatform>
+            <OnPlatform x:Key="FontAwesomeBrands"
+                        x:TypeArguments="x:String"
+                        Android="fontawesome_brands.otf#Font Awesome 5 Brands Regular"
+                        iOS="FontAwesome5BrandsRegular" />
 
-            <OnPlatform x:Key="FontAwesomeSolid" x:TypeArguments="x:String">
-                <On Platform="Android">fontawesome.otf#Font Awesome 5 Free Solid</On>
-                <On Platform="iOS">FontAwesome5FreeSolid</On>
-            </OnPlatform>
+            <OnPlatform x:Key="FontAwesomeSolid"
+                        x:TypeArguments="x:String"
+                        Android="fontawesome.otf#Font Awesome 5 Free Solid"
+                        iOS="FontAwesome5FreeSolid" />
 
-            <OnPlatform x:Key="LittleSize" x:TypeArguments="x:Double">
-                <On Platform="Android">12</On>
-                <On Platform="iOS">11</On>
-            </OnPlatform>
+            <OnPlatform x:Key="LittleSize"
+                        x:TypeArguments="x:Double"
+                        Android="12"
+                        iOS="11" />
 
-            <OnPlatform x:Key="MidMediumSize" x:TypeArguments="x:Double">
-                <On Platform="Android">14</On>
-                <On Platform="iOS">12</On>
-            </OnPlatform>
+            <OnPlatform x:Key="MidMediumSize"
+                        x:TypeArguments="x:Double"
+                        Android="14"
+                        iOS="12" />
 
-            <OnPlatform x:Key="MediumSize" x:TypeArguments="x:Double">
-                <On Platform="Android">16</On>
-                <On Platform="iOS">14</On>
-            </OnPlatform>
+            <OnPlatform x:Key="MediumSize"
+                        x:TypeArguments="x:Double"
+                        Android="16"
+                        iOS="14" />
 
-            <OnPlatform x:Key="LargeSize" x:TypeArguments="x:Double">
-                <On Platform="Android">18</On>
-                <On Platform="iOS">16</On>
-            </OnPlatform>
+            <OnPlatform x:Key="LargeSize"
+                        x:TypeArguments="x:Double"
+                        Android="18"
+                        iOS="16" />
 
-            <OnPlatform x:Key="LargerSize" x:TypeArguments="x:Double">
-                <On Platform="Android">20</On>
-                <On Platform="iOS">18</On>
-            </OnPlatform>
+            <OnPlatform x:Key="LargerSize"
+                        x:TypeArguments="x:Double"
+                        Android="20"
+                        iOS="18" />
 
-            <OnPlatform x:Key="BigSize" x:TypeArguments="x:Double">
-                <On Platform="Android">24</On>
-                <On Platform="iOS">20</On>
-            </OnPlatform>
+            <OnPlatform x:Key="BigSize"
+                        x:TypeArguments="x:Double"
+                        Android="24"
+                        iOS="20" />
 
-            <OnPlatform x:Key="ExtraBigSize" x:TypeArguments="x:Double">
-                <On Platform="Android">32</On>
-                <On Platform="iOS">24</On>
-            </OnPlatform>
+            <OnPlatform x:Key="ExtraBigSize"
+                        x:TypeArguments="x:Double"
+                        Android="32"
+                        iOS="24" />
 
-            <OnPlatform x:Key="HugeSize" x:TypeArguments="x:Double">
-                <On Platform="Android">48</On>
-                <On Platform="iOS">32</On>
-            </OnPlatform>
+            <OnPlatform x:Key="HugeSize"
+                        x:TypeArguments="x:Double"
+                        Android="48"
+                        iOS="32" />
 
 
 
@@ -250,14 +250,7 @@
             <Style TargetType="{x:Type ActivityIndicator}">
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="WidthRequest">
-                    <Setter.Value>
-                        <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="Android, iOS" Value="100" />
-                            <On Platform="UWP" Value="300" />
-                        </OnPlatform>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="WidthRequest" Value="{OnPlatform Default=100, UWP=300}" />
             </Style>
         </ResourceDictionary>
     </prism:PrismApplication.Resources>

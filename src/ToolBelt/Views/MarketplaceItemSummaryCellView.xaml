@@ -7,36 +7,20 @@
                        x:TypeArguments="local:MarketplaceItemSummary">
     <Grid Padding="8">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition>
-                <ColumnDefinition.Width>
-                    <OnPlatform x:TypeArguments="GridLength">
-                        <On Platform="Android, WinPhone">144</On>
-                        <On Platform="iOS">120</On>
-                    </OnPlatform>
-                </ColumnDefinition.Width>
-            </ColumnDefinition>
+            <ColumnDefinition Width="{OnPlatform Default=144, iOS=120}" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Image x:Name="_imgIcon" />
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1"
+              Padding="{OnPlatform Android='8,2,0,4',
+                                   iOS='4,8,0,8'}"
+              RowSpacing="{OnPlatform Default=4,
+                                      iOS=0}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid.Padding>
-                <OnPlatform x:TypeArguments="Thickness">
-                    <On Platform="Android">8,2,0,4</On>
-                    <On Platform="WinPhone">12,-2,0,-4</On>
-                    <On Platform="iOS">4,8,0,8</On>
-                </OnPlatform>
-            </Grid.Padding>
-            <Grid.RowSpacing>
-                <OnPlatform x:TypeArguments="x:Double">
-                    <On Platform="Android, WinPhone">4</On>
-                    <On Platform="iOS">0</On>
-                </OnPlatform>
-            </Grid.RowSpacing>
             <Label x:Name="_lblTitle"
                    FontSize="{StaticResource LargeSize}"
                    LineBreakMode="TailTruncation" />

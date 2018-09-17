@@ -38,10 +38,9 @@
             <StackLayout Grid.ColumnSpan="3" Padding="20">
                 <Label x:Name="_lblProjectName" FontSize="{StaticResource LargeSize}">
                     <Label.LineBreakMode>
-                        <OnPlatform x:TypeArguments="LineBreakMode">
-                            <On Platform="Android" Value="NoWrap" />
-                            <On Platform="iOS" Value="TailTruncation" />
-                        </OnPlatform>
+                        <OnPlatform x:TypeArguments="LineBreakMode"
+                                    Android="NoWrap"
+                                    iOS="TailTruncation" />
                     </Label.LineBreakMode>
                 </Label>
                 <Label x:Name="_lblProjectDescription" />
