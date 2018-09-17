@@ -32,7 +32,8 @@ namespace ToolBelt.Views.Projects
                 ProjectName,
                 StartDate,
                 EndDate,
-                Description
+                Description,
+                SkillsRequired
             };
 
             AddValidationRules();
@@ -54,6 +55,7 @@ namespace ToolBelt.Views.Projects
                     _project.EstimatedStartDate = StartDate.Value.Value;
                     _project.EstimatedEndDate = EndDate.Value.Value;
                     _project.Description = Description.Value;
+                    _project.SkillsRequired = SkillsRequired.Value;
 
                     // TODO: projectDataStore.Update(_project);
                 }
@@ -109,6 +111,7 @@ namespace ToolBelt.Views.Projects
                     StartDate.Value = project.EstimatedStartDate;
                     EndDate.Value = project.EstimatedEndDate;
                     Description.Value = project.Description;
+                    SkillsRequired.Value = project.SkillsRequired;
 
                     // accept changes for all fields
                     foreach (var field in _validatableFields)
@@ -139,6 +142,8 @@ namespace ToolBelt.Views.Projects
         /// Gets the command used to save the data.
         /// </summary>
         public ReactiveCommand Save { get; }
+
+        public ValidatableObject<string> SkillsRequired { get; } = new ValidatableObject<string>();
 
         public ValidatableObject<DateTime?> StartDate { get; } = new ValidatableObject<DateTime?>();
 

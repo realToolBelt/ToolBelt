@@ -15,13 +15,19 @@ namespace ToolBelt.Controls
     }
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ValidatedEditor : BaseValidatedEntry
+    public partial class ValidatedEditor : BaseValidatedEditor
     {
         public static readonly BindableProperty HeaderTextProperty = BindableProperty.Create(
             nameof(HeaderText),
             typeof(string),
             typeof(ExtendedEntry),
             string.Empty);
+
+        public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(
+            nameof(MaxLength),
+            typeof(int),
+            typeof(ValidatedEditor),
+            defaultValue: int.MaxValue);
 
         public ValidatedEditor()
         {
@@ -61,6 +67,17 @@ namespace ToolBelt.Controls
                     .Where(args => args.IsFocused)
                     .Subscribe(_ => ViewModel.ClearValidationErrors())
                     .DisposeWith(disposable);
+
+                this
+                    .WhenAnyValue(x => x.MaxLength)
+                    .Select(length => length != (int)MaxLengthProperty.DefaultValue)
+                    .BindTo(this, v => v._lblCharacters.IsVisible)
+                    .DisposeWith(disposable);
+
+                this
+                    .WhenAnyValue(v => v.ViewModel.Value, v => v.MaxLength, (vm, length) => $"{(vm?.Length ?? 0)}/{length}")
+                    .BindTo(this, v => v._lblCharacters.Text)
+                    .DisposeWith(disposable);
             });
         }
 
@@ -68,6 +85,12 @@ namespace ToolBelt.Controls
         {
             get => (string)GetValue(HeaderTextProperty);
             set => SetValue(HeaderTextProperty, value);
+        }
+
+        public int MaxLength
+        {
+            get => (int)GetValue(MaxLengthProperty);
+            set => SetValue(MaxLengthProperty, value);
         }
     }
 }

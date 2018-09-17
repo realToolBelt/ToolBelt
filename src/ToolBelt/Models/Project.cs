@@ -21,8 +21,8 @@ namespace ToolBelt.Models
         private DateTime _estimatedStartDate;
         private int _id;
         private string _name;
+        private string _skillsRequired;
         private ProjectStatus _status;
-
         public Project()
         {
             CreateDate = DateTime.UtcNow;
@@ -74,6 +74,11 @@ namespace ToolBelt.Models
             set => this.RaiseAndSetIfChanged(ref _name, value);
         }
 
+        public string SkillsRequired
+        {
+            get => _skillsRequired;
+            set => this.RaiseAndSetIfChanged(ref _skillsRequired, value);
+        }
         public ProjectStatus Status
         {
             get => _status;
