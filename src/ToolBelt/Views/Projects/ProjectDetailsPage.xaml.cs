@@ -35,6 +35,10 @@ namespace ToolBelt.Views.Projects
                     this
                         .OneWayBind(ViewModel, vm => vm.Project.Description, v => v._lblDescription.Text)
                         .DisposeWith(disposable);
+
+                    this
+                        .OneWayBind(ViewModel, vm => vm.Project.SkillsRequired, v => v._lblSkillsRequired.Text)
+                        .DisposeWith(disposable);
                 }
             });
         }

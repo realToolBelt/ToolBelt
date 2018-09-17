@@ -45,6 +45,12 @@
 
             <controls:ValidatedEditor x:Name="_projectDescriptionControl"
                                       HeaderText="Description:"
+                                      MaxLength="120"
+                                      VerticalOptions="FillAndExpand" />
+
+            <controls:ValidatedEditor x:Name="_skillsRequiredControl"
+                                      HeaderText="Skills Required:"
+                                      MaxLength="120"
                                       VerticalOptions="FillAndExpand" />
 
         </StackLayout>

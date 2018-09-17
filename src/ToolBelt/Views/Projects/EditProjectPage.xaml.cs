@@ -42,6 +42,10 @@ namespace ToolBelt.Views.Projects
                         .DisposeWith(disposable);
 
                     this
+                        .OneWayBind(ViewModel, vm => vm.SkillsRequired, v => v._skillsRequiredControl.ViewModel)
+                        .DisposeWith(disposable);
+
+                    this
                         .BindCommand(ViewModel, vm => vm.Save, v => v._miSave)
                         .DisposeWith(disposable);
 
