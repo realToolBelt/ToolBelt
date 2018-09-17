@@ -12,14 +12,17 @@ namespace ToolBelt.Services
         /// </summary>
         /// <param name="analyticService">The analytic service.</param>
         /// <param name="screenName">Name of the screen.</param>
-        public static void TrackScreen(this IAnalyticService analyticService, string screenName)
+        /// <param name="additionalProperties">The additional properties related to the screen.</param>
+        public static void TrackScreen(
+            this IAnalyticService analyticService,
+            string screenName,
+            IDictionary<string, string> additionalProperties = null)
         {
-            analyticService?.TrackEvent(
-                "screen_view",
-                new Dictionary<string, string>
-                {
-                    { "screen_name", screenName }
-                });
+            // get or create the dictionary to submit with the event
+            additionalProperties = additionalProperties ?? new Dictionary<string, string>();
+            additionalProperties.Add("screen_name", screenName);
+
+            analyticService?.TrackEvent("screen_view", additionalProperties);
         }
 
         /// <summary>

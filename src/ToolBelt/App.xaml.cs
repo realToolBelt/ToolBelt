@@ -112,9 +112,7 @@ namespace ToolBelt
 
             containerRegistry.RegisterForNavigation<RootPage, RootPageViewModel>("Root");
             containerRegistry.RegisterForNavigation<RootNavigationPage, RootNavigationPageViewModel>("Details");
-            containerRegistry.RegisterForNavigation<CommunitiesPage, CommunitiesPageViewModel>();
             containerRegistry.RegisterForNavigation<ContactUsPage, ContactUsPageViewModel>();
-            containerRegistry.RegisterForNavigation<ItemDetailsPage, ItemDetailsPageViewModel>();
             containerRegistry.RegisterForNavigation<AboutUsPage, AboutUsPageViewModel>();
             containerRegistry.RegisterForNavigation<PrivacyPolicyPage, PrivacyPolicyPageViewModel>();
             containerRegistry.RegisterForNavigation<MultiSelectListViewPage, MultiSelectListViewPageViewModel>();
@@ -131,7 +129,6 @@ namespace ToolBelt
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<ProjectsPage, ProjectsPageViewModel>();
             containerRegistry.RegisterForNavigation<MyProjectsPage, MyProjectsPageViewModel>();
-            containerRegistry.RegisterForNavigation<TradesmenPage, TradesmenPageViewModel>();
             containerRegistry.RegisterForNavigation<ProjectFilterPage, ProjectFilterPageViewModel>();
 
             containerRegistry.RegisterForNavigation<EditProjectPage, EditProjectPageViewModel>();

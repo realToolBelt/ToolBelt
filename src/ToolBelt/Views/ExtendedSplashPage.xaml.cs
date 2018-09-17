@@ -36,6 +36,7 @@ namespace ToolBelt.Views
                         .OneWayBind(ViewModel, vm => vm.IsBusy, v => v._activityIndicator.IsVisible)
                         .DisposeWith(disposable);
 
+                    // TODO: Make sure this runs on the background thread...
                     this
                         .WhenAnyValue(x => x.ViewModel.Initialize)
                         .ToSignal()
