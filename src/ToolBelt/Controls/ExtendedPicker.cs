@@ -1,62 +1,46 @@
-﻿using System;
+﻿using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
 namespace ToolBelt.Controls
 {
     /// <summary>
-    /// An extended date picker that supports additional features like nullable dates, validation,
-    /// and more.
+    /// A derivation of the <see cref="Picker" /> that allows for additional behavior.
     /// </summary>
-    /// <seealso cref="Xamarin.Forms.DatePicker" />
-    public class ExtendedDatePicker : DatePicker, IDynamicLineColorControl
+    /// <seealso cref="Xamarin.Forms.Picker" />
+    public class ExtendedPicker : Picker, IDynamicLineColorControl
     {
         public static readonly BindableProperty FocusLineColorProperty = BindableProperty.Create(
             nameof(FocusLineColor),
             typeof(Color),
-            typeof(ExtendedDatePicker),
+            typeof(ExtendedEntry),
             Color.Default);
 
         public static readonly BindableProperty InvalidLineColorProperty = BindableProperty.Create(
             nameof(InvalidLineColor),
             typeof(Color),
-            typeof(ExtendedDatePicker),
+            typeof(ExtendedEntry),
             Color.Default);
 
         public static readonly BindableProperty IsValidProperty = BindableProperty.Create(
             nameof(IsValid),
             typeof(bool),
-            typeof(ExtendedDatePicker),
+            typeof(ExtendedEntry),
             true);
 
         public static readonly BindableProperty LineColorProperty = BindableProperty.Create(
             nameof(LineColor),
             typeof(Color),
-            typeof(ExtendedDatePicker),
+            typeof(ExtendedEntry),
             Color.Default);
-
-        public static readonly BindableProperty NullableDateProperty = BindableProperty.Create(
-            nameof(NullableDate),
-            typeof(DateTime?),
-            typeof(ExtendedDatePicker),
-            null,
-            defaultBindingMode: BindingMode.TwoWay);
-
-        public static readonly BindableProperty PlaceHolderProperty = BindableProperty.Create(
-            nameof(PlaceHolder),
-            typeof(string),
-            typeof(ExtendedDatePicker),
-            "/ . / . /");
 
         private Color _lineColorToApply;
 
-        public ExtendedDatePicker()
+        public ExtendedPicker()
         {
-            Format = "d";
-
             Focused += OnFocused;
             Unfocused += OnUnfocused;
 
-            Effects.Add(Effect.Resolve(ToolBelt.Effects.EffectSettings.DatePickerLineColor));
+            Effects.Add(Effect.Resolve(ToolBelt.Effects.EffectSettings.PickerLineColor));
 
             ResetLineColor();
         }
@@ -111,73 +95,9 @@ namespace ToolBelt.Controls
             }
         }
 
-        public DateTime? NullableDate
-        {
-            get => (DateTime?)GetValue(NullableDateProperty);
-            set
-            {
-                SetValue(NullableDateProperty, value);
-                UpdateDate();
-            }
-        }
-
-        public string OriginalFormat
-        {
-            get;
-            private set;
-        }
-
-        public string PlaceHolder
-        {
-            get => (string)GetValue(PlaceHolderProperty);
-            set => SetValue(PlaceHolderProperty, value);
-        }
-
-        public void AssignValue()
-        {
-            NullableDate = Date;
-            UpdateDate();
-        }
-
-        public void CleanDate()
-        {
-            NullableDate = null;
-            UpdateDate();
-        }
-
-        protected override void OnBindingContextChanged()
-        {
-            base.OnBindingContextChanged();
-            if (BindingContext != null)
-            {
-                if (OriginalFormat == null)
-                {
-                    OriginalFormat = Format;
-                }
-
-                UpdateDate();
-            }
-        }
-
-        protected override void OnPropertyChanged(string propertyName = null)
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
-
-            if (propertyName == DateProperty.PropertyName || (propertyName == IsFocusedProperty.PropertyName && !IsFocused && (Date.ToString("d") == DateTime.Now.ToString("d"))))
-            {
-                AssignValue();
-            }
-
-            if (propertyName == NullableDateProperty.PropertyName && NullableDate.HasValue)
-            {
-                Date = NullableDate.Value;
-                if (Date.ToString(OriginalFormat) == DateTime.Now.ToString(OriginalFormat))
-                {
-                    // this code was done because when date selected is the actual date the
-                    // "DateProperty" does not raise
-                    UpdateDate();
-                }
-            }
 
             if (propertyName == IsValidProperty.PropertyName)
             {
@@ -216,21 +136,6 @@ namespace ToolBelt.Controls
         private void ResetLineColor()
         {
             LineColorToApply = GetNormalStateLineColor();
-        }
-
-        private void UpdateDate()
-        {
-            if (NullableDate != null)
-            {
-                if (OriginalFormat != null)
-                {
-                    Format = OriginalFormat;
-                }
-            }
-            else
-            {
-                Format = PlaceHolder;
-            }
         }
     }
 }

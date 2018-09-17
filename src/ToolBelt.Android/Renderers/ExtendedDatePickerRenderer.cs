@@ -61,8 +61,6 @@ namespace ToolBelt.Droid.Renderers
             var entry = Element;
 
             Control.Text = !entry.NullableDate.HasValue ? entry.PlaceHolder : Element.Date.ToString(Element.Format);
-            Control.InputType |= Android.Text.InputTypes.TextFlagNoSuggestions;
-            UpdateLineColor();
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -75,7 +73,6 @@ namespace ToolBelt.Droid.Renderers
                 if (Element.Format == entry.PlaceHolder)
                 {
                     Control.Text = entry.PlaceHolder;
-                    return;
                 }
             }
             else if (e.PropertyName == ExtendedDatePicker.MinimumDateProperty.PropertyName)
@@ -85,11 +82,6 @@ namespace ToolBelt.Droid.Renderers
             else if (e.PropertyName == ExtendedDatePicker.MaximumDateProperty.PropertyName)
             {
                 UpdateMaximumDate();
-            }
-
-            if (e.PropertyName.Equals(nameof(ExtendedEntry.LineColorToApply)))
-            {
-                UpdateLineColor();
             }
         }
 
@@ -142,11 +134,6 @@ namespace ToolBelt.Droid.Renderers
         {
             Control.Text = date.ToString(Element.Format);
             Element.Date = date;
-        }
-
-        private void UpdateLineColor()
-        {
-            Control?.Background?.SetColorFilter(Element.LineColorToApply.ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcAtop);
         }
 
         private void UpdateMaximumDate()

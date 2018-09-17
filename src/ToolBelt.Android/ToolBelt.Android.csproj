@@ -20,7 +20,7 @@
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidKeyStore>false</AndroidKeyStore>
     <AndroidSigningKeyStore>C:\Users\ep031022\AppData\Local\Xamarin\Mono for Android\Keystore\ToolBelt-Release\ToolBelt-Release.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>T((lB3lt</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>ToolBelt-Release</AndroidSigningKeyAlias>
@@ -116,11 +116,14 @@
   <ItemGroup>
     <Compile Include="Activities\GoogleLoginActivity.cs" />
     <Compile Include="AndroidInitializer.cs" />
+    <Compile Include="Effects\BaseLineColorEffect.cs" />
+    <Compile Include="Effects\DatePickerLineColorEffect.cs" />
+    <Compile Include="Effects\EditorLineColorEffect.cs" />
+    <Compile Include="Effects\EntryLineColorEffect.cs" />
+    <Compile Include="Effects\PickerLineColorEffect.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="Renderers\ExtendedDatePickerRenderer.cs" />
-    <Compile Include="Renderers\ExtendedEditorRenderer.cs" />
-    <Compile Include="Renderers\ExtendedEntryRenderer.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <AndroidResource Include="Resources\drawable\background_dialog.xml">

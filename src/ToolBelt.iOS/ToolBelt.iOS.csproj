@@ -69,14 +69,17 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Effects\BaseLineColorEffect.cs" />
+    <Compile Include="Effects\DatePickerLineColorEffect.cs" />
+    <Compile Include="Effects\EditorLineColorEffect.cs" />
+    <Compile Include="Effects\EntryLineColorEffect.cs" />
+    <Compile Include="Effects\PickerLineColorEffect.cs" />
     <Compile Include="iOSInitializer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Renderers\ExtendedDatePickerRenderer.cs" />
-    <Compile Include="Renderers\ExtendedEditorRenderer.cs" />
-    <Compile Include="Renderers\ExtendedEntryRenderer.cs" />
     <BundleResource Include="..\CommonResources\Fonts\FontAwesome\fontawesome.otf">
       <Link>Resources\fontawesome.otf</Link>
     </BundleResource>

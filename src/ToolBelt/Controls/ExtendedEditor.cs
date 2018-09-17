@@ -7,7 +7,7 @@ namespace ToolBelt.Controls
     /// A derivation of the <see cref="Editor" /> that allows for additional behavior.
     /// </summary>
     /// <seealso cref="Xamarin.Forms.Editor" />
-    public class ExtendedEditor : Editor
+    public class ExtendedEditor : Editor, IDynamicLineColorControl
     {
         public static readonly BindableProperty FocusLineColorProperty = BindableProperty.Create(
             nameof(FocusLineColor),
@@ -39,6 +39,8 @@ namespace ToolBelt.Controls
         {
             Focused += OnFocused;
             Unfocused += OnUnfocused;
+
+            Effects.Add(Effect.Resolve(ToolBelt.Effects.EffectSettings.EditorLineColor));
 
             ResetLineColor();
         }
