@@ -4,9 +4,9 @@ using System;
 
 namespace ToolBelt.Models
 {
+    // NOTE: We want to explicitly set the values here to match what we have in the database
     public enum ProjectStatus
     {
-        // NOTE: We want to explicitly set the values here to match what we have in the database
         Open = 1,
         Closed = 2,
         Deleted = 3
@@ -23,6 +23,7 @@ namespace ToolBelt.Models
         private string _name;
         private string _skillsRequired;
         private ProjectStatus _status;
+
         public Project()
         {
             CreateDate = DateTime.UtcNow;
@@ -79,6 +80,7 @@ namespace ToolBelt.Models
             get => _skillsRequired;
             set => this.RaiseAndSetIfChanged(ref _skillsRequired, value);
         }
+
         public ProjectStatus Status
         {
             get => _status;

@@ -69,20 +69,24 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Effects\BaseLineColorEffect.cs" />
+    <Compile Include="Effects\DatePickerLineColorEffect.cs" />
+    <Compile Include="Effects\EditorLineColorEffect.cs" />
+    <Compile Include="Effects\EntryLineColorEffect.cs" />
+    <Compile Include="Effects\PickerLineColorEffect.cs" />
     <Compile Include="iOSInitializer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Renderers\ExtendedDatePickerRenderer.cs" />
-    <Compile Include="Renderers\ExtendedEditorRenderer.cs" />
-    <Compile Include="Renderers\ExtendedEntryRenderer.cs" />
     <BundleResource Include="..\CommonResources\Fonts\FontAwesome\fontawesome.otf">
       <Link>Resources\fontawesome.otf</Link>
     </BundleResource>
     <BundleResource Include="..\CommonResources\Fonts\FontAwesome\fontawesome_brands.otf">
       <Link>Resources\fontawesome_brands.otf</Link>
     </BundleResource>
+    <Compile Include="Services\FirebaseAuthService.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +100,12 @@
     <BundleResource Include="Resources\ic_action_search%403x.png" />
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)'=='Debug' ">
+    <BundleResource Include="GoogleService-Info.debug.plist" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)'=='Release' ">
+    <BundleResource Include="GoogleService-Info.release.plist" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -231,7 +241,10 @@
     <PackageReference Include="Xamarin.FFImageLoading.Transformations">
       <Version>2.4.3.840</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
+    <PackageReference Include="Xamarin.Firebase.iOS.Auth">
+      <Version>5.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Plugin.Permissions">
       <Version>3.0.0.12</Version>
@@ -250,7 +263,5 @@
   <ItemGroup>
     <BundleResource Include="Resources\hamburger.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

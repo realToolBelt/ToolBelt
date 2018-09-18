@@ -8,7 +8,7 @@ namespace ToolBelt.Controls
     /// and more.
     /// </summary>
     /// <seealso cref="Xamarin.Forms.DatePicker" />
-    public class ExtendedDatePicker : DatePicker
+    public class ExtendedDatePicker : DatePicker, IDynamicLineColorControl
     {
         public static readonly BindableProperty FocusLineColorProperty = BindableProperty.Create(
             nameof(FocusLineColor),
@@ -55,6 +55,8 @@ namespace ToolBelt.Controls
 
             Focused += OnFocused;
             Unfocused += OnUnfocused;
+
+            Effects.Add(Effect.Resolve(ToolBelt.Effects.EffectSettings.DatePickerLineColor));
 
             ResetLineColor();
         }

@@ -33,17 +33,11 @@
 
         <Frame Grid.Row="0"
                Grid.Column="1"
-               BackgroundColor="#03A9F4">
-            <Frame.HasShadow>
-                <OnPlatform x:TypeArguments="x:Boolean">
-                    <On Platform="Android">true</On>
-                    <On Platform="iOS">false</On>
-                </OnPlatform>
-            </Frame.HasShadow>
+               BackgroundColor="#03A9F4"
+               HasShadow="{OnPlatform Android=true,
+                                      iOS=false}">
 
-            <StackLayout>
-                <Label x:Name="_lblText" TextColor="White" />
-            </StackLayout>
+            <Label x:Name="_lblText" TextColor="White" />
         </Frame>
 
         <Label x:Name="_lblMessageDate"

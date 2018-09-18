@@ -8,40 +8,80 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using ToolBelt.Models;
-using ToolBelt.Services.Authentication;
-using Xamarin.Auth;
 using Xamarin.Forms;
 
 namespace ToolBelt.Services
 {
-        // TODO: Should be INPC...I think...
-    public class User
+    /// <summary>
+    /// The basic information for an account in the system.
+    /// </summary>
+    public abstract class Account
     {
-        public int Id { get; set; }
+        /// <summary>
+        /// Gets or sets the unique identifier for the account.
+        /// </summary>
+        public string Uid { get; set; }
 
-        public AuthToken Token { get; set; }
+        /// <summary>
+        /// Gets or sets the email address for the account.
+        /// </summary>
+        public string EmailAddress { get; set; }
+    }
 
-        public string Name { get; set; }
+    /// <summary>
+    /// The account information for a contractor.
+    /// </summary>
+    /// <seealso cref="ToolBelt.Services.Account" />
+    public class ContractorAccount : Account
+    {
+        /* 
+        Fields for Contractors:
+        X Company name
+        X URL (if any)
+        X Email address
+        X Physical Address
+        
+        Specialty Area (pull down)
+        Contact Person's name
+        Phone Numbers and Faxes
+        Social networks
+        Billing Information (optional for now)
+         */
 
-        public string LastName { get; set; }
+        /// <summary>
+        /// Gets or sets the name of the company.
+        /// </summary>
+        public string CompanyName { get; set; }
 
-        public string Email { get; set; }
+        /// <summary>
+        /// Gets or sets the URL for the company.
+        /// </summary>
+        public string CompanyUrl { get; set; }
 
-        public string AvatarUrl { get; set; }
+        /// <summary>
+        /// Gets or sets the physical address for the company.
+        /// </summary>
+        public Address PhysicalAddress { get; set; }
+    }
 
-        public AccountType AccountType { get; set; }
+    /// <summary>
+    /// The account information for a tradesmen.
+    /// </summary>
+    /// <seealso cref="ToolBelt.Services.Account" />
+    public class TradesemenAccount : Account
+    {
     }
 
     public interface IUserService
     {
-        User AuthenticatedUser { get; }
+        Account AuthenticatedUser { get; }
     }
 
     public class UserService : IUserService
     {
-        public User AuthenticatedUser { get; }
+        public Account AuthenticatedUser { get; }
 
-        public UserService(User user)
+        public UserService(Account user)
         {
             AuthenticatedUser = user;
         }
@@ -51,70 +91,18 @@ namespace ToolBelt.Services
 
     public interface IUserDataStore
     {
-        Task<User> GetUserFromProvider(AuthenticationProviderUser providerUser);
+        Task<Account> GetUserById(string uid);
     }
 
     public class FakeUserDataStore : IUserDataStore
     {
-        public Task<User> GetUserFromProvider(AuthenticationProviderUser providerUser)
+        public Task<Account> GetUserById(string uid)
         {
-            return Task.FromResult((User)null);
-
-            return Task.FromResult(new User
+            return Task.FromResult((Account)new ContractorAccount
             {
-                Id = 1,
-                Name = "John",
-                LastName = "Doe",
-                Email = "john.doe@fakeemail.com"
+                Uid = "1234",
+                EmailAddress = "john.doe@fake.com"
             });
         }
-    }
-
-    public interface IAuthenticatorFactory
-    {
-        IAuthenticator GetAuthenticationService(AuthenticationProviderType provider, IAuthenticationDelegate authenticationDelegate);
-    }
-
-    public class AuthenticatorFactory : IAuthenticatorFactory
-    {
-        public IAuthenticator GetAuthenticationService(AuthenticationProviderType provider, IAuthenticationDelegate authenticationDelegate)
-        {
-            switch (provider)
-            {
-                case AuthenticationProviderType.Google:
-                    return new GoogleAuthenticator(
-                        "59954122652-tcgdvnlbd18pkucfuih43csfru3tq6gg.apps.googleusercontent.com",
-                        "email",
-                        "com.toolbelt.toolbelt:/oauth2redirect",
-                        authenticationDelegate);
-
-                case AuthenticationProviderType.Facebook:
-                    return new FacebookAuthenticator(
-                    "1324833817652478",
-                    "email",
-                    authenticationDelegate);
-
-                default:
-                    throw new InvalidEnumArgumentException(
-                        nameof(provider),
-                        (int)provider,
-                        typeof(AuthenticationProviderType));
-            }
-        }
-    }
-
-
-    
-
-
-    public class AuthenticationState
-    {
-        /// <summary>
-        /// The authenticator.
-        /// </summary>
-        // TODO:
-        // Oauth1Authenticator inherits from WebAuthenticator
-        // Oauth2Authenticator inherits from WebRedirectAuthenticator
-        public static IAuthenticator Authenticator;
     }
 }

@@ -1,85 +1,109 @@
-﻿using Prism.Ioc;
+﻿using Acr.UserDialogs;
+using Prism.Ioc;
 using Prism.Navigation;
 using ReactiveUI;
+using Splat;
 using System;
 using System.Reactive;
 using System.Reactive.Linq;
 using ToolBelt.Extensions;
 using ToolBelt.Services;
-using ToolBelt.Services.Authentication;
 using ToolBelt.ViewModels;
 using ToolBelt.Views.Authentication.Registration;
 
 namespace ToolBelt.Views.Authentication
 {
-    public class LoginPageViewModel : BaseViewModel, IAuthenticationDelegate
+    public class LoginPageViewModel : BaseViewModel
     {
-        private readonly IAuthenticatorFactory _authenticatorFactory;
         private readonly IContainerRegistry _containerRegistry;
-        private readonly IUserDataStore _userDataStore;
 
         public LoginPageViewModel(
             INavigationService navigationService,
-            IAuthenticatorFactory authenticatorFactory,
             IContainerRegistry containerRegistry,
-            IUserDataStore userDataStore) : base(navigationService)
+            IUserDataStore userDataStore,
+            IUserDialogs dialogs,
+            IFirebaseAuthService firebaseAuthService) : base(navigationService)
         {
             Title = "Login";
-            _authenticatorFactory = authenticatorFactory;
             _containerRegistry = containerRegistry;
-            _userDataStore = userDataStore;
 
             SignInWithGoogle = ReactiveCommand.CreateFromTask(async () =>
             {
-                var auth = _authenticatorFactory.GetAuthenticationService(AuthenticationProviderType.Google, this);
-                AuthenticationState.Authenticator = auth;
-                await Authenticate.Handle(auth);
+                if (await firebaseAuthService.SignInWithGoogle())
+                {
+                    var userId = firebaseAuthService.GetCurrentUserId();
+                    var account = await new FakeUserDataStore().GetUserById(userId);
+                    account = null; // TODO: Remove this
+
+                    if (account == null)
+                    {
+                        // if the account doesn't exist, prompt the user to register
+                        var shouldSignUp = await dialogs.ConfirmAsync(
+                            new ConfirmConfig
+                            {
+                                Message = "The account does not appear to exist.  Would you like to sign up?",
+                                OkText = "Sign Up!"
+                            });
+                        if (shouldSignUp)
+                        {
+                            await NavigationService
+                                .NavigateAsync(
+                                    $"/NavigationPage/{nameof(RegistrationTypeSelectionPage)}",
+                                    new NavigationParameters
+                                    {
+                                        { "user_id", userId }
+                                    }).ConfigureAwait(false);
+                        }
+                    }
+                    else
+                    {
+                        // the account exists. Head to the home page
+                        _containerRegistry.RegisterInstance<IUserService>(new UserService(account));
+
+                        await NavigationService.NavigateHomeAsync().ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    await dialogs.AlertAsync(
+                        new AlertConfig
+                        {
+                            Title = "Error",
+                            Message = "Login failed"
+                        }).ConfigureAwait(false);
+
+                    // TODO: Should call log out just to be safe?
+                }
             });
 
             SignInWithFacebook = ReactiveCommand.CreateFromTask(async () =>
             {
-                var auth = _authenticatorFactory.GetAuthenticationService(AuthenticationProviderType.Facebook, this);
-                AuthenticationState.Authenticator = auth;
-                await Authenticate.Handle(auth);
+                await dialogs.AlertAsync("Coming Soon!").ConfigureAwait(false);
             });
-        }
 
-        public Interaction<IAuthenticator, Unit> Authenticate { get; } = new Interaction<IAuthenticator, Unit>();
+            SignInWithTwitter = ReactiveCommand.CreateFromTask(async () =>
+            {
+                await dialogs.AlertAsync("Coming Soon!").ConfigureAwait(false);
+            });
+
+            // When an exception is thrown from a command, log the error and let the user handle the exception
+            SignInWithGoogle.ThrownExceptions
+                .Merge(SignInWithFacebook.ThrownExceptions)
+                .Merge(SignInWithTwitter.ThrownExceptions)
+                .SelectMany(exception =>
+                {
+                    this.Log().ErrorException("Error logging in", exception);
+                    //return SharedInteractions.Error.Handle(exception);
+                    return Observable.Return(Unit.Default);
+                })
+                .Subscribe();
+        }
 
         public ReactiveCommand<Unit, Unit> SignInWithFacebook { get; }
 
         public ReactiveCommand<Unit, Unit> SignInWithGoogle { get; }
 
-        void IAuthenticationDelegate.OnAuthenticationCanceled()
-        {
-            AuthenticationState.Authenticator = null;
-        }
-
-        async void IAuthenticationDelegate.OnAuthenticationCompleted(OAuthToken token, AuthenticationProviderUser providerUser)
-        {
-            _containerRegistry.RegisterInstance<IAuthenticator>(AuthenticationState.Authenticator);
-
-            var user = await _userDataStore.GetUserFromProvider(providerUser);
-            if (user == null)
-            {
-                // the user is a new user.  Show the registration flow.
-                // NOTE: We probably don't want to do this here.  We should have a separate sign up process
-                await NavigationService.NavigateAsync($"/NavigationPage/{nameof(BasicInformationPage)}").ConfigureAwait(false);
-            }
-            else
-            {
-                _containerRegistry.RegisterInstance<IUserService>(new UserService(user));
-
-                // the user is already registered. Show the main page.
-                await NavigationService.NavigateHomeAsync().ConfigureAwait(false);
-            }
-        }
-
-        void IAuthenticationDelegate.OnAuthenticationFailed(string message, Exception exception)
-        {
-            // TODO: Show message here...
-            AuthenticationState.Authenticator = null;
-        }
+        public ReactiveCommand<Unit, Unit> SignInWithTwitter { get; }
 
         public override void OnNavigatedTo(NavigationParameters parameters)
         {
@@ -87,7 +111,6 @@ namespace ToolBelt.Views.Authentication
             base.OnNavigatedTo(parameters);
 
             // clear the current authentication data from the container
-            _containerRegistry.RegisterInstance<IAuthenticator>(null);
             _containerRegistry.RegisterInstance<IUserService>(null);
         }
     }

@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase x:Class="ToolBelt.Views.Authentication.Registration.ContractorRegistrationPage"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:controls="clr-namespace:ToolBelt.Controls"
+                       xmlns:local="clr-namespace:ToolBelt.Views.Authentication.Registration"
+                       xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                       xmlns:views="clr-namespace:ToolBelt.Views"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:TypeArguments="local:ContractorRegistrationPageViewModel">
+    <StackLayout Padding="20">
+        <Frame Margin="0,0,0,10"
+               Padding="10"
+               BackgroundColor="{StaticResource primaryBackgroundColorLight}"
+               VerticalOptions="Start">
+            <Label Text="The first thing we need to do is set up your account.  To do that, we need to gather some basic information about your company." />
+        </Frame>
+
+        <ScrollView VerticalOptions="FillAndExpand">
+            <StackLayout>
+                <controls:ValidatedEntry x:Name="_companyName"
+                                         HeaderText="Company Name:"
+                                         PlaceholderText="Company Name"
+                                         VerticalOptions="Start" />
+
+                <controls:ValidatedEntry x:Name="_companyEmail"
+                                         HeaderText="Email:"
+                                         Keyboard="Email"
+                                         PlaceholderText="Email"
+                                         VerticalOptions="Start" />
+
+                <controls:ValidatedEntry x:Name="_companyUrl"
+                                         HeaderText="URL:"
+                                         Keyboard="Url"
+                                         PlaceholderText="URL"
+                                         VerticalOptions="Start" />
+
+                <!--<controls:ValidatedEntry x:Name="_phoneControl"
+                                         HeaderText="Phone:"
+                                         Keyboard="Telephone"
+                                         PlaceholderText="Phone"
+                                         VerticalOptions="Start" />-->
+
+                <!--  TODO: Extract address editor to it's own control  -->
+                <controls:ValidatedEntry x:Name="_addressLineOne"
+                                         HeaderText="Address Line 1:"
+                                         PlaceholderText="Address Line 1"
+                                         VerticalOptions="Start" />
+
+                <controls:ValidatedEntry x:Name="_addressLineTwo"
+                                         HeaderText="Address Line 2:"
+                                         PlaceholderText="Address Line 2"
+                                         VerticalOptions="Start" />
+
+                <controls:ValidatedEntry x:Name="_addressCity"
+                                         HeaderText="City:"
+                                         PlaceholderText="City"
+                                         VerticalOptions="Start" />
+
+                <controls:ValidatedEntry x:Name="_addressState"
+                                         HeaderText="State:"
+                                         PlaceholderText="State"
+                                         VerticalOptions="Start" />
+
+                <controls:ValidatedEntry x:Name="_addressZip"
+                                         HeaderText="Zip:"
+                                         PlaceholderText="Zip"
+                                         VerticalOptions="Start" />
+            </StackLayout>
+        </ScrollView>
+
+        <BoxView Margin="0,5"
+                 BackgroundColor="{DynamicResource accentColor}"
+                 HeightRequest="2"
+                 HorizontalOptions="FillAndExpand"
+                 VerticalOptions="End" />
+        <Button x:Name="_btnSave"
+                HorizontalOptions="End"
+                Text="Save"
+                VerticalOptions="End" />
+    </StackLayout>
+    <!--
+        Fields for Contractors:
+        Company name
+        Specialty Area (pull down)
+        URL (if any)
+        Contact Person's name
+        Physical Address
+        Phone Numbers and Faxes
+        Email address
+        Social networks
+        Billing Information (optional for now)
+    -->
+</views:ContentPageBase>

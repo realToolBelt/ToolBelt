@@ -14,7 +14,7 @@ namespace ToolBelt.Views.Authentication.Registration
     // TODO: Most of this page should be moved into a content view rather than a page.  Then we could share it across the registration and profile editing pages.
     public class TradeSpecialtiesPageViewModel : BaseViewModel
     {
-        private User _user;
+        private Account _user;
 
         public TradeSpecialtiesPageViewModel(
             INavigationService navigationService,
@@ -71,7 +71,7 @@ namespace ToolBelt.Views.Authentication.Registration
                 });
 
             NavigatingTo
-                .Select(args => (User)args["user"])
+                .Select(args => (Account)args["user"])
                 .Subscribe(user =>
                 {
                     _user = user;

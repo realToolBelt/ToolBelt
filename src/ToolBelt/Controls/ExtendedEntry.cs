@@ -3,11 +3,12 @@ using Xamarin.Forms;
 
 namespace ToolBelt.Controls
 {
+
     /// <summary>
     /// A derivation of the <see cref="Entry" /> that allows for additional behavior.
     /// </summary>
     /// <seealso cref="Xamarin.Forms.Entry" />
-    public class ExtendedEntry : Entry
+    public class ExtendedEntry : Entry, IDynamicLineColorControl
     {
         public static readonly BindableProperty FocusLineColorProperty = BindableProperty.Create(
             nameof(FocusLineColor),
@@ -39,6 +40,8 @@ namespace ToolBelt.Controls
         {
             Focused += OnFocused;
             Unfocused += OnUnfocused;
+
+            Effects.Add(Effect.Resolve(ToolBelt.Effects.EffectSettings.EntryLineColor));
 
             ResetLineColor();
         }

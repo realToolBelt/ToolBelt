@@ -5,29 +5,28 @@ using ReactiveUI;
 using System;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
+using ToolBelt.Extensions;
 using ToolBelt.Services;
-using ToolBelt.Services.Authentication;
 using ToolBelt.ViewModels;
 using ToolBelt.Views.Authentication.Registration;
 
 namespace ToolBelt.Views.Authentication
 {
-    public class SignupPageViewModel : BaseViewModel, IAuthenticationDelegate
+    public class SignupPageViewModel : BaseViewModel
     {
-        private readonly IAuthenticatorFactory _authenticatorFactory;
         private readonly IContainerRegistry _containerRegistry;
         private readonly IUserDataStore _userDataStore;
         private bool _agreeWithTermsAndConditions;
 
         public SignupPageViewModel(
             INavigationService navigationService,
-            IAuthenticatorFactory authenticatorFactory,
             IContainerRegistry containerRegistry,
             IUserDataStore userDataStore,
-            IUserDialogs dialogService) : base(navigationService)
+            IUserDialogs dialogService,
+            IFirebaseAuthService firebaseAuthService) : base(navigationService)
         {
             Title = "Sign Up";
-            _authenticatorFactory = authenticatorFactory;
             _containerRegistry = containerRegistry;
             _userDataStore = userDataStore;
 
@@ -35,40 +34,57 @@ namespace ToolBelt.Views.Authentication
             {
                 if (!AgreeWithTermsAndConditions)
                 {
-                    await dialogService.AlertAsync(
-                        new AlertConfig
-                        {
-                            Title = "Missing information",
-                            Message = "You must agree to the terms and conditions",
-                            OkText = "OK"
-                        }).ConfigureAwait(false);
-
+                    await ShowTermsAndConditionsValidationMessage(dialogService).ConfigureAwait(false);
                     return;
                 }
 
-                var auth = _authenticatorFactory.GetAuthenticationService(AuthenticationProviderType.Google, this);
-                AuthenticationState.Authenticator = auth;
-                await Authenticate.Handle(auth);
+                if (await firebaseAuthService.SignInWithGoogle())
+                {
+                    var userId = firebaseAuthService.GetCurrentUserId();
+                    var account = await new FakeUserDataStore().GetUserById(userId);
+
+                    if (account != null)
+                    {
+                        // if the account is not null, the user is already registered. Just log them
+                        // in and head to the home screen
+                        _containerRegistry.RegisterInstance<IUserService>(new UserService(account));
+
+                        await NavigationService.NavigateHomeAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        // The account does not yet exist. Go through the registration process
+                        await NavigationService
+                            .NavigateAsync(
+                                $"/NavigationPage/{nameof(RegistrationTypeSelectionPage)}",
+                                new NavigationParameters
+                                {
+                                    { "user_id", userId }
+                                }).ConfigureAwait(false);
+                    }
+                }
             });
 
             SignInWithFacebook = ReactiveCommand.CreateFromTask(async () =>
             {
                 if (!AgreeWithTermsAndConditions)
                 {
-                    await dialogService.AlertAsync(
-                        new AlertConfig
-                        {
-                            Title = "Missing information",
-                            Message = "You must agree to the terms and conditions",
-                            OkText = "OK"
-                        }).ConfigureAwait(false);
-
+                    await ShowTermsAndConditionsValidationMessage(dialogService).ConfigureAwait(false);
                     return;
                 }
 
-                var auth = _authenticatorFactory.GetAuthenticationService(AuthenticationProviderType.Facebook, this);
-                AuthenticationState.Authenticator = auth;
-                await Authenticate.Handle(auth);
+                await dialogService.AlertAsync("Coming Soon!").ConfigureAwait(false);
+            });
+
+            SignInWithTwitter = ReactiveCommand.CreateFromTask(async () =>
+            {
+                if (!AgreeWithTermsAndConditions)
+                {
+                    await ShowTermsAndConditionsValidationMessage(dialogService).ConfigureAwait(false);
+                    return;
+                }
+
+                await dialogService.AlertAsync("Coming Soon!").ConfigureAwait(false);
             });
 
             SignInWithGoogle.ThrownExceptions.Subscribe(error => System.Diagnostics.Debug.WriteLine(error.ToString()));
@@ -80,55 +96,21 @@ namespace ToolBelt.Views.Authentication
             set => this.RaiseAndSetIfChanged(ref _agreeWithTermsAndConditions, value);
         }
 
-        public Interaction<IAuthenticator, Unit> Authenticate { get; } = new Interaction<IAuthenticator, Unit>();
-
         public ReactiveCommand<Unit, Unit> SignInWithFacebook { get; }
 
         public ReactiveCommand<Unit, Unit> SignInWithGoogle { get; }
 
-        void IAuthenticationDelegate.OnAuthenticationCanceled()
-        {
-            AuthenticationState.Authenticator = null;
-        }
+        public ReactiveCommand<Unit, Unit> SignInWithTwitter { get; }
 
-        async void IAuthenticationDelegate.OnAuthenticationCompleted(OAuthToken token, AuthenticationProviderUser providerUser)
+        private static async Task ShowTermsAndConditionsValidationMessage(IUserDialogs dialogService)
         {
-            _containerRegistry.RegisterInstance<IAuthenticator>(AuthenticationState.Authenticator);
-
-            var user = await _userDataStore.GetUserFromProvider(providerUser);
-            if (user == null)
-            {
-                user = new User
+            await dialogService.AlertAsync(
+                new AlertConfig
                 {
-                    Email = providerUser.Email,
-                    Token = AuthToken.FromOAuthToken(token),
-                    AccountType = Models.AccountType.Contractor, // NOTE: Hard-coded for now...
-                };
-
-                // TODO: Save the account here?
-
-                await NavigationService
-                    .NavigateAsync(
-                        $"/NavigationPage/{nameof(TradeSpecialtiesPage)}",
-                        new NavigationParameters
-                        {
-                            { "user", user }
-                        }).ConfigureAwait(false);
-            }
-            else
-            {
-                // if the user is an existing user, we should let them know they're already registered... Should we just sign in?
-                //_containerRegistry.RegisterInstance<IUserService>(new UserService(user));
-
-                //// the user is already registered. Show the main page.
-                //await NavigationService.NavigateAsync($"/Root/Details/{nameof(MainPage)}").ConfigureAwait(false);
-            }
-        }
-
-        void IAuthenticationDelegate.OnAuthenticationFailed(string message, Exception exception)
-        {
-            // TODO: Show message here...
-            AuthenticationState.Authenticator = null;
+                    Title = "Missing information",
+                    Message = "You must agree to the terms and conditions",
+                    OkText = "OK"
+                }).ConfigureAwait(false);
         }
     }
 }

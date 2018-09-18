@@ -55,9 +55,6 @@
                 <Label Style="{StaticResource ProfileTitleLabelStyle}" Text="First Name" />
                 <Label x:Name="_lblFirstName" Style="{StaticResource ProfileItemLabelStyle}" />
 
-                <Label Style="{StaticResource ProfileTitleLabelStyle}" Text="Last Name" />
-                <Label x:Name="_lblLastName" Style="{StaticResource ProfileItemLabelStyle}" />
-
                 <Label Style="{StaticResource ProfileTitleLabelStyle}" Text="Email" />
                 <Label x:Name="_lblEmail" Style="{StaticResource ProfileItemLabelStyle}" />
             </StackLayout>

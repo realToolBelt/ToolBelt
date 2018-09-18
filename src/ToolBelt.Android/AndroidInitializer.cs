@@ -1,5 +1,6 @@
 ﻿using Prism;
 using Prism.Ioc;
+using ToolBelt.Droid.Services;
 using ToolBelt.Services;
 
 namespace ToolBelt.Droid
@@ -8,6 +9,7 @@ namespace ToolBelt.Droid
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register<IFirebaseAuthService, FirebaseAuthService>();
         }
     }
 }
