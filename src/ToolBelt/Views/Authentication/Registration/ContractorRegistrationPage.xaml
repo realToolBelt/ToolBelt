@@ -23,10 +23,27 @@
                                          PlaceholderText="Company Name"
                                          VerticalOptions="Start" />
 
+                <controls:ValidatedEntry x:Name="_primaryContact"
+                                         HeaderText="Primary Contact:"
+                                         PlaceholderText="Primary Contact"
+                                         VerticalOptions="Start" />
+
                 <controls:ValidatedEntry x:Name="_companyEmail"
                                          HeaderText="Email:"
                                          Keyboard="Email"
                                          PlaceholderText="Email"
+                                         VerticalOptions="Start" />
+
+                <controls:ValidatedEntry x:Name="_companyPrimaryPhone"
+                                         HeaderText="Primary Phone:"
+                                         Keyboard="Telephone"
+                                         PlaceholderText="Primary Phone"
+                                         VerticalOptions="Start" />
+
+                <controls:ValidatedEntry x:Name="_companySecondaryPhone"
+                                         HeaderText="Alternate Phone:"
+                                         Keyboard="Telephone"
+                                         PlaceholderText="Alternate Phone"
                                          VerticalOptions="Start" />
 
                 <controls:ValidatedEntry x:Name="_companyUrl"
@@ -34,12 +51,6 @@
                                          Keyboard="Url"
                                          PlaceholderText="URL"
                                          VerticalOptions="Start" />
-
-                <!--<controls:ValidatedEntry x:Name="_phoneControl"
-                                         HeaderText="Phone:"
-                                         Keyboard="Telephone"
-                                         PlaceholderText="Phone"
-                                         VerticalOptions="Start" />-->
 
                 <!--  TODO: Extract address editor to it's own control  -->
                 <controls:ValidatedEntry x:Name="_addressLineOne"
@@ -66,6 +77,26 @@
                                          HeaderText="Zip:"
                                          PlaceholderText="Zip"
                                          VerticalOptions="Start" />
+
+
+
+                <controls:ValidatedEntry x:Name="_socialNetwork1"
+                                         HeaderText="Social Network:"
+                                         Keyboard="Url"
+                                         PlaceholderText="Social Network"
+                                         VerticalOptions="Start" />
+
+                <controls:ValidatedEntry x:Name="_socialNetwork2"
+                                         HeaderText="Social Network:"
+                                         Keyboard="Url"
+                                         PlaceholderText="Social Network"
+                                         VerticalOptions="Start" />
+
+                <controls:ValidatedEntry x:Name="_socialNetwork3"
+                                         HeaderText="Social Network:"
+                                         Keyboard="Url"
+                                         PlaceholderText="Social Network"
+                                         VerticalOptions="Start" />
             </StackLayout>
         </ScrollView>
 
@@ -74,9 +105,9 @@
                  HeightRequest="2"
                  HorizontalOptions="FillAndExpand"
                  VerticalOptions="End" />
-        <Button x:Name="_btnSave"
+        <Button x:Name="_btnNext"
                 HorizontalOptions="End"
-                Text="Save"
+                Text="Next"
                 VerticalOptions="End" />
     </StackLayout>
     <!--

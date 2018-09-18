@@ -30,7 +30,9 @@ namespace ToolBelt.Views.Authentication.Registration
             Contractor = ReactiveCommand.CreateFromTask(async () =>
             {
                 analyticService.TrackTapEvent("register-as-contractor");
-                await navigationService.NavigateAsync(nameof(ContractorRegistrationPage)).ConfigureAwait(false);
+                await navigationService.NavigateAsync(
+                    nameof(ContractorRegistrationPage),
+                    new NavigationParameters { { "user_id", _userId } }).ConfigureAwait(false);
             });
 
             NavigatingTo

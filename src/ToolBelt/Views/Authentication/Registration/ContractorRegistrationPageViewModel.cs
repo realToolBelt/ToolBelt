@@ -2,6 +2,7 @@
 using ReactiveUI;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using ToolBelt.Services;
 using ToolBelt.Validation;
 using ToolBelt.Validation.Rules;
@@ -12,6 +13,7 @@ namespace ToolBelt.Views.Authentication.Registration
     public class ContractorRegistrationPageViewModel : BaseViewModel
     {
         private readonly IEnumerable<IValidity> _validatableFields;
+        private string _userId;
 
         public ContractorRegistrationPageViewModel(
             INavigationService navigationService,
@@ -35,19 +37,55 @@ namespace ToolBelt.Views.Authentication.Registration
                 AddressLineTwo,
                 City,
                 State,
-                Zip
+                Zip,
+                PrimaryPhone,
+                SecondaryPhone,
+                SocialNetwork1,
+                SocialNetwork2,
+                SocialNetwork3,
+                PrimaryContact
             };
 
             AddValidationRules();
 
-            Save = ReactiveCommand.CreateFromTask(async () =>
+            NavigatingTo
+                .Where(args => args.ContainsKey("user_id"))
+                .Select(args => args["user_id"].ToString())
+                .BindTo(this, x => x._userId);
+
+            Next = ReactiveCommand.CreateFromTask(async () =>
             {
                 if (!IsValid())
                 {
                     return;
                 }
 
+                var contractor = new ContractorAccount
+                {
+                    Uid = _userId,
+                    EmailAddress = CompanyEmail.Value,
+                    CompanyName = CompanyName.Value,
+                    CompanyUrl = CompanyUrl.Value,
+                    PrimaryContact = PrimaryContact.Value,
+                    PrimaryPhoneNumber = PrimaryPhone.Value,
+                    SecondaryPhoneNumber = SecondaryPhone.Value,
+                    PhysicalAddress = new Models.Address
+                    {
+                        Address1 = AddressLineOne.Value,
+                        Address2 = AddressLineTwo.Value,
+                        City = City.Value,
+                        State = State.Value,
+                        PostalCode = Zip.Value
+                    },
+                    SocialNetwork1 = SocialNetwork1.Value,
+                    SocialNetwork2 = SocialNetwork2.Value,
+                    SocialNetwork3 = SocialNetwork3.Value
+                };
+                
                 // TODO: ...
+                await navigationService.NavigateAsync(
+                    nameof(TradeSpecialtiesPage),
+                    new NavigationParameters { { "account", contractor } }).ConfigureAwait(false);
             });
         }
 
@@ -63,11 +101,20 @@ namespace ToolBelt.Views.Authentication.Registration
 
         public ValidatableObject<string> CompanyUrl { get; } = new ValidatableObject<string>();
 
-        public ReactiveCommand Save { get; }
+        public ValidatableObject<string> PrimaryPhone { get; } = new ValidatableObject<string>();
+
+        public ReactiveCommand Next { get; }
+
+        public ValidatableObject<string> SecondaryPhone { get; } = new ValidatableObject<string>();
 
         public ValidatableObject<string> State { get; } = new ValidatableObject<string>();
 
         public ValidatableObject<string> Zip { get; } = new ValidatableObject<string>();
+
+        public ValidatableObject<string> SocialNetwork1 { get; } = new ValidatableObject<string>();
+        public ValidatableObject<string> SocialNetwork2 { get; } = new ValidatableObject<string>();
+        public ValidatableObject<string> SocialNetwork3 { get; } = new ValidatableObject<string>();
+        public ValidatableObject<string> PrimaryContact { get; } = new ValidatableObject<string>();
 
         private Dictionary<string, string> States { get; } = new Dictionary<string, string>
         {
@@ -130,10 +177,18 @@ namespace ToolBelt.Views.Authentication.Registration
         private void AddValidationRules()
         {
             CompanyName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "Company name cannot be empty" });
+            PrimaryContact.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "Primary contact cannot be empty" });
             CompanyEmail.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "Company email cannot be empty" });
             CompanyEmail.Validations.Add(new EmailRule { ValidationMessage = "Company email must be a valid email address" });
 
             CompanyUrl.Validations.Add(new ValidUrlRule { ValidationMessage = "Company URL must be a valid URL" });
+
+            PrimaryPhone.Validations.Add(new PhoneRule { ValidationMessage = "Phone number must be a valid phone number" });
+            SecondaryPhone.Validations.Add(new PhoneRule { ValidationMessage = "Phone number must be a valid phone number" });
+
+            SocialNetwork1.Validations.Add(new ValidUrlRule { ValidationMessage = "Must be a valid URL" });
+            SocialNetwork2.Validations.Add(new ValidUrlRule { ValidationMessage = "Must be a valid URL" });
+            SocialNetwork3.Validations.Add(new ValidUrlRule { ValidationMessage = "Must be a valid URL" });
         }
 
         /// <summary>

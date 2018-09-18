@@ -40,11 +40,11 @@ namespace ToolBelt.Services
         X URL (if any)
         X Email address
         X Physical Address
+        X Contact Person's name
+        X Phone Numbers and Faxes (2)
+        X Social networks (3)
         
         Specialty Area (pull down)
-        Contact Person's name
-        Phone Numbers and Faxes
-        Social networks
         Billing Information (optional for now)
          */
 
@@ -62,6 +62,25 @@ namespace ToolBelt.Services
         /// Gets or sets the physical address for the company.
         /// </summary>
         public Address PhysicalAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the primary phone number for the company.
+        /// </summary>
+        public string PrimaryPhoneNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secondary phone number for the company.
+        /// </summary>
+        public string SecondaryPhoneNumber { get; set; }
+
+        public string PrimaryContact { get; set; }
+
+        /*NOTE: Right now we're hard-limiting to 3 social networks, with no category defined */
+        public string SocialNetwork1 { get; set; }
+        public string SocialNetwork2 { get; set; }
+        public string SocialNetwork3 { get; set; }
+
+        public List<TradeSpecialty> Specialties { get; } = new List<TradeSpecialty>();
     }
 
     /// <summary>

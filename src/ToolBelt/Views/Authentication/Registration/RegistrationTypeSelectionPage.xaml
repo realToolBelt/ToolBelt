@@ -2,61 +2,19 @@
 <views:ContentPageBase x:Class="ToolBelt.Views.Authentication.Registration.RegistrationTypeSelectionPage"
                        xmlns="http://xamarin.com/schemas/2014/forms"
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                       xmlns:controls="clr-namespace:ToolBelt.Controls"
                        xmlns:local="clr-namespace:ToolBelt.Views.Authentication.Registration"
                        xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                        xmlns:views="clr-namespace:ToolBelt.Views"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        x:TypeArguments="local:RegistrationTypeSelectionPageViewModel">
-    <Grid x:Name="_mainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="0" />
-        </Grid.ColumnDefinitions>
-
-        <Frame Grid.Row="0"
-               Grid.Column="0"
+    <FlexLayout x:Name="_flexMain" Direction="Column">
+        <Frame Margin="10"
                BackgroundColor="{StaticResource primaryBackgroundColorLight}"
+               FlexLayout.Basis="50%"
                HasShadow="True"
-               HorizontalOptions="FillAndExpand"
-               IsClippedToBounds="True"
-               VerticalOptions="FillAndExpand">
+               IsClippedToBounds="True">
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer x:Name="_tgrTradesmen" />
-            </Frame.GestureRecognizers>
-
-            <StackLayout>
-                <Label FontSize="{StaticResource HugeSize}"
-                       HorizontalOptions="Center"
-                       HorizontalTextAlignment="Center"
-                       Style="{StaticResource FASolidLabelStyle}"
-                       Text="&#xf1ad;"
-                       TextColor="{StaticResource textColor}" />
-
-                <Label FontSize="{StaticResource BigSize}"
-                       HorizontalOptions="Center"
-                       HorizontalTextAlignment="Center"
-                       Text="Tradesman" />
-
-                <Label Text="You are a tradesman, ..." />
-            </StackLayout>
-        </Frame>
-
-        <Frame x:Name="_frameContractor"
-               Grid.Row="1"
-               Grid.Column="0"
-               BackgroundColor="{StaticResource primaryBackgroundColorLight}"
-               HasShadow="True"
-               HorizontalOptions="FillAndExpand"
-               IsClippedToBounds="True"
-               VerticalOptions="FillAndExpand">
-            <Frame.GestureRecognizers>
-                <TapGestureRecognizer x:Name="_tgrContractor" />
             </Frame.GestureRecognizers>
 
             <StackLayout>
@@ -70,10 +28,52 @@
                 <Label FontSize="{StaticResource BigSize}"
                        HorizontalOptions="Center"
                        HorizontalTextAlignment="Center"
+                       Text="Tradesman" />
+
+                <Label Text="You are a tradesman, ..." />
+            </StackLayout>
+        </Frame>
+
+        <Frame Margin="10"
+               BackgroundColor="{StaticResource primaryBackgroundColorLight}"
+               FlexLayout.Basis="50%"
+               HasShadow="True"
+               IsClippedToBounds="True">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer x:Name="_tgrContractor" />
+            </Frame.GestureRecognizers>
+
+            <StackLayout>
+                <Label FontSize="{StaticResource HugeSize}"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Style="{StaticResource FASolidLabelStyle}"
+                       Text="&#xf1ad;"
+                       TextColor="{StaticResource textColor}" />
+
+                <Label FontSize="{StaticResource BigSize}"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
                        Text="Contractor" />
 
                 <Label Text="You are a contracting company, ..." />
             </StackLayout>
         </Frame>
-    </Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup Name="OrientationStates">
+
+                <VisualState Name="Portrait">
+                    <VisualState.Setters>
+                        <Setter Property="Direction" Value="Column" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState Name="Landscape">
+                    <VisualState.Setters>
+                        <Setter Property="Direction" Value="Row" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </FlexLayout>
 </views:ContentPageBase>

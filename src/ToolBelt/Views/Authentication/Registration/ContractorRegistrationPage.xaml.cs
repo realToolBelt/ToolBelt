@@ -25,6 +25,10 @@ namespace ToolBelt.Views.Authentication.Registration
                         .DisposeWith(disposable);
 
                     this
+                        .Bind(ViewModel, vm => vm.PrimaryContact, v => v._primaryContact.ViewModel)
+                        .DisposeWith(disposable);
+
+                    this
                         .Bind(ViewModel, vm => vm.CompanyEmail, v => v._companyEmail.ViewModel)
                         .DisposeWith(disposable);
 
@@ -53,7 +57,27 @@ namespace ToolBelt.Views.Authentication.Registration
                         .DisposeWith(disposable);
 
                     this
-                        .BindCommand(ViewModel, vm => vm.Save, v => v._btnSave)
+                        .Bind(ViewModel, vm => vm.PrimaryPhone, v => v._companyPrimaryPhone.ViewModel)
+                        .DisposeWith(disposable);
+
+                    this
+                        .Bind(ViewModel, vm => vm.SecondaryPhone, v => v._companySecondaryPhone.ViewModel)
+                        .DisposeWith(disposable);
+
+                    this
+                        .Bind(ViewModel, vm => vm.SocialNetwork1, v => v._socialNetwork1.ViewModel)
+                        .DisposeWith(disposable);
+
+                    this
+                        .Bind(ViewModel, vm => vm.SocialNetwork2, v => v._socialNetwork2.ViewModel)
+                        .DisposeWith(disposable);
+
+                    this
+                        .Bind(ViewModel, vm => vm.SocialNetwork3, v => v._socialNetwork3.ViewModel)
+                        .DisposeWith(disposable);
+
+                    this
+                        .BindCommand(ViewModel, vm => vm.Next, v => v._btnNext)
                         .DisposeWith(disposable);
                 }
             });

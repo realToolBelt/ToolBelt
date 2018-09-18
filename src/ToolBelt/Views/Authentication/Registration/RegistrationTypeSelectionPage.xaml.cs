@@ -43,23 +43,13 @@ namespace ToolBelt.Views.Authentication.Registration
 
         protected override void OnOrientationChanged(DeviceOrientations orientation)
         {
-            switch (orientation)
+            if (orientation == DeviceOrientations.Landscape)
             {
-                case DeviceOrientations.Landscape:
-                    _mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
-                    _mainGrid.RowDefinitions[1].Height = new GridLength(0, GridUnitType.Absolute);
-
-                    Grid.SetColumn(_frameContractor, 1);
-                    Grid.SetRow(_frameContractor, 0);
-                    break;
-
-                default:
-                    _mainGrid.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Absolute);
-                    _mainGrid.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
-
-                    Grid.SetColumn(_frameContractor, 0);
-                    Grid.SetRow(_frameContractor, 1);
-                    break;
+                VisualStateManager.GoToState(_flexMain, "Landscape");
+            }
+            else
+            {
+                VisualStateManager.GoToState(_flexMain, "Portrait");
             }
         }
     }

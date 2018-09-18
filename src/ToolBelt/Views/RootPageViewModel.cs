@@ -45,11 +45,11 @@ namespace ToolBelt.Views
                 //    IconSource = "\xf0c0",
                 //    TapCommand = CreateNavigationCommand($"Details/{nameof(CommunitiesPage)}")
                 //},
-                new CustomMenuItem
-                {
-                    Title = "Explore",
-                    IconSource = "\xf002"
-                },
+                //new CustomMenuItem
+                //{
+                //    Title = "Explore",
+                //    IconSource = "\xf002"
+                //},
                 new CustomMenuItem
                 {
                     Title = "Contact Us",
