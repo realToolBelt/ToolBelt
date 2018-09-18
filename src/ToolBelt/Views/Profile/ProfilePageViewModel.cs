@@ -9,7 +9,7 @@ namespace ToolBelt.Views.Profile
 {
     public class ProfilePageViewModel : BaseViewModel
     {
-        private User _user;
+        private Account _user;
 
         public ProfilePageViewModel(INavigationService navigationService) : base(navigationService)
         {
@@ -27,7 +27,7 @@ namespace ToolBelt.Views.Profile
 
             NavigatedTo
                 .Take(1)
-                .Select(args => args["user"] as User)
+                .Select(args => args["user"] as Account)
                 .Subscribe(user =>
                 {
                     // TODO: Add handler for when user is null
@@ -37,7 +37,7 @@ namespace ToolBelt.Views.Profile
 
         public ReactiveCommand Edit { get; }
 
-        public User User
+        public Account User
         {
             get => _user;
             private set => this.RaiseAndSetIfChanged(ref _user, value);

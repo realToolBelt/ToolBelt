@@ -127,7 +127,7 @@ namespace ToolBelt.Views
 
         public ReactiveList<CustomMenuItem> MenuItems { get; }
 
-        public User User { get; }
+        public Account User { get; }
 
         public ReactiveCommand ViewProfile { get; }
     }

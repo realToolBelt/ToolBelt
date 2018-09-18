@@ -139,7 +139,7 @@ namespace ToolBelt.Views.Profile
         public override void OnNavigatingTo(NavigationParameters parameters)
         {
             base.OnNavigatingTo(parameters);
-            var user = parameters["user"] as User;
+            var user = parameters["user"] as Account;
             if (user?.Uid == _userService.AuthenticatedUser.Uid)
             {
                 CanEdit = true;

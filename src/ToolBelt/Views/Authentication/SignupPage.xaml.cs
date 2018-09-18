@@ -36,6 +36,10 @@ namespace ToolBelt.Views.Authentication
                     this
                         .BindCommand(ViewModel, vm => vm.SignInWithFacebook, v => v._btnFacebook)
                         .DisposeWith(disposable);
+
+                    this
+                        .BindCommand(ViewModel, vm => vm.SignInWithTwitter, v => v._btnTwitter)
+                        .DisposeWith(disposable);
                 }
             });
         }

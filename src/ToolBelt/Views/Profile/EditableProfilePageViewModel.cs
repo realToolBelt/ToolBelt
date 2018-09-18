@@ -40,7 +40,7 @@ namespace ToolBelt.Views.Profile
 
             NavigatedTo
                 .Take(1)
-                .Select(args => args["user"] as User)
+                .Select(args => args["user"] as Account)
                 .Subscribe(user =>
                 {
                     // TODO: Handle null user, handle editing...

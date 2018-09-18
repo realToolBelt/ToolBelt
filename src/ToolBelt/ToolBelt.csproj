@@ -43,6 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\Authentication\Registration\RegistrationTypeSelectionPage.xaml.cs">
+      <DependentUpon>RegistrationTypeSelectionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Profile\ProfileViewTabbedPage.xaml.cs">
       <DependentUpon>ProfileViewTabbedPage.xaml</DependentUpon>
     </Compile>
@@ -83,6 +86,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Authentication\Registration\BasicInformationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Authentication\Registration\ContractorRegistrationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Authentication\Registration\RegistrationTypeSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Authentication\Registration\TradeSpecialtiesPage.xaml">

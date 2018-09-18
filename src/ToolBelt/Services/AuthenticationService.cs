@@ -12,28 +12,76 @@ using Xamarin.Forms;
 
 namespace ToolBelt.Services
 {
-        // TODO: Should be INPC...I think...
-    public class User
+    /// <summary>
+    /// The basic information for an account in the system.
+    /// </summary>
+    public abstract class Account
     {
+        /// <summary>
+        /// Gets or sets the unique identifier for the account.
+        /// </summary>
         public string Uid { get; set; }
 
-        public string Name { get; set; }
+        /// <summary>
+        /// Gets or sets the email address for the account.
+        /// </summary>
+        public string EmailAddress { get; set; }
+    }
 
-        public string Email { get; set; }
+    /// <summary>
+    /// The account information for a contractor.
+    /// </summary>
+    /// <seealso cref="ToolBelt.Services.Account" />
+    public class ContractorAccount : Account
+    {
+        /* 
+        Fields for Contractors:
+        X Company name
+        X URL (if any)
+        X Email address
+        X Physical Address
+        
+        Specialty Area (pull down)
+        Contact Person's name
+        Phone Numbers and Faxes
+        Social networks
+        Billing Information (optional for now)
+         */
 
-        public AccountType AccountType { get; set; }
+        /// <summary>
+        /// Gets or sets the name of the company.
+        /// </summary>
+        public string CompanyName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL for the company.
+        /// </summary>
+        public string CompanyUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the physical address for the company.
+        /// </summary>
+        public Address PhysicalAddress { get; set; }
+    }
+
+    /// <summary>
+    /// The account information for a tradesmen.
+    /// </summary>
+    /// <seealso cref="ToolBelt.Services.Account" />
+    public class TradesemenAccount : Account
+    {
     }
 
     public interface IUserService
     {
-        User AuthenticatedUser { get; }
+        Account AuthenticatedUser { get; }
     }
 
     public class UserService : IUserService
     {
-        public User AuthenticatedUser { get; }
+        public Account AuthenticatedUser { get; }
 
-        public UserService(User user)
+        public UserService(Account user)
         {
             AuthenticatedUser = user;
         }
@@ -43,19 +91,17 @@ namespace ToolBelt.Services
 
     public interface IUserDataStore
     {
-        Task<User> GetUserById(string uid);
+        Task<Account> GetUserById(string uid);
     }
 
     public class FakeUserDataStore : IUserDataStore
     {
-        public Task<User> GetUserById(string uid)
+        public Task<Account> GetUserById(string uid)
         {
-            return Task.FromResult(new User
+            return Task.FromResult((Account)new ContractorAccount
             {
                 Uid = "1234",
-                Name = "John",
-                Email = "john.doe@fakeemail.com",
-                AccountType = AccountType.Contractor
+                EmailAddress = "john.doe@fake.com"
             });
         }
     }

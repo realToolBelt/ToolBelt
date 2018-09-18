@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:ContentPageBase x:Class="ToolBelt.Views.Authentication.Registration.RegistrationTypeSelectionPage"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:controls="clr-namespace:ToolBelt.Controls"
+                       xmlns:local="clr-namespace:ToolBelt.Views.Authentication.Registration"
+                       xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                       xmlns:views="clr-namespace:ToolBelt.Views"
+                       prism:ViewModelLocator.AutowireViewModel="True"
+                       x:TypeArguments="local:RegistrationTypeSelectionPageViewModel">
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Frame BackgroundColor="{StaticResource primaryBackgroundColorLight}"
+               HasShadow="True"
+               HorizontalOptions="FillAndExpand"
+               IsClippedToBounds="True"
+               VerticalOptions="FillAndExpand">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer x:Name="_tgrTradesmen" />
+            </Frame.GestureRecognizers>
+
+            <StackLayout>
+                <Label FontSize="{StaticResource HugeSize}"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Style="{StaticResource FASolidLabelStyle}"
+                       Text="&#xf1ad;"
+                       TextColor="{StaticResource textColor}" />
+
+                <Label FontSize="{StaticResource BigSize}"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Text="Tradesman" />
+
+                <Label Text="You are a tradesman, ..." />
+            </StackLayout>
+        </Frame>
+
+        <Frame BackgroundColor="{StaticResource primaryBackgroundColorLight}"
+               HasShadow="True"
+               HorizontalOptions="FillAndExpand"
+               IsClippedToBounds="True"
+               VerticalOptions="FillAndExpand">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer x:Name="_tgrContractor" />
+            </Frame.GestureRecognizers>
+
+            <StackLayout>
+                <Label FontSize="{StaticResource HugeSize}"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Style="{StaticResource FASolidLabelStyle}"
+                       Text="&#xf007;"
+                       TextColor="{StaticResource textColor}" />
+
+                <Label FontSize="{StaticResource BigSize}"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       Text="Contractor" />
+
+                <Label Text="You are a contracting company, ..." />
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</views:ContentPageBase>

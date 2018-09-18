@@ -46,8 +46,7 @@ namespace ToolBelt.Views
                 .Take(1)
                 .Subscribe(_ =>
                 {
-                    Email.Value = userService.AuthenticatedUser.Email;
-                    Name.Value = userService.AuthenticatedUser.Name;
+                    Email.Value = userService.AuthenticatedUser.EmailAddress;
                 });
         }
 

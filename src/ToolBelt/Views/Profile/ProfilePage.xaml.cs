@@ -30,12 +30,12 @@ namespace ToolBelt.Views.Profile
                         .DisposeWith(disposable);
 
                     this
-                        .OneWayBind(ViewModel, vm => vm.User.Email, v => v._lblEmail.Text)
+                        .OneWayBind(ViewModel, vm => vm.User.EmailAddress, v => v._lblEmail.Text)
                         .DisposeWith(disposable);
 
-                    this
-                        .OneWayBind(ViewModel, vm => vm.User.Name, v => v._lblFirstName.Text)
-                        .DisposeWith(disposable);
+                    //this
+                    //    .OneWayBind(ViewModel, vm => vm.User.Name, v => v._lblFirstName.Text)
+                    //    .DisposeWith(disposable);
                 }
             });
         }

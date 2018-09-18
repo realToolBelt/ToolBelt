@@ -31,9 +31,10 @@ namespace ToolBelt.Views
                 this
                     .OneWayBind(ViewModel, vm => vm.MenuItems, v => v._lstMenu.ItemsSource)
                     .DisposeWith(disposable);
-                this
-                    .OneWayBind(ViewModel, vm => vm.User.Name, v => v._lblUserName.Text)
-                    .DisposeWith(disposable);
+
+                //this
+                //    .OneWayBind(ViewModel, vm => vm.User.Name, v => v._lblUserName.Text)
+                //    .DisposeWith(disposable);
 
                 _lstMenu
                     .Events()
