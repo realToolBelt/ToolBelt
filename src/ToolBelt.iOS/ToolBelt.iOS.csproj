@@ -86,6 +86,7 @@
     <BundleResource Include="..\CommonResources\Fonts\FontAwesome\fontawesome_brands.otf">
       <Link>Resources\fontawesome_brands.otf</Link>
     </BundleResource>
+    <Compile Include="Services\DeviceOrientationImplementation.cs" />
     <Compile Include="Services\FirebaseAuthService.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />

@@ -10,6 +10,7 @@ namespace ToolBelt.Droid
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IFirebaseAuthService, FirebaseAuthService>();
+            containerRegistry.Register<IDeviceOrientation, DeviceOrientationImplementation>();
         }
     }
 }

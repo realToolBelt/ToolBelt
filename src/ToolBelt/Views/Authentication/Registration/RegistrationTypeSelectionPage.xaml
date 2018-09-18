@@ -8,8 +8,20 @@
                        xmlns:views="clr-namespace:ToolBelt.Views"
                        prism:ViewModelLocator.AutowireViewModel="True"
                        x:TypeArguments="local:RegistrationTypeSelectionPageViewModel">
-    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <Frame BackgroundColor="{StaticResource primaryBackgroundColorLight}"
+    <Grid x:Name="_mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0" />
+        </Grid.ColumnDefinitions>
+
+        <Frame Grid.Row="0"
+               Grid.Column="0"
+               BackgroundColor="{StaticResource primaryBackgroundColorLight}"
                HasShadow="True"
                HorizontalOptions="FillAndExpand"
                IsClippedToBounds="True"
@@ -35,7 +47,10 @@
             </StackLayout>
         </Frame>
 
-        <Frame BackgroundColor="{StaticResource primaryBackgroundColorLight}"
+        <Frame x:Name="_frameContractor"
+               Grid.Row="1"
+               Grid.Column="0"
+               BackgroundColor="{StaticResource primaryBackgroundColorLight}"
                HasShadow="True"
                HorizontalOptions="FillAndExpand"
                IsClippedToBounds="True"
@@ -60,5 +75,5 @@
                 <Label Text="You are a contracting company, ..." />
             </StackLayout>
         </Frame>
-    </StackLayout>
+    </Grid>
 </views:ContentPageBase>
