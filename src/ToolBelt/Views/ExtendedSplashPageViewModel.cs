@@ -1,9 +1,6 @@
-﻿using Acr.UserDialogs;
-using Prism.Ioc;
+﻿using Prism.Ioc;
 using Prism.Navigation;
 using ReactiveUI;
-using System;
-using System.Linq;
 using System.Reactive.Linq;
 using ToolBelt.Extensions;
 using ToolBelt.Services;
@@ -11,22 +8,21 @@ using ToolBelt.ViewModels;
 
 namespace ToolBelt.Views
 {
+    /// <summary>
+    /// View-model for the extended splash screen. This view-model determines whether a user is
+    /// already logged in or not and routes them to the appropriate screen (home screen, login, ...).
+    /// </summary>
+    /// <seealso cref="ToolBelt.ViewModels.BaseViewModel" />
     public class ExtendedSplashPageViewModel : BaseViewModel
     {
-        private readonly IContainerRegistry _containerRegistry;
-        private readonly IUserDialogs _dialogService;
         private readonly ObservableAsPropertyHelper<bool> _isBusy;
 
         public ExtendedSplashPageViewModel(
             INavigationService navigationService,
             IContainerRegistry containerRegistry,
             IUserDataStore userDataStore,
-            IUserDialogs dialogService,
             IFirebaseAuthService firebaseAuthService) : base(navigationService)
         {
-            _containerRegistry = containerRegistry;
-            _dialogService = dialogService;
-
             Initialize = ReactiveCommand.CreateFromTask(async () =>
             {
                 if (firebaseAuthService.IsUserSigned())
@@ -47,7 +43,7 @@ namespace ToolBelt.Views
                     }
                     else
                     {
-                        _containerRegistry.RegisterInstance<IUserService>(new UserService(user));
+                        containerRegistry.RegisterInstance<IUserService>(new UserService(user));
 
                         await NavigationService.NavigateHomeAsync().ConfigureAwait(false);
                     }
