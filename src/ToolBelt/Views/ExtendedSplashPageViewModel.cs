@@ -1,6 +1,7 @@
 ﻿using Prism.Ioc;
 using Prism.Navigation;
 using ReactiveUI;
+using System;
 using System.Reactive.Linq;
 using ToolBelt.Extensions;
 using ToolBelt.Services;
@@ -30,21 +31,21 @@ namespace ToolBelt.Views
                     var currentUserId = firebaseAuthService.GetCurrentUserId();
                     if (string.IsNullOrWhiteSpace(currentUserId))
                     {
-                        await firebaseAuthService.Logout().ConfigureAwait(false);
+                        await firebaseAuthService.Logout();
                         await NavigationService.NavigateToLoginPageAsync().ConfigureAwait(false);
+                        return;
                     }
 
                     // try to get the user from our database
-                    var user = await userDataStore.GetUserById(currentUserId).ConfigureAwait(false);
+                    var user = await userDataStore.GetUserById(currentUserId);
                     if (user == null)
                     {
-                        await firebaseAuthService.Logout().ConfigureAwait(false);
+                        await firebaseAuthService.Logout();
                         await NavigationService.NavigateToLoginPageAsync().ConfigureAwait(false);
                     }
                     else
                     {
                         containerRegistry.RegisterInstance<IUserService>(new UserService(user));
-
                         await NavigationService.NavigateHomeAsync().ConfigureAwait(false);
                     }
                 }
@@ -58,6 +59,9 @@ namespace ToolBelt.Views
             this.WhenAnyObservable(x => x.Initialize.IsExecuting)
               .StartWith(false)
               .ToProperty(this, x => x.IsBusy, out _isBusy);
+
+            this.Initialize.ThrownExceptions
+                .Subscribe(exception => System.Diagnostics.Debug.WriteLine($"Error: {exception}"));
         }
 
         public ReactiveCommand Initialize { get; }

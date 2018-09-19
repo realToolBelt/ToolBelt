@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using Splat;
+using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ToolBelt.Extensions;
@@ -39,6 +40,15 @@ namespace ToolBelt.Views.Authentication.Registration
                         .DisposeWith(disposable);
                 }
             });
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            // execute the "Go Back" command on the view-model
+            ViewModel.GoBack.Execute().Subscribe();
+
+            // let XF know we're handling this one ourselves
+            return true;
         }
 
         protected override void OnOrientationChanged(DeviceOrientations orientation)

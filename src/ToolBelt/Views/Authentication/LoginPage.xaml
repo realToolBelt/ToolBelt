@@ -3,51 +3,46 @@
                        xmlns="http://xamarin.com/schemas/2014/forms"
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                        xmlns:controls="clr-namespace:ToolBelt.Controls"
-                       xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex"
                        xmlns:local="clr-namespace:ToolBelt.Views.Authentication"
                        xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                        xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                        xmlns:views="clr-namespace:ToolBelt.Views"
                        prism:ViewModelLocator.AutowireViewModel="True"
-                       x:TypeArguments="local:LoginPageViewModel">
-    <ScrollView>
-        <Grid Padding="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+                       x:TypeArguments="local:LoginPageViewModel"
+                       NavigationPage.HasNavigationBar="False">
+    <Grid Padding="20">
+        <ScrollView>
+            <FlexLayout AlignItems="Center" Direction="Column">
 
-            <controls:ToolBeltLabel Margin="0,10,0,0"
-                                    FontAttributes="Bold"
-                                    FontSize="{StaticResource ExtraBigSize}"
-                                    HorizontalOptions="Center" />
+                <controls:ToolBeltLabel Margin="0,10,0,0"
+                                        FontAttributes="Bold"
+                                        FontSize="{StaticResource ExtraBigSize}" />
 
-            <!--  Social buttons  -->
-            <StackLayout Grid.Row="1"
-                         Margin="0,10"
-                         HorizontalOptions="FillAndExpand">
-                <controls:SocialButton x:Name="_btnFacebook"
-                                       BackgroundColor="#4267B2"
-                                       IconText="&#xf39e;"
-                                       Text="Sign in with Facebook" />
-                <controls:SocialButton x:Name="_btnTwitter"
-                                       BackgroundColor="#55ACEE"
-                                       IconText="&#xf099;"
-                                       Text="Sign in with Twitter" />
-                <controls:SocialButton x:Name="_btnGoogle"
-                                       BackgroundColor="#DD4B39"
-                                       IconText="&#xf1a0;"
-                                       Text="Sign in with Google" />
-            </StackLayout>
+                <!--  Social buttons  -->
+                <StackLayout Margin="0,10"
+                             FlexLayout.AlignSelf="Stretch"
+                             FlexLayout.Grow="1">
+                    <controls:SocialButton x:Name="_btnFacebook"
+                                           BackgroundColor="#4267B2"
+                                           IconText="&#xf39e;"
+                                           Text="Sign in with Facebook" />
 
-            <Label Grid.Row="2"
-                   FontSize="{StaticResource MidMediumSize}"
-                   HorizontalOptions="Center"
-                   Text="Terms and conditions"
-                   VerticalOptions="End" />
+                    <controls:SocialButton x:Name="_btnTwitter"
+                                           BackgroundColor="#55ACEE"
+                                           IconText="&#xf099;"
+                                           Text="Sign in with Twitter" />
 
-            <ActivityIndicator x:Name="_activityIndicator" Grid.Row="1" />
-        </Grid>
-    </ScrollView>
+                    <controls:SocialButton x:Name="_btnGoogle"
+                                           BackgroundColor="#DD4B39"
+                                           IconText="&#xf1a0;"
+                                           Text="Sign in with Google" />
+                </StackLayout>
+
+                <Label FontSize="{StaticResource MidMediumSize}" Text="Terms and conditions" />
+
+            </FlexLayout>
+        </ScrollView>
+
+        <ActivityIndicator x:Name="_activityIndicator" />
+    </Grid>
 </views:ContentPageBase>

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ToolBelt.Views;
 using ToolBelt.Views.Authentication;
+using Xamarin.Forms;
 
 namespace ToolBelt.Extensions
 {
@@ -27,7 +28,7 @@ namespace ToolBelt.Extensions
         public static async Task NavigateToLoginPageAsync(this INavigationService navigationService)
         {
             await navigationService
-                .NavigateAsync($"/TabbedPage?createTab={nameof(LoginPage)}&createTab={nameof(SignupPage)}")
+                .NavigateAsync($"/{nameof(NavigationPage)}/{nameof(AuthenticationTabbedPage)}?createTab={nameof(LoginPage)}&createTab={nameof(SignupPage)}")
                 .ConfigureAwait(false);
         }
     }

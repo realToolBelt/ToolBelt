@@ -63,7 +63,7 @@ namespace ToolBelt.Views.Authentication
                         // The account does not yet exist. Go through the registration process
                         await NavigationService
                             .NavigateAsync(
-                                $"/NavigationPage/{nameof(RegistrationTypeSelectionPage)}",
+                                nameof(RegistrationTypeSelectionPage),
                                 new NavigationParameters
                                 {
                                     { "user_id", userId }

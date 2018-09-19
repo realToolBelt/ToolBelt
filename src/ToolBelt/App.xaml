@@ -3,7 +3,6 @@
                         xmlns="http://xamarin.com/schemas/2014/forms"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                         xmlns:controls="clr-namespace:ToolBelt.Controls"
-                        xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex"
                         xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms">
     <prism:PrismApplication.Resources>
         <ResourceDictionary>
@@ -14,6 +13,7 @@
             <Color x:Key="primaryBackgroundColorLightLight">#777777</Color>
             <Color x:Key="accentColor">#FFC600</Color>
             <Color x:Key="textColor">White</Color>
+            <Color x:Key="PlaceholderColor">#8C8C8C</Color>
             <Color x:Key="buttonBackground">#ffc600</Color>
             <Color x:Key="buttonTextColor">Black</Color>
             <Color x:Key="buttonDisabledTextColor">Red</Color>
@@ -166,26 +166,11 @@
                 <Setter Property="FontFamily" Value="{StaticResource FontAwesomeBrands}" />
             </Style>
 
-            <Style x:Key="FABrandFlexButton" TargetType="{x:Type flex:FlexButton}">
-                <Setter Property="FontFamily" Value="{StaticResource FontAwesomeBrands}" />
-                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
-                <Setter Property="BackgroundColor" Value="{StaticResource accentColor}" />
-                <Setter Property="HighlightBackgroundColor" Value="#c19600" />
-                <Setter Property="ForegroundColor" Value="{StaticResource buttonTextColor}" />
-                <Setter Property="HighlightForegroundColor" Value="{StaticResource buttonTextColor}" />
-                <Setter Property="BorderColor" Value="{StaticResource accentColor}" />
-                <Setter Property="HighlightBorderColor" Value="#c19600" />
-                <Setter Property="WidthRequest" Value="64" />
-                <Setter Property="HeightRequest" Value="64" />
-                <Setter Property="CornerRadius" Value="32" />
-                <Setter Property="BorderThickness" Value="3" />
-            </Style>
-
             <!--  Base style to use for Extended Entry controls  -->
             <Style x:Key="BaseEntryStyle" TargetType="{x:Type controls:ExtendedEntry}">
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="TextColor" Value="{StaticResource textColor}" />
-                <Setter Property="PlaceholderColor" Value="{StaticResource textColor}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderColor}" />
                 <Setter Property="HeightRequest" Value="44" />
                 <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />

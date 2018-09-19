@@ -21,7 +21,6 @@
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />
     <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
-    <PackageReference Include="Forms.Controls.FlexButton" Version="0.8.0" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.9.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.9.0" />
     <PackageReference Include="morelinq" Version="3.0.0" />

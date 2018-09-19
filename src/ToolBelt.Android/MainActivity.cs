@@ -3,6 +3,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using Android.Views;
 using FFImageLoading.Forms.Platform;
 using Firebase;
 using Plugin.Permissions;
@@ -38,6 +39,21 @@ namespace ToolBelt.Droid
                 statusBarHeightInfo?.SetValue(this, 0);
                 Window.SetStatusBarColor(new Android.Graphics.Color(0, 0, 0, 255)); // Change color as required.
             }
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            // if we are not hitting the internal "home" button, just return without any action
+            if (item.ItemId != Android.Resource.Id.Home)
+            {
+                return base.OnOptionsItemSelected(item);
+            }
+
+            //this one triggers the hardware back button press handler - so we are back in XF without even mentioning it
+            OnBackPressed();
+
+            // return true to signal we have handled everything fine
+            return true;
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
@@ -77,6 +93,28 @@ namespace ToolBelt.Droid
                 .UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
         }
 
+        protected override void OnPostCreate(Bundle savedInstanceState)
+        {
+            var toolBar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            if (toolBar != null)
+            {
+                SetSupportActionBar(toolBar);
+            }
+
+            base.OnPostCreate(savedInstanceState);
+        }
+
+        protected override void OnResume()
+        {
+            var toolBar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            if (toolBar != null)
+            {
+                SetSupportActionBar(toolBar);
+            }
+
+            base.OnResume();
+        }
+
         private void InitializeFirebaseAuthentication()
         {
 #if DEBUG
@@ -90,7 +128,7 @@ namespace ToolBelt.Droid
                .SetApiKey("AIzaSyDMjWYUtEAsGvQs0bMpmYQnyYraYrk_zyk")
                .Build();
 #endif
-            
+
             if (app == null)
             {
                 app = FirebaseApp.InitializeApp(this, options, "FirebaseSample");

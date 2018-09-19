@@ -6,7 +6,6 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using Splat;
 using System.Threading.Tasks;
-using ToolBelt.Extensions;
 using ToolBelt.Services;
 using ToolBelt.Views;
 using ToolBelt.Views.About;
@@ -103,6 +102,7 @@ namespace ToolBelt
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<ModalNavigationPage, ModalNavigationPageViewModel>();
             containerRegistry.RegisterForNavigation<TabbedPage>();
+            containerRegistry.RegisterForNavigation<AuthenticationTabbedPage>();
             containerRegistry.RegisterForNavigation<ExtendedSplashPage, ExtendedSplashPageViewModel>();
 
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();

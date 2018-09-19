@@ -11,8 +11,6 @@ namespace ToolBelt.Views.Authentication
     {
         public LoginPage()
         {
-            Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, false);
-
             using (this.Log().Perf($"{nameof(LoginPage)}: Initialize component."))
             {
                 InitializeComponent();
