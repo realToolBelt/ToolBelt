@@ -44,6 +44,8 @@
                                        IconText="&#xf1a0;"
                                        Text="Sign in with Google" />
             </StackLayout>
+
+            <ActivityIndicator x:Name="_activityIndicator" Grid.Row="1" />
         </Grid>
     </ScrollView>
 </views:ContentPageBase>

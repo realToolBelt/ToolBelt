@@ -2,9 +2,11 @@
 using Prism.Ioc;
 using Prism.Navigation;
 using ReactiveUI;
+using Splat;
 using System;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using ToolBelt.Extensions;
 using ToolBelt.Services;
@@ -16,6 +18,7 @@ namespace ToolBelt.Views.Authentication
     public class SignupPageViewModel : BaseViewModel
     {
         private readonly IContainerRegistry _containerRegistry;
+        private readonly ObservableAsPropertyHelper<bool> _isBusy;
         private readonly IUserDataStore _userDataStore;
         private bool _agreeWithTermsAndConditions;
 
@@ -29,6 +32,10 @@ namespace ToolBelt.Views.Authentication
             Title = "Sign Up";
             _containerRegistry = containerRegistry;
             _userDataStore = userDataStore;
+
+            // we want to disable all commands when any one is running. We'll do that by using a
+            // behavior subject to play all of the command events through
+            BehaviorSubject<bool> canExecute = new BehaviorSubject<bool>(true);
 
             SignInWithGoogle = ReactiveCommand.CreateFromTask(async () =>
             {
@@ -63,7 +70,8 @@ namespace ToolBelt.Views.Authentication
                                 }).ConfigureAwait(false);
                     }
                 }
-            });
+            },
+            canExecute);
 
             SignInWithFacebook = ReactiveCommand.CreateFromTask(async () =>
             {
@@ -74,7 +82,8 @@ namespace ToolBelt.Views.Authentication
                 }
 
                 await dialogService.AlertAsync("Coming Soon!").ConfigureAwait(false);
-            });
+            },
+            canExecute);
 
             SignInWithTwitter = ReactiveCommand.CreateFromTask(async () =>
             {
@@ -85,9 +94,40 @@ namespace ToolBelt.Views.Authentication
                 }
 
                 await dialogService.AlertAsync("Coming Soon!").ConfigureAwait(false);
-            });
+            },
+            canExecute);
 
-            SignInWithGoogle.ThrownExceptions.Subscribe(error => System.Diagnostics.Debug.WriteLine(error.ToString()));
+            var commandsExecuting = this.WhenAnyObservable(
+                x => x.SignInWithGoogle.IsExecuting,
+                x => x.SignInWithFacebook.IsExecuting,
+                x => x.SignInWithTwitter.IsExecuting,
+                (googleExecuting, facebookExecuting, twitterExecuting) => googleExecuting || facebookExecuting || twitterExecuting)
+                .DistinctUntilChanged()
+                .Publish()
+                .RefCount();
+
+            // when any of the commands are executing, update the busy state
+            commandsExecuting
+                .StartWith(false)
+                .ToProperty(this, x => x.IsBusy, out _isBusy, scheduler: RxApp.MainThreadScheduler);
+
+            // when any of the commands are executing, update the "can execute" state
+            commandsExecuting
+                .Select(isExecuting => !isExecuting)
+                .Subscribe(canExecute);
+
+            // When an exception is thrown from a command, log the error and let the user handle the exception
+            SignInWithGoogle.ThrownExceptions
+                .Merge(SignInWithFacebook.ThrownExceptions)
+                .Merge(SignInWithTwitter.ThrownExceptions)
+                .SelectMany(exception =>
+                {
+                    this.Log().ErrorException("Error signing up", exception);
+
+                    //return SharedInteractions.Error.Handle(exception);
+                    return Observable.Return(Unit.Default);
+                })
+                .Subscribe();
         }
 
         public bool AgreeWithTermsAndConditions
@@ -95,6 +135,8 @@ namespace ToolBelt.Views.Authentication
             get => _agreeWithTermsAndConditions;
             set => this.RaiseAndSetIfChanged(ref _agreeWithTermsAndConditions, value);
         }
+
+        public bool IsBusy => _isBusy?.Value ?? false;
 
         public ReactiveCommand<Unit, Unit> SignInWithFacebook { get; }
 

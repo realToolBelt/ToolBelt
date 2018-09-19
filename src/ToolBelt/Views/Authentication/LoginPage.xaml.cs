@@ -38,6 +38,14 @@ namespace ToolBelt.Views.Authentication
                     this
                         .BindCommand(ViewModel, vm => vm.SignInWithTwitter, v => v._btnTwitter)
                         .DisposeWith(disposable);
+
+                    this
+                        .OneWayBind(ViewModel, vm => vm.IsBusy, v => v._activityIndicator.IsRunning)
+                        .DisposeWith(disposable);
+
+                    this
+                        .OneWayBind(ViewModel, vm => vm.IsBusy, v => v._activityIndicator.IsVisible)
+                        .DisposeWith(disposable);
                 }
             });
         }
