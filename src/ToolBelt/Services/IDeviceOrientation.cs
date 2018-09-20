@@ -1,21 +1,27 @@
-﻿namespace ToolBelt.Services
-{
-    public enum DeviceOrientations
-    {
-        Undefined,
-        Landscape,
-        Portrait
-    }
+﻿using Xamarin.Essentials;
 
+namespace ToolBelt.Services
+{
     /// <summary>
     /// Service exposing device orientation information.
     /// </summary>
     public interface IDeviceOrientation
     {
         /// <summary>
-        /// Gets the orientation of the device.
+        /// Gets the screen metrics of the device.
         /// </summary>
-        /// <returns>The orientation of the device.</returns>
-        DeviceOrientations GetOrientation();
+        ScreenMetrics ScreenMetrics { get; }
+    }
+
+    /// <summary>
+    /// Implementation of the <see cref="IDeviceOrientation" /> interface.
+    /// </summary>
+    /// <seealso cref="ToolBelt.Services.IDeviceOrientation" />
+    public class DeviceOrientationImplementation : IDeviceOrientation
+    {
+        /// <summary>
+        /// Gets the screen metrics of the device.
+        /// </summary>
+        public ScreenMetrics ScreenMetrics => DeviceDisplay.ScreenMetrics;
     }
 }

@@ -1,5 +1,4 @@
-﻿using Plugin.Settings;
-using Plugin.Settings.Abstractions;
+﻿using Xamarin.Essentials;
 
 namespace ToolBelt
 {
@@ -10,16 +9,14 @@ namespace ToolBelt
 
         public static string AppCenterAnalyticsAndroid
         {
-            get => Settings.GetValueOrDefault(nameof(AppCenterAnalyticsAndroid), DefaultAppCenterAndroid);
-            set => Settings.AddOrUpdateValue(nameof(AppCenterAnalyticsAndroid), value);
+            get => Preferences.Get(nameof(AppCenterAnalyticsAndroid), DefaultAppCenterAndroid);
+            set => Preferences.Set(nameof(AppCenterAnalyticsAndroid), value);
         }
 
         public static string AppCenterAnalyticsIos
         {
-            get => Settings.GetValueOrDefault(nameof(AppCenterAnalyticsIos), DefaultAppCenteriOS);
-            set => Settings.AddOrUpdateValue(nameof(AppCenterAnalyticsIos), value);
+            get => Preferences.Get(nameof(AppCenterAnalyticsIos), DefaultAppCenteriOS);
+            set => Preferences.Set(nameof(AppCenterAnalyticsIos), value);
         }
-
-        private static ISettings Settings => CrossSettings.Current;
     }
 }

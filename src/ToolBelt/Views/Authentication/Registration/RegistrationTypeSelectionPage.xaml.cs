@@ -5,6 +5,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ToolBelt.Extensions;
 using ToolBelt.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,18 +14,24 @@ namespace ToolBelt.Views.Authentication.Registration
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegistrationTypeSelectionPage : ContentPageBase<RegistrationTypeSelectionPageViewModel>
     {
+        private readonly IDeviceOrientation _deviceOrientationService;
+        private ScreenOrientation _lastOrientation = ScreenOrientation.Unknown;
+
         public RegistrationTypeSelectionPage(IDeviceOrientation deviceOrientationService)
         {
+            _deviceOrientationService = deviceOrientationService;
+
             using (this.Log().Perf($"{nameof(RegistrationTypeSelectionPage)}: Initialize component."))
             {
                 InitializeComponent();
-                OnOrientationChanged(deviceOrientationService.GetOrientation());
             }
 
             this.WhenActivated(disposable =>
             {
                 using (this.Log().Perf($"{nameof(RegistrationTypeSelectionPage)}: Activate."))
                 {
+                    OnOrientationChanged(deviceOrientationService.ScreenMetrics.Orientation);
+
                     _tgrTradesmen
                         .Events()
                         .Tapped
@@ -51,16 +58,26 @@ namespace ToolBelt.Views.Authentication.Registration
             return true;
         }
 
-        protected override void OnOrientationChanged(DeviceOrientations orientation)
+        protected void OnOrientationChanged(ScreenOrientation orientation)
         {
-            if (orientation == DeviceOrientations.Landscape)
+            if (_lastOrientation != orientation)
             {
-                VisualStateManager.GoToState(_flexMain, "Landscape");
+                _lastOrientation = orientation;
+                if (orientation == ScreenOrientation.Landscape)
+                {
+                    VisualStateManager.GoToState(_flexMain, "Landscape");
+                }
+                else
+                {
+                    VisualStateManager.GoToState(_flexMain, "Portrait");
+                }
             }
-            else
-            {
-                VisualStateManager.GoToState(_flexMain, "Portrait");
-            }
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+            OnOrientationChanged(_deviceOrientationService.ScreenMetrics.Orientation);
         }
     }
 }

@@ -90,6 +90,7 @@ namespace ToolBelt
 #endif
 
             containerRegistry.RegisterInstance<ICrashService>(new CrashService());
+            containerRegistry.RegisterInstance<IDeviceOrientation>(new DeviceOrientationImplementation());
 
             containerRegistry.Register<IPermissionsService, PermissionsService>();
             containerRegistry.RegisterInstance<Acr.UserDialogs.IUserDialogs>(Acr.UserDialogs.UserDialogs.Instance);

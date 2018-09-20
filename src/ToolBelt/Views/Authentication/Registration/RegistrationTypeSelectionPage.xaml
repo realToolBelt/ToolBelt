@@ -60,15 +60,15 @@
             </StackLayout>
         </Frame>
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup Name="OrientationStates" TargetType="{x:Type FlexLayout}">
+            <VisualStateGroup x:Name="OrientationStates" TargetType="{x:Type FlexLayout}">
 
-                <VisualState Name="Portrait">
+                <VisualState x:Name="Portrait">
                     <VisualState.Setters>
                         <Setter Property="Direction" Value="Column" />
                     </VisualState.Setters>
                 </VisualState>
 
-                <VisualState Name="Landscape">
+                <VisualState x:Name="Landscape">
                     <VisualState.Setters>
                         <Setter Property="Direction" Value="Row" />
                     </VisualState.Setters>
