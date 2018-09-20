@@ -23,6 +23,8 @@ namespace ToolBelt.Models
         private string _name;
         private string _skillsRequired;
         private ProjectStatus _status;
+        private WorkPaymentType _paymentType;
+        private decimal _payRate;
 
         public Project()
         {
@@ -86,5 +88,23 @@ namespace ToolBelt.Models
             get => _status;
             set => this.RaiseAndSetIfChanged(ref _status, value);
         }
+
+        public WorkPaymentType PaymentType
+        {
+            get => _paymentType;
+            set => this.RaiseAndSetIfChanged(ref _paymentType, value);
+        }
+
+        public decimal PaymentRate
+        {
+            get => _payRate;
+            set => this.RaiseAndSetIfChanged(ref _payRate, value);
+        }
+    }
+
+    public enum WorkPaymentType
+    {
+        Hourly,
+        Piece
     }
 }

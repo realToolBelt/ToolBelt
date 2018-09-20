@@ -33,7 +33,9 @@ namespace ToolBelt.Views.Projects
                 StartDate,
                 EndDate,
                 Description,
-                SkillsRequired
+                SkillsRequired,
+                PayRate,
+                PaymentType
             };
 
             AddValidationRules();
@@ -56,6 +58,8 @@ namespace ToolBelt.Views.Projects
                     _project.EstimatedEndDate = EndDate.Value.Value;
                     _project.Description = Description.Value;
                     _project.SkillsRequired = SkillsRequired.Value;
+                    _project.PaymentRate = decimal.Parse(PayRate.Value);
+                    _project.PaymentType = PaymentType.Value;
 
                     // TODO: projectDataStore.Update(_project);
                 }
@@ -112,6 +116,8 @@ namespace ToolBelt.Views.Projects
                     EndDate.Value = project.EstimatedEndDate;
                     Description.Value = project.Description;
                     SkillsRequired.Value = project.SkillsRequired;
+                    PayRate.Value = project.PaymentRate.ToString();
+                    PaymentType.Value = project.PaymentType;
 
                     // accept changes for all fields
                     foreach (var field in _validatableFields)
@@ -136,6 +142,17 @@ namespace ToolBelt.Views.Projects
 
         public ValidatableObject<DateTime?> EndDate { get; } = new ValidatableObject<DateTime?>();
 
+        public ValidatableObject<WorkPaymentType> PaymentType { get; } = new ValidatableObject<WorkPaymentType>();
+
+        public List<WorkPaymentType> PaymentTypes { get; } =
+            new List<WorkPaymentType>
+            {
+                WorkPaymentType.Hourly,
+                WorkPaymentType.Piece
+            };
+
+        public ValidatableObject<string> PayRate { get; } = new ValidatableObject<string>();
+
         public ValidatableObject<string> ProjectName { get; } = new ValidatableObject<string>();
 
         /// <summary>
@@ -155,6 +172,8 @@ namespace ToolBelt.Views.Projects
             ProjectName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "Project name cannot be empty" });
             StartDate.Validations.Add(new IsNotNullRule<DateTime?> { ValidationMessage = "Start date cannot be empty" });
             EndDate.Validations.Add(new IsNotNullRule<DateTime?> { ValidationMessage = "End date cannot be empty" });
+            PayRate.Validations.Add(new IsNotNullRule<string> { ValidationMessage = "Payment rate cannot be empty" });
+            PayRate.Validations.Add(new ActionValidationRule<string>(value => decimal.TryParse(value, out _), "Payment rate must be a number"));
 
             StartDate.Validations.Add(new ActionValidationRule<DateTime?>(
                 startDate => !EndDate.Value.HasValue || !startDate.HasValue || startDate.Value < EndDate.Value.Value,

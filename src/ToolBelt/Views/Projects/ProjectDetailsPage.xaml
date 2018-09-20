@@ -18,6 +18,12 @@
             <Label Text="Estimated End Date:" TextColor="{StaticResource accentColor}" />
             <Label x:Name="_lblEndDate" />
 
+            <Label Text="Payment:" TextColor="{StaticResource accentColor}" />
+            <StackLayout Orientation="Horizontal">
+                <Label x:Name="_lblPayRate" />
+                <Label x:Name="_lblPayType" />
+            </StackLayout>
+
             <Label Text="Description:" TextColor="{StaticResource accentColor}" />
             <Label x:Name="_lblDescription" VerticalOptions="StartAndExpand" />
 

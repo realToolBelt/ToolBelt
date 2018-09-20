@@ -16,7 +16,7 @@ namespace ToolBelt.Droid
         Label = "ToolBelt",
         Icon = "@mipmap/ic_launcher",
         RoundIcon = "@mipmap/ic_round_launcher",
-        Theme = "@style/MainTheme",
+        Theme = "@style/SplashTheme",
         MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
@@ -71,6 +71,12 @@ namespace ToolBelt.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             Instance = this;
+
+            base.Window.RequestFeature(WindowFeatures.ActionBar);
+
+            // Name of the MainActivity theme you had there before.
+            // Or you can use global::Android.Resource.Style.ThemeHoloLight
+            base.SetTheme(Resource.Style.MainTheme);
 
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;

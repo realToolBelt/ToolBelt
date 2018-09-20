@@ -43,6 +43,20 @@
                                           HeaderText="End Date (estimated):"
                                           VerticalOptions="Start" />
 
+            <StackLayout>
+                <Label FontAttributes="Bold"
+                       Style="{StaticResource HeaderTextStyle}"
+                       Text="Payment"
+                       TextColor="{Binding LineColorToApply, Source={Reference _txtPayRate}}" />
+                <StackLayout Orientation="Horizontal">
+                    <controls:ExtendedEntry x:Name="_txtPayRate"
+                                            Keyboard="Numeric"
+                                            Placeholder="0.00" />
+                    <Picker x:Name="_pickPaymentType" ItemDisplayBinding="{Binding .}" />
+                </StackLayout>
+                <Label x:Name="_lblPayRateError" Style="{StaticResource ValidationErrorLabelStyle}" />
+            </StackLayout>
+
             <controls:ValidatedEditor x:Name="_projectDescriptionControl"
                                       HeaderText="Description:"
                                       MaxLength="120"

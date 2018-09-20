@@ -39,6 +39,14 @@ namespace ToolBelt.Views.Projects
                     this
                         .OneWayBind(ViewModel, vm => vm.Project.SkillsRequired, v => v._lblSkillsRequired.Text)
                         .DisposeWith(disposable);
+
+                    this
+                        .OneWayBind(ViewModel, vm => vm.Project.PaymentRate, v => v._lblPayRate.Text)
+                        .DisposeWith(disposable);
+
+                    this
+                        .OneWayBind(ViewModel, vm => vm.Project.PaymentType, v => v._lblPayType.Text)
+                        .DisposeWith(disposable);
                 }
             });
         }
