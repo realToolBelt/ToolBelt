@@ -5,6 +5,7 @@ using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ToolBelt.Models;
+using ToolBelt.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -32,9 +33,24 @@ namespace ToolBelt.Views
                     .OneWayBind(ViewModel, vm => vm.MenuItems, v => v._lstMenu.ItemsSource)
                     .DisposeWith(disposable);
 
-                //this
-                //    .OneWayBind(ViewModel, vm => vm.User.Name, v => v._lblUserName.Text)
-                //    .DisposeWith(disposable);
+                this
+                    .WhenAnyValue(v => v.ViewModel.User)
+                    .Select(user =>
+                    {
+                        if (user is ContractorAccount contractor)
+                        {
+                            return contractor.CompanyName;
+                        }
+
+                        if (user is TradesemanAccount tradesman)
+                        {
+                            return tradesman.Name;
+                        }
+
+                        return "";
+                    })
+                    .BindTo(this, v => v._lblUserName.Text)
+                    .DisposeWith(disposable);
 
                 _lstMenu
                     .Events()

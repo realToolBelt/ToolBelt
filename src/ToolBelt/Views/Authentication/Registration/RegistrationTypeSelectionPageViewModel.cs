@@ -50,6 +50,8 @@ namespace ToolBelt.Views.Authentication.Registration
                     });
                 if (result)
                 {
+                    analyticService.TrackTapEvent("cancel-account-creation");
+
                     // make sure we log out so the user has to log in again
                     await authService.Logout();
 

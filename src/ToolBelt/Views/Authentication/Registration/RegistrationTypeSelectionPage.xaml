@@ -60,7 +60,7 @@
             </StackLayout>
         </Frame>
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup Name="OrientationStates">
+            <VisualStateGroup Name="OrientationStates" TargetType="{x:Type FlexLayout}">
 
                 <VisualState Name="Portrait">
                     <VisualState.Setters>

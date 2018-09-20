@@ -84,11 +84,12 @@ namespace ToolBelt.Services
     }
 
     /// <summary>
-    /// The account information for a tradesmen.
+    /// The account information for a tradesman.
     /// </summary>
     /// <seealso cref="ToolBelt.Services.Account" />
-    public class TradesemenAccount : Account
+    public class TradesemanAccount : Account
     {
+        public string Name { get; set; }
     }
 
     public interface IUserService
@@ -120,7 +121,8 @@ namespace ToolBelt.Services
             return Task.FromResult((Account)new ContractorAccount
             {
                 Uid = "1234",
-                EmailAddress = "john.doe@fake.com"
+                EmailAddress = "john.doe@fake.com",
+                CompanyName = "John Doe Contracting"
             });
         }
     }
