@@ -175,14 +175,8 @@
                 <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="Opacity" Value="0.6" />
                 <Setter Property="FocusLineColor" Value="{StaticResource accentColor}" />
                 <Setter Property="InvalidLineColor" Value="{StaticResource ValidationErrorColor}" />
-                <Style.Triggers>
-                    <Trigger TargetType="Entry" Property="IsFocused" Value="True">
-                        <Setter Property="Opacity" Value="1" />
-                    </Trigger>
-                </Style.Triggers>
             </Style>
 
             <!--  Default style for Extended Entry controls  -->
@@ -196,14 +190,8 @@
                 <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="Opacity" Value="0.6" />
                 <Setter Property="FocusLineColor" Value="{StaticResource accentColor}" />
                 <Setter Property="InvalidLineColor" Value="{StaticResource ValidationErrorColor}" />
-                <Style.Triggers>
-                    <Trigger TargetType="Editor" Property="IsFocused" Value="True">
-                        <Setter Property="Opacity" Value="1" />
-                    </Trigger>
-                </Style.Triggers>
             </Style>
 
             <!--  Default style for Extended Entry controls  -->
@@ -218,14 +206,8 @@
                 <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="Opacity" Value="0.6" />
                 <Setter Property="FocusLineColor" Value="{StaticResource accentColor}" />
                 <Setter Property="InvalidLineColor" Value="{StaticResource ValidationErrorColor}" />
-                <Style.Triggers>
-                    <Trigger TargetType="controls:ExtendedDatePicker" Property="IsFocused" Value="True">
-                        <Setter Property="Opacity" Value="1" />
-                    </Trigger>
-                </Style.Triggers>
             </Style>
 
             <!--  Default style for Extended DatePicker controls  -->

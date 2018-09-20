@@ -46,6 +46,31 @@ namespace ToolBelt
             );
 #endif
 
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            Crashes.IsEnabledAsync()
+                .ContinueWith(isEnabled =>
+                {
+                    if (isEnabled.Result)
+                    {
+                        Crashes.HasCrashedInLastSessionAsync()
+                            .ContinueWith(hasCrashed =>
+                            {
+                                if (hasCrashed.Result)
+                                {
+                                    Crashes.GetLastSessionCrashReportAsync()
+                                        .ContinueWith(crashReport =>
+                                        {
+                                            if (crashReport?.Exception != null)
+                                            {
+                                                Crashes.TrackError(crashReport.Exception);
+                                            }
+                                        });
+                                }
+                            });
+                    }
+                });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+
             NavigationService.NavigateAsync($"/NavigationPage/{nameof(ExtendedSplashPage)}");
         }
 
