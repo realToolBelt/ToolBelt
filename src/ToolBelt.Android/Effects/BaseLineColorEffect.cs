@@ -23,6 +23,7 @@ namespace ToolBelt.Droid.Effects
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
                 Console.WriteLine($"Cannot set property on attached control. Error: {ex.Message}");
             }
         }
@@ -35,6 +36,7 @@ namespace ToolBelt.Droid.Effects
 
         protected override void OnElementPropertyChanged(PropertyChangedEventArgs args)
         {
+            Android.Util.Log.Debug("TOOLBELT", $"Property Changed: {args.PropertyName}");
             if (args.PropertyName == nameof(IDynamicLineColorControl.LineColorToApply))
             {
                 UpdateLineColor();

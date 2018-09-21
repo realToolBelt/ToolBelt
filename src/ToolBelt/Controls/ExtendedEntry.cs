@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using ToolBelt.Effects;
 using Xamarin.Forms;
 
 namespace ToolBelt.Controls
@@ -41,7 +42,7 @@ namespace ToolBelt.Controls
             Focused += OnFocused;
             Unfocused += OnUnfocused;
 
-            Effects.Add(Effect.Resolve(ToolBelt.Effects.EffectSettings.EntryLineColor));
+            Effects.Add(new EntryLineColorEffect());
 
             ResetLineColor();
         }

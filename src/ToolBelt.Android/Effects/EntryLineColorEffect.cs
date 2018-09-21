@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace ToolBelt.Droid.Effects
 {
-    public class EntryLineColorEffect : BaseLineColorEffect<ExtendedEditor>
+    public class EntryLineColorEffect : BaseLineColorEffect<ExtendedEntry>
     {
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using ToolBelt.Effects;
 using Xamarin.Forms;
 
 namespace ToolBelt.Controls
@@ -56,7 +57,7 @@ namespace ToolBelt.Controls
             Focused += OnFocused;
             Unfocused += OnUnfocused;
 
-            Effects.Add(Effect.Resolve(ToolBelt.Effects.EffectSettings.DatePickerLineColor));
+            Effects.Add(new DatePickerLineColorEffect());
 
             ResetLineColor();
         }
