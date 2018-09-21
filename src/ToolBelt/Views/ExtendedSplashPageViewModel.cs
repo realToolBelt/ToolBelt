@@ -1,8 +1,11 @@
 ﻿using Prism.Ioc;
 using Prism.Navigation;
 using ReactiveUI;
+using Splat;
 using System;
+using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading;
 using ToolBelt.Extensions;
 using ToolBelt.Services;
 using ToolBelt.ViewModels;
@@ -24,16 +27,22 @@ namespace ToolBelt.Views
             IUserDataStore userDataStore,
             IFirebaseAuthService firebaseAuthService) : base(navigationService)
         {
+            const int Home = 1;
+            const int Login = 2;
+
             Initialize = ReactiveCommand.CreateFromTask(async () =>
             {
+                // make sure we're running this on a background thread
+                this.Log().Debug($"Loading projects on thread: {Thread.CurrentThread.ManagedThreadId}, IsBackground = {Thread.CurrentThread.IsBackground}");
+                AssertRunningOnBackgroundThread();
+
                 if (firebaseAuthService.IsUserSigned())
                 {
                     var currentUserId = firebaseAuthService.GetCurrentUserId();
                     if (string.IsNullOrWhiteSpace(currentUserId))
                     {
                         await firebaseAuthService.Logout();
-                        await NavigationService.NavigateToLoginPageAsync().ConfigureAwait(false);
-                        return;
+                        return Login;
                     }
 
                     // try to get the user from our database
@@ -41,30 +50,43 @@ namespace ToolBelt.Views
                     if (user == null)
                     {
                         await firebaseAuthService.Logout();
-                        await NavigationService.NavigateToLoginPageAsync().ConfigureAwait(false);
+                        return Login;
+                    }
+
+                    containerRegistry.RegisterInstance<IUserService>(new UserService(user));
+                    return Home;
+                }
+
+                return Login;
+            });
+
+            Initialize
+                .SubscribeOn(RxApp.MainThreadScheduler)
+                .SelectMany(async nextPage =>
+                {
+                    if (nextPage == Home)
+                    {
+                        await NavigationService.NavigateHomeAsync().ConfigureAwait(false);
                     }
                     else
                     {
-                        containerRegistry.RegisterInstance<IUserService>(new UserService(user));
-                        await NavigationService.NavigateHomeAsync().ConfigureAwait(false);
+                        await NavigationService.NavigateToLoginPageAsync().ConfigureAwait(false);
                     }
-                }
-                else
-                {
-                    await NavigationService.NavigateToLoginPageAsync().ConfigureAwait(false);
-                }
-            });
+
+                    return Observable.Return(Unit.Default);
+                })
+                .Subscribe();
 
             // when the command is executing, update the busy state
-            this.WhenAnyObservable(x => x.Initialize.IsExecuting)
+            Initialize.IsExecuting
               .StartWith(false)
               .ToProperty(this, x => x.IsBusy, out _isBusy);
 
-            this.Initialize.ThrownExceptions
+            Initialize.ThrownExceptions
                 .Subscribe(exception => System.Diagnostics.Debug.WriteLine($"Error: {exception}"));
         }
 
-        public ReactiveCommand Initialize { get; }
+        public ReactiveCommand<Unit, int> Initialize { get; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is busy performing work.

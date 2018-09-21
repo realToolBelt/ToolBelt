@@ -12,17 +12,11 @@ namespace ToolBelt.Views
     {
         public ExtendedSplashPage()
         {
-            Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, false);
-
             using (this.Log().Perf($"{nameof(ExtendedSplashPage)}: Initialize component."))
             {
                 InitializeComponent();
+                Xamarin.Forms.NavigationPage.SetHasNavigationBar(this, false);
             }
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
 
             this.WhenActivated(disposable =>
             {
@@ -36,10 +30,10 @@ namespace ToolBelt.Views
                         .OneWayBind(ViewModel, vm => vm.IsBusy, v => v._activityIndicator.IsVisible)
                         .DisposeWith(disposable);
 
-                    // TODO: Make sure this runs on the background thread...
                     this
                         .WhenAnyValue(x => x.ViewModel.Initialize)
                         .ToSignal()
+                        .ObserveOn(RxApp.TaskpoolScheduler)
                         .InvokeCommand(this, v => v.ViewModel.Initialize)
                         .DisposeWith(disposable);
                 }

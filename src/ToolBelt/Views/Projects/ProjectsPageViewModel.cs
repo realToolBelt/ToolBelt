@@ -133,10 +133,8 @@ namespace ToolBelt.Views.Projects
                 });
 
             // when either of the commands are executing, update the busy state
-            this.WhenAnyObservable(
-                x => x.LoadProjects.IsExecuting,
-                x => x.RefreshProjects.IsExecuting,
-                (isLoadExecuting, isRefreshExecuting) => isLoadExecuting || isRefreshExecuting)
+            LoadProjects.IsExecuting
+                .CombineLatest(RefreshProjects.IsExecuting, (isLoadExecuting, isRefreshExecuting) => isLoadExecuting || isRefreshExecuting)
                 .DistinctUntilChanged()
                 .StartWith(false)
                 .ToProperty(this, x => x.IsBusy, out _isBusy, scheduler: RxApp.MainThreadScheduler);

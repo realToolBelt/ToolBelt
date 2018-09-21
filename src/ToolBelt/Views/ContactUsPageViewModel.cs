@@ -38,7 +38,7 @@ namespace ToolBelt.Views
                     await NavigationService.GoBackAsync(useModalNavigation: true).ConfigureAwait(false);
                 });
 
-            this.WhenAnyObservable(x => x.Submit.IsExecuting)
+            Submit.IsExecuting
               .StartWith(false)
               .ToProperty(this, x => x.IsBusy, out _isBusy);
 

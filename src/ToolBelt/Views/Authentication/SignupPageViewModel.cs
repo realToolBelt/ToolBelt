@@ -97,10 +97,10 @@ namespace ToolBelt.Views.Authentication
             },
             canExecute);
 
-            var commandsExecuting = this.WhenAnyObservable(
-                x => x.SignInWithGoogle.IsExecuting,
-                x => x.SignInWithFacebook.IsExecuting,
-                x => x.SignInWithTwitter.IsExecuting,
+            var commandsExecuting = Observable.CombineLatest(
+                SignInWithGoogle.IsExecuting,
+                SignInWithFacebook.IsExecuting,
+                SignInWithTwitter.IsExecuting,
                 (googleExecuting, facebookExecuting, twitterExecuting) => googleExecuting || facebookExecuting || twitterExecuting)
                 .DistinctUntilChanged()
                 .Publish()
