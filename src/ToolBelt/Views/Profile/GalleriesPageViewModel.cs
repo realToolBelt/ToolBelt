@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using ToolBelt.Data;
 using ToolBelt.Models;
 using ToolBelt.Services;
 using ToolBelt.ViewModels;
@@ -140,7 +141,7 @@ namespace ToolBelt.Views.Profile
         {
             base.OnNavigatingTo(parameters);
             var user = parameters["user"] as Account;
-            if (user?.Uid == _userService.AuthenticatedUser.Uid)
+            if (user?.AccountId == _userService.AuthenticatedUser.AccountId)
             {
                 CanEdit = true;
                 this.RaisePropertyChanged(nameof(Albums));

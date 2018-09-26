@@ -41,21 +41,6 @@
                                                          VerticalOptions="Center" />
                         </StackLayout>
                     </ViewCell>
-                    <ViewCell>
-                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                            <Label HorizontalOptions="Start"
-                                   Text="End Date"
-                                   VerticalOptions="Center"
-                                   VerticalTextAlignment="Center" />
-                            <Picker x:Name="_endDateComparisonTypePicker"
-                                    Margin="10,0"
-                                    HorizontalOptions="FillAndExpand"
-                                    VerticalOptions="Center" />
-                            <controls:ExtendedDatePicker x:Name="_endDatePicker"
-                                                         HorizontalOptions="End"
-                                                         VerticalOptions="Center" />
-                        </StackLayout>
-                    </ViewCell>
                 </TableSection>
             </TableRoot>
         </TableView>

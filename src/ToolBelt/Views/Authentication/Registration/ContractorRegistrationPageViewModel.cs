@@ -3,6 +3,7 @@ using ReactiveUI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using ToolBelt.Data;
 using ToolBelt.Services;
 using ToolBelt.Validation;
 using ToolBelt.Validation.Rules;
@@ -62,24 +63,24 @@ namespace ToolBelt.Views.Authentication.Registration
 
                 var contractor = new ContractorAccount
                 {
-                    Uid = _userId,
+                    AccountId = _userId,
                     EmailAddress = CompanyEmail.Value,
                     CompanyName = CompanyName.Value,
                     CompanyUrl = CompanyUrl.Value,
-                    PrimaryContact = PrimaryContact.Value,
-                    PrimaryPhoneNumber = PrimaryPhone.Value,
-                    SecondaryPhoneNumber = SecondaryPhone.Value,
-                    PhysicalAddress = new Models.Address
-                    {
-                        Address1 = AddressLineOne.Value,
-                        Address2 = AddressLineTwo.Value,
-                        City = City.Value,
-                        State = State.Value,
-                        PostalCode = Zip.Value
-                    },
-                    SocialNetwork1 = SocialNetwork1.Value,
-                    SocialNetwork2 = SocialNetwork2.Value,
-                    SocialNetwork3 = SocialNetwork3.Value
+                    //PrimaryContact = PrimaryContact.Value,
+                    PhoneNumber = PrimaryPhone.Value,
+                    //SecondaryPhoneNumber = SecondaryPhone.Value,
+                    //PhysicalAddress = new Models.Address
+                    //{
+                    //    Address1 = AddressLineOne.Value,
+                    //    Address2 = AddressLineTwo.Value,
+                    //    City = City.Value,
+                    //    State = State.Value,
+                    //    PostalCode = Zip.Value
+                    //},
+                    //SocialNetwork1 = SocialNetwork1.Value,
+                    //SocialNetwork2 = SocialNetwork2.Value,
+                    //SocialNetwork3 = SocialNetwork3.Value
                 };
                 
                 // TODO: ...

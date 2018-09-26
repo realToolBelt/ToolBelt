@@ -9,6 +9,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
+using ToolBelt.Data;
 using ToolBelt.Extensions;
 using ToolBelt.Models;
 using ToolBelt.Services;
@@ -100,7 +101,7 @@ namespace ToolBelt.Views.Projects
                     if (projects.Any())
                     {
                         // NOTE: This probably isn't necessary...
-                        projects = projects.ExceptBy(Projects, p => p.Id);
+                        projects = projects.ExceptBy(Projects, p => p.ProjectId);
 
                         // get the oldest and newest projects from the new data set. Age is simply
                         // determined by the date the project was created

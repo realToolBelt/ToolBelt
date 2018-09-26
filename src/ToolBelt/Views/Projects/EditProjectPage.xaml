@@ -20,7 +20,6 @@
             <Setter Property="HorizontalOptions" Value="FillAndExpand" />
             <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
         </Style>
-
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
@@ -29,24 +28,21 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <StackLayout Margin="20" VerticalOptions="FillAndExpand">
+        <FlexLayout Padding="10" Direction="Column">
             <controls:ValidatedEntry x:Name="_projectNameControl"
                                      HeaderText="Project Name:"
                                      PlaceholderText="Project Name"
                                      VerticalOptions="Start" />
 
-            <controls:ValidatedDatePicker x:Name="_startDateControl"
-                                          HeaderText="Start Date (estimated):"
-                                          VerticalOptions="Start" />
-
-            <controls:ValidatedDatePicker x:Name="_endDateControl"
-                                          HeaderText="End Date (estimated):"
-                                          VerticalOptions="Start" />
+            <Label FontAttributes="Bold"
+                   Style="{StaticResource HeaderTextStyle}"
+                   Text="Starts" />
+            <Picker x:Name="_projectStart" ItemDisplayBinding="{Binding Key}" />
 
             <StackLayout>
                 <Label FontAttributes="Bold"
                        Style="{StaticResource HeaderTextStyle}"
-                       Text="Payment"
+                       Text="Pay Rate"
                        TextColor="{Binding LineColorToApply, Source={Reference _txtPayRate}}" />
                 <StackLayout Orientation="Horizontal">
                     <controls:ExtendedEntry x:Name="_txtPayRate"
@@ -59,14 +55,15 @@
 
             <controls:ValidatedEditor x:Name="_projectDescriptionControl"
                                       HeaderText="Description:"
+                                      HeightRequest="100"
                                       MaxLength="120"
                                       VerticalOptions="FillAndExpand" />
 
             <controls:ValidatedEditor x:Name="_skillsRequiredControl"
                                       HeaderText="Skills Required:"
+                                      HeightRequest="100"
                                       MaxLength="120"
                                       VerticalOptions="FillAndExpand" />
-
-        </StackLayout>
+        </FlexLayout>
     </ScrollView>
 </vw:ContentPageBase>

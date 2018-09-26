@@ -126,7 +126,7 @@ namespace ToolBelt.Droid.Activities
 
             mGoogleApiClient = BuildGoogleApiClient();
 
-            _firebaseAuth = FirebaseAuth.GetInstance(MainActivity.app);
+            _firebaseAuth = FirebaseAuth.GetInstance(MainActivity.FirebaseApp);
 
             Intent signInIntent = Auth.GoogleSignInApi.GetSignInIntent(mGoogleApiClient);
             StartActivityForResult(signInIntent, RC_SIGN_IN);

@@ -21,8 +21,6 @@ namespace ToolBelt.Views.Projects
             using (this.Log().Perf($"{nameof(EditProjectPage)}: Initialize component."))
             {
                 InitializeComponent();
-                _startDateControl.MinimumDate = DateTime.Today;
-                _endDateControl.MinimumDate = DateTime.Today;
             }
 
             this.WhenActivated(disposable =>
@@ -33,13 +31,15 @@ namespace ToolBelt.Views.Projects
                         .OneWayBind(ViewModel, vm => vm.ProjectName, v => v._projectNameControl.ViewModel)
                         .DisposeWith(disposable);
 
-                    this
-                        .OneWayBind(ViewModel, vm => vm.StartDate, v => v._startDateControl.ViewModel)
-                        .DisposeWith(disposable);
+                    //this
+                    //    .OneWayBind(ViewModel, vm => vm.StartStatuses, v => v._projectStart.ItemsSource)
+                    //    .DisposeWith(disposable);
 
-                    this
-                        .OneWayBind(ViewModel, vm => vm.EndDate, v => v._endDateControl.ViewModel)
-                        .DisposeWith(disposable);
+                    //this
+                    //    .Bind(ViewModel, vm => vm.StartStatus.Value, v => v._projectStart.SelectedItem,
+                    //        vmToViewConverter: start => ViewModel.StartStatuses.First(item => item.Value == start),
+                    //        viewToVmConverter: item => ((KeyValuePair<string, ProjectStartStatus>)item).Value)
+                    //    .DisposeWith(disposable);
 
                     this
                         .OneWayBind(ViewModel, vm => vm.Description, v => v._projectDescriptionControl.ViewModel)
@@ -59,18 +59,18 @@ namespace ToolBelt.Views.Projects
 
                     BindPaymentControls(disposable);
 
-                    if (Device.RuntimePlatform == Device.Android)
-                    {
-                        var platformConfig = Xamarin.Forms.Application.Current.On<Xamarin.Forms.PlatformConfiguration.Android>();
-                        var softInputMode = platformConfig.GetWindowSoftInputModeAdjust();
-                        platformConfig.UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Pan);
-                        Disposable.Create(() =>
-                        {
-                            // restore the original soft input mode
-                            platformConfig.UseWindowSoftInputModeAdjust(softInputMode);
-                        })
-                        .DisposeWith(disposable);
-                    }
+                    //if (Device.RuntimePlatform == Device.Android)
+                    //{
+                    //    var platformConfig = Xamarin.Forms.Application.Current.On<Xamarin.Forms.PlatformConfiguration.Android>();
+                    //    var softInputMode = platformConfig.GetWindowSoftInputModeAdjust();
+                    //    platformConfig.UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Pan);
+                    //    Disposable.Create(() =>
+                    //    {
+                    //        // restore the original soft input mode
+                    //        platformConfig.UseWindowSoftInputModeAdjust(softInputMode);
+                    //    })
+                    //    .DisposeWith(disposable);
+                    //}
                 }
             });
         }
@@ -110,13 +110,13 @@ namespace ToolBelt.Views.Projects
                 .Subscribe(_ => ViewModel.PayRate.ClearValidationErrors())
                 .DisposeWith(disposable);
 
-            this
-                .OneWayBind(ViewModel, vm => vm.PaymentTypes, v => v._pickPaymentType.ItemsSource)
-                .DisposeWith(disposable);
+            //this
+            //    .OneWayBind(ViewModel, vm => vm.PaymentTypes, v => v._pickPaymentType.ItemsSource)
+            //    .DisposeWith(disposable);
 
-            this
-                .Bind(ViewModel, vm => vm.PaymentType.Value, v => v._pickPaymentType.SelectedItem)
-                .DisposeWith(disposable);
+            //this
+            //    .Bind(ViewModel, vm => vm.PaymentType.Value, v => v._pickPaymentType.SelectedItem)
+            //    .DisposeWith(disposable);
         }
     }
 }

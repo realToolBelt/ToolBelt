@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using ToolBelt.Models;
+using ToolBelt.Data;
 using ToolBelt.Services;
 using ToolBelt.ViewModels;
 
@@ -20,15 +20,11 @@ namespace ToolBelt.Views.Projects
 
     public class ProjectFilter
     {
-        public DateTime? EndDate { get; set; }
-
-        public DateComparisonType EndDateComparison { get; set; }
-
         public DateTime? StartDate { get; set; }
 
         public DateComparisonType StartDateComparison { get; set; }
 
-        public List<TradeSpecialty> Trades { get; } = new List<TradeSpecialty>();
+        public List<Trade> Trades { get; } = new List<Trade>();
     }
 
     public class ProjectFilterPageViewModel : BaseViewModel
@@ -38,7 +34,7 @@ namespace ToolBelt.Views.Projects
         private DateComparisonType _selectedEndDateComparisonType = DateComparisonType.Before;
         private DateTime? _selectedStartDate;
         private DateComparisonType _selectedStartDateComparisonType = DateComparisonType.After;
-        private IEnumerable<TradeSpecialty> _selectedTrades;
+        private IEnumerable<Trade> _selectedTrades;
 
         public ProjectFilterPageViewModel(
             INavigationService navigationService,
@@ -50,9 +46,6 @@ namespace ToolBelt.Views.Projects
             {
                 _filter.StartDate = _selectedStartDate;
                 _filter.StartDateComparison = _selectedStartDateComparisonType;
-
-                _filter.EndDate = _selectedEndDate;
-                _filter.EndDateComparison = _selectedEndDateComparisonType;
 
                 _filter.Trades.Clear();
                 _filter.Trades.AddRange(_selectedTrades);
@@ -75,17 +68,17 @@ namespace ToolBelt.Views.Projects
             NavigatedTo
                 .Where(args => args.ContainsKey("selected_items"))
                 .Select(args => (IEnumerable<SelectionViewModel>)args["selected_items"])
-                .Subscribe(selections => _selectedTrades = selections.Select(x => x.Item).Cast<TradeSpecialty>());
+                .Subscribe(selections => _selectedTrades = selections.Select(x => x.Item).Cast<Trade>());
 
             // begin loading the trade data
-            var trades = projectDataStore.GetTradeSpecialtiesAsync();
+            var trades = projectDataStore.GetTradesAsync();
 
             SelectTrades = ReactiveCommand.CreateFromTask(async () =>
             {
                 var args = new NavigationParameters();
                 args.Add(
                     "items",
-                    (await trades).Select(specialty => new SelectionViewModel<TradeSpecialty>(specialty)
+                    (await trades).Select(specialty => new SelectionViewModel<Trade>(specialty)
                     {
                         DisplayValue = specialty.Name,
                         IsSelected = _selectedTrades?.Contains(specialty) == true

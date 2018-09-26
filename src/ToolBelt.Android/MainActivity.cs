@@ -21,7 +21,7 @@ namespace ToolBelt.Droid
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        public static FirebaseApp app;
+        public static FirebaseApp FirebaseApp { get; private set; }
 
         public event Action<int, Result, Intent> ActivityResult;
 
@@ -135,9 +135,9 @@ namespace ToolBelt.Droid
                .Build();
 #endif
 
-            if (app == null)
+            if (FirebaseApp == null)
             {
-                app = FirebaseApp.InitializeApp(this, options, "FirebaseSample");
+                FirebaseApp = FirebaseApp.InitializeApp(this, options, "FirebaseSample");
             }
         }
     }

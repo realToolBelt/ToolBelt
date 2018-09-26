@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ToolBelt.Data;
 using ToolBelt.Models;
 
 namespace ToolBelt.Services
@@ -18,7 +19,7 @@ namespace ToolBelt.Services
         /// <returns>An awaitable task.</returns>
         Task DeleteProjectAsync(Project project);
 
-        Task<IEnumerable<TradeSpecialty>> GetTradeSpecialtiesAsync();
+        Task<IEnumerable<Trade>> GetTradesAsync();
 
         /// <summary>
         /// Loads the new projects.
@@ -98,13 +99,13 @@ namespace ToolBelt.Services
 
         public Task DeleteProjectAsync(Project project)
         {
-            project.Status = ProjectStatus.Deleted;
+            //project.Status = ProjectStatus.Deleted;
 
             // delete...
             return Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<TradeSpecialty>> GetTradeSpecialtiesAsync()
+        public async Task<IEnumerable<Trade>> GetTradesAsync()
         {
             // introduce a delay to emulate network latency
             //await RandomDelay().ConfigureAwait(false);
@@ -141,7 +142,7 @@ namespace ToolBelt.Services
                     "Bathroom Remodeling",
                     "Concrete"
                 }
-                .Select((specialty, index) => new TradeSpecialty(index, specialty))).ConfigureAwait(false);
+                .Select((specialty, index) => new Trade { TradeId = index, Name = specialty })).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Project>> LoadNewProjects(int itemsPerPage)
@@ -151,12 +152,12 @@ namespace ToolBelt.Services
 
         public async Task<IEnumerable<Project>> LoadNewProjects(Project project, int itemsPerPage)
         {
-            return (await LoadProjects()).TakeWhile(p => p.Id < project.Id).Reverse().Take(itemsPerPage).ToArray();
+            return (await LoadProjects()).TakeWhile(p => p.ProjectId < project.ProjectId).Reverse().Take(itemsPerPage).ToArray();
         }
 
         public async Task<IEnumerable<Project>> LoadOldProjects(Project project, int itemsPerPage)
         {
-            return (await LoadProjects()).SkipWhile(p => p.Id <= project.Id).Take(itemsPerPage).ToArray();
+            return (await LoadProjects()).SkipWhile(p => p.ProjectId <= project.ProjectId).Take(itemsPerPage).ToArray();
         }
 
         public async Task<IEnumerable<Project>> LoadProjectsForUser(string userId)

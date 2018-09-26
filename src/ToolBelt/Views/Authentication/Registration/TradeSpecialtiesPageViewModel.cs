@@ -5,6 +5,7 @@ using ReactiveUI;
 using System;
 using System.Linq;
 using System.Reactive.Linq;
+using ToolBelt.Data;
 using ToolBelt.Extensions;
 using ToolBelt.Models;
 using ToolBelt.Services;
@@ -60,23 +61,28 @@ namespace ToolBelt.Views.Authentication.Registration
 
                 if (_account is ContractorAccount contractor)
                 {
-                    contractor.Specialties.Clear();
-                    contractor.Specialties.AddRange(selectedItems);
+                    contractor.AccountTrades.Clear();
+                    contractor.AccountTrades.AddRange(
+                        selectedItems.Select(item => new AccountTrade
+                        {
+                            AccountId = contractor.AccountId,
+                            TradeId = item.TradeId
+                        }));
                 }
-                
+
                 // TODO: Save the account...
                 containerRegistry.RegisterInstance<IUserService>(new UserService(_account));
                 await NavigationService.NavigateHomeAsync().ConfigureAwait(false);
             });
 
             projectDataStore
-                .GetTradeSpecialtiesAsync()
+                .GetTradesAsync()
                 .ContinueWith(t =>
                 {
                     // TODO: Handle failure?
                     Items.AddRange(
                         t.Result.Select(
-                            specialty => new SelectionViewModel<TradeSpecialty>(specialty)
+                            specialty => new SelectionViewModel<Trade>(specialty)
                             {
                                 DisplayValue = specialty.Name
                             }));
@@ -90,7 +96,7 @@ namespace ToolBelt.Views.Authentication.Registration
                 });
         }
 
-        public ReactiveList<SelectionViewModel<TradeSpecialty>> Items { get; } = new ReactiveList<SelectionViewModel<TradeSpecialty>>();
+        public ReactiveList<SelectionViewModel<Trade>> Items { get; } = new ReactiveList<SelectionViewModel<Trade>>();
 
         public ReactiveCommand Next { get; }
 

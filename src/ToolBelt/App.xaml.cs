@@ -5,6 +5,7 @@ using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Splat;
+using System;
 using System.Threading.Tasks;
 using ToolBelt.Services;
 using ToolBelt.Views;
@@ -71,6 +72,9 @@ namespace ToolBelt
                 });
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
+            System.AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+            TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
+
             NavigationService.NavigateAsync($"/NavigationPage/{nameof(ExtendedSplashPage)}");
         }
 
@@ -116,6 +120,7 @@ namespace ToolBelt
 
             containerRegistry.RegisterInstance<ICrashService>(new CrashService());
             containerRegistry.RegisterInstance<IDeviceOrientation>(new DeviceOrientationImplementation());
+            containerRegistry.RegisterInstance<IDateTimeProvider>(new SystemDateTimeProvider());
 
             containerRegistry.Register<IPermissionsService, PermissionsService>();
             containerRegistry.RegisterInstance<Acr.UserDialogs.IUserDialogs>(Acr.UserDialogs.UserDialogs.Instance);
@@ -164,12 +169,25 @@ namespace ToolBelt
             RegisterSplatDependencies();
         }
 
+        private void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
         private void RegisterSplatDependencies()
         {
             // register the command binder for the social buttons
             Locator.CurrentMutable.Register(
                 () => new Controls.SocialButtonCommandBinder(),
                 typeof(ReactiveUI.ICreatesCommandBinding));
+        }
+
+        private void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            Crashes.TrackError(e.Exception);
         }
     }
 }

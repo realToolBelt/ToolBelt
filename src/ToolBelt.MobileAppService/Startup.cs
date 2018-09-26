@@ -1,13 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
-
-using ToolBelt.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using ToolBelt.MobileAppService.Services;
 
 namespace ToolBelt.MobileAppService
 {
@@ -30,7 +31,8 @@ namespace ToolBelt.MobileAppService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton<IItemRepository, ItemRepository>();
+
+            services.AddDbContext<ToolBeltContext>();
 
             services.AddSwaggerGen(c =>
             {
@@ -44,6 +46,10 @@ namespace ToolBelt.MobileAppService
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            // TODO: REMOVE:
+            var dbContext = app.ApplicationServices.GetService<ToolBeltContext>();
+            AddTestData(dbContext);
+
             app.UseMvc();
 
             app.UseSwagger();
@@ -53,6 +59,47 @@ namespace ToolBelt.MobileAppService
             });
 
             app.Run(async (context) => await Task.Run(() => context.Response.Redirect("/swagger")));
+        }
+
+        private void AddTestData(ToolBeltContext context)
+        {
+            context.Trades.RemoveRange(context.Trades);
+
+            context.Trades.AddRange(
+                new[]
+                {
+                    "Roofing",
+                    "Siding",
+                    "Flooring",
+                    "Framing",
+                    "Dry-wall",
+                    "Tiling",
+                    "Masonry (stone work)",
+                    "Chimney",
+                    "Concrete",
+                    "Asphalt",
+                    "Remodeling (bathrooms)",
+                    "Remodeling (kitchens)",
+                    "Carpentry (finished)",
+                    "Carpentry (rough)",
+                    "Painting (interior)",
+                    "Painting (exterior)",
+                    "Plumbing",
+                    "Electrical",
+                    "Landscaping",
+                    "Appliance Installation",
+                    "Window Replacement",
+                    "Welding",
+                    "Decks",
+                    "Fencing",
+                    "Tile",
+                    "Kitchen Remodeling",
+                    "Bathroom Remodeling",
+                    "Concrete"
+                }
+                .Select((specialty, index) => new Data.Trade { Name = specialty }));
+
+            context.SaveChanges();
         }
     }
 }

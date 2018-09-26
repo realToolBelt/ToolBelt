@@ -5,6 +5,7 @@ using Splat;
 using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using ToolBelt.Data;
 using ToolBelt.Extensions;
 using ToolBelt.Models;
 using ToolBelt.Services;
@@ -49,10 +50,10 @@ namespace ToolBelt.Views
                                 return contractor.CompanyName;
                             }
 
-                            if (user is TradesemanAccount tradesman)
-                            {
-                                return tradesman.Name;
-                            }
+                            //if (user is TradesemanAccount tradesman)
+                            //{
+                            //    return tradesman.Name;
+                            //}
 
                             return "";
                         })

@@ -42,6 +42,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ToolBelt.Data\ToolBelt.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Views\Authentication\Registration\RegistrationTypeSelectionPage.xaml.cs">
       <DependentUpon>RegistrationTypeSelectionPage.xaml</DependentUpon>
     </Compile>

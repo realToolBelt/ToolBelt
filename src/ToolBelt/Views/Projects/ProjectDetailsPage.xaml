@@ -12,13 +12,10 @@
         <StackLayout Padding="20">
             <Label x:Name="_lblProjectName" FontSize="{StaticResource LargerSize}" />
 
-            <Label Text="Estimated Start Date:" TextColor="{StaticResource accentColor}" />
+            <Label Text="Estimated Start:" TextColor="{StaticResource accentColor}" />
             <Label x:Name="_lblStartDate" />
 
-            <Label Text="Estimated End Date:" TextColor="{StaticResource accentColor}" />
-            <Label x:Name="_lblEndDate" />
-
-            <Label Text="Payment:" TextColor="{StaticResource accentColor}" />
+            <Label Text="Pay Rate:" TextColor="{StaticResource accentColor}" />
             <StackLayout Orientation="Horizontal">
                 <Label x:Name="_lblPayRate" />
                 <Label x:Name="_lblPayType" />

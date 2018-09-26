@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using ToolBelt.Models;
+using ToolBelt.Data;
 using ToolBelt.Services;
 using ToolBelt.ViewModels;
 
@@ -36,7 +36,7 @@ namespace ToolBelt.Views.Projects
             var initialize = ReactiveCommand.CreateFromTask<Unit, IEnumerable<Project>>(_ =>
             {
                 AssertRunningOnBackgroundThread();
-                return projectDataStore.LoadProjectsForUser(userService.AuthenticatedUser.Uid);
+                return projectDataStore.LoadProjectsForUser(userService.AuthenticatedUser.AccountId);
             });
 
             initialize
@@ -130,7 +130,7 @@ namespace ToolBelt.Views.Projects
 
                 analyticService.TrackTapEvent("close-project");
 
-                project.Project.Status = ProjectStatus.Closed;
+                //project.Project.Status = ProjectStatus.Closed;
 
                 // TODO: Save to the database
 

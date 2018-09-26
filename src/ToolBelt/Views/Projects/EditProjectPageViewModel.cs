@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using ToolBelt.Data;
 using ToolBelt.Models;
 using ToolBelt.Services;
 using ToolBelt.Validation;
@@ -30,12 +31,11 @@ namespace ToolBelt.Views.Projects
             _validatableFields = new IValidity[]
             {
                 ProjectName,
-                StartDate,
-                EndDate,
+                //StartStatus,
                 Description,
                 SkillsRequired,
                 PayRate,
-                PaymentType
+                //PaymentType
             };
 
             AddValidationRules();
@@ -53,13 +53,33 @@ namespace ToolBelt.Views.Projects
                 {
                     // if the product was being edited, map the local fields back to the project and
                     // save it
-                    _project.Name = ProjectName.Value;
-                    _project.EstimatedStartDate = StartDate.Value.Value;
-                    _project.EstimatedEndDate = EndDate.Value.Value;
+                    //_project.Name = ProjectName.Value;
                     _project.Description = Description.Value;
-                    _project.SkillsRequired = SkillsRequired.Value;
-                    _project.PaymentRate = decimal.Parse(PayRate.Value);
-                    _project.PaymentType = PaymentType.Value;
+                    //_project.SkillsRequired = SkillsRequired.Value;
+                    //_project.PaymentRate = decimal.Parse(PayRate.Value);
+                    //_project.PaymentType = PaymentType.Value;
+
+                    //switch (StartStatus.Value)
+                    //{
+                    //    case ProjectStartStatus.ReadyNow:
+                    //        _project.EstimatedStartDate = DateTime.Today;
+                    //        break;
+
+                    //    case ProjectStartStatus.OneToTwoWeeks:
+                    //        _project.EstimatedStartDate = DateTime.Today.AddDays(7);
+                    //        break;
+
+                    //    case ProjectStartStatus.ThreeToFourWeeks:
+                    //        _project.EstimatedStartDate = DateTime.Today.AddDays(7 * 3);
+                    //        break;
+
+                    //    case ProjectStartStatus.FiveOrMoreWeeks:
+                    //        _project.EstimatedStartDate = DateTime.Today.AddDays(7 * 5);
+                    //        break;
+
+                    //    default:
+                    //        throw new InvalidOperationException("Invalid start status");
+                    //}
 
                     // TODO: projectDataStore.Update(_project);
                 }
@@ -111,13 +131,12 @@ namespace ToolBelt.Views.Projects
                     Title = "Edit Project";
 
                     // map the project being edited to the local fields
-                    ProjectName.Value = project.Name;
-                    StartDate.Value = project.EstimatedStartDate;
-                    EndDate.Value = project.EstimatedEndDate;
+                    //ProjectName.Value = project.Name;
+                    //StartStatus.Value = project.StartStatus;
                     Description.Value = project.Description;
-                    SkillsRequired.Value = project.SkillsRequired;
-                    PayRate.Value = project.PaymentRate.ToString();
-                    PaymentType.Value = project.PaymentType;
+                    //SkillsRequired.Value = project.SkillsRequired;
+                    //PayRate.Value = project.PaymentRate.ToString();
+                    //PaymentType.Value = project.PaymentType;
 
                     // accept changes for all fields
                     foreach (var field in _validatableFields)
@@ -140,16 +159,14 @@ namespace ToolBelt.Views.Projects
 
         public ValidatableObject<string> Description { get; } = new ValidatableObject<string>();
 
-        public ValidatableObject<DateTime?> EndDate { get; } = new ValidatableObject<DateTime?>();
+        //public ValidatableObject<WorkPaymentType> PaymentType { get; } = new ValidatableObject<WorkPaymentType>();
 
-        public ValidatableObject<WorkPaymentType> PaymentType { get; } = new ValidatableObject<WorkPaymentType>();
-
-        public List<WorkPaymentType> PaymentTypes { get; } =
-            new List<WorkPaymentType>
-            {
-                WorkPaymentType.Hourly,
-                WorkPaymentType.Piece
-            };
+        //public List<WorkPaymentType> PaymentTypes { get; } =
+        //    new List<WorkPaymentType>
+        //    {
+        //        WorkPaymentType.Hourly,
+        //        WorkPaymentType.Piece
+        //    };
 
         public ValidatableObject<string> PayRate { get; } = new ValidatableObject<string>();
 
@@ -162,7 +179,16 @@ namespace ToolBelt.Views.Projects
 
         public ValidatableObject<string> SkillsRequired { get; } = new ValidatableObject<string>();
 
-        public ValidatableObject<DateTime?> StartDate { get; } = new ValidatableObject<DateTime?>();
+        //public ValidatableObject<ProjectStartStatus> StartStatus { get; } = new ValidatableObject<ProjectStartStatus>();
+
+        //public List<KeyValuePair<string, ProjectStartStatus>> StartStatuses { get; } =
+        //    new List<KeyValuePair<string, ProjectStartStatus>>
+        //    {
+        //        new KeyValuePair<string, ProjectStartStatus>("Ready Now", ProjectStartStatus.ReadyNow),
+        //        new KeyValuePair<string, ProjectStartStatus>("1 - 2 Weeks", ProjectStartStatus.OneToTwoWeeks),
+        //        new KeyValuePair<string, ProjectStartStatus>("3 - 4 Weeks", ProjectStartStatus.ThreeToFourWeeks),
+        //        new KeyValuePair<string, ProjectStartStatus>("5+ Weeks", ProjectStartStatus.FiveOrMoreWeeks),
+        //    };
 
         /// <summary>
         /// Adds the validation rules for this instance.
@@ -170,18 +196,8 @@ namespace ToolBelt.Views.Projects
         private void AddValidationRules()
         {
             ProjectName.Validations.Add(new IsNotNullOrEmptyRule { ValidationMessage = "Project name cannot be empty" });
-            StartDate.Validations.Add(new IsNotNullRule<DateTime?> { ValidationMessage = "Start date cannot be empty" });
-            EndDate.Validations.Add(new IsNotNullRule<DateTime?> { ValidationMessage = "End date cannot be empty" });
-            PayRate.Validations.Add(new IsNotNullRule<string> { ValidationMessage = "Payment rate cannot be empty" });
-            PayRate.Validations.Add(new ActionValidationRule<string>(value => decimal.TryParse(value, out _), "Payment rate must be a number"));
-
-            StartDate.Validations.Add(new ActionValidationRule<DateTime?>(
-                startDate => !EndDate.Value.HasValue || !startDate.HasValue || startDate.Value < EndDate.Value.Value,
-                "Start date cannot come after the end date"));
-
-            EndDate.Validations.Add(new ActionValidationRule<DateTime?>(
-                endDate => !StartDate.Value.HasValue || !endDate.HasValue || endDate.Value > StartDate.Value.Value,
-                "End date cannot come before the start date"));
+            PayRate.Validations.Add(new IsNotNullRule<string> { ValidationMessage = "Pay rate cannot be empty" });
+            PayRate.Validations.Add(new ActionValidationRule<string>(value => decimal.TryParse(value, out _), "Pay rate must be a number"));
         }
 
         /// <summary>

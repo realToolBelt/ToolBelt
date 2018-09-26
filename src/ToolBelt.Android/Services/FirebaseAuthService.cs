@@ -106,7 +106,7 @@ namespace ToolBelt.Droid.Services
             }
         }
 
-        private FirebaseAuth GetFirebaseAuthInstance() => FirebaseAuth.GetInstance(MainActivity.app);
+        private FirebaseAuth GetFirebaseAuthInstance() => FirebaseAuth.GetInstance(MainActivity.FirebaseApp);
 
         private async Task<bool> SignInWithGoogle(string token)
         {

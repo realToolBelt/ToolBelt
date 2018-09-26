@@ -10,6 +10,7 @@ using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
+using ToolBelt.Data;
 using ToolBelt.Models;
 using ToolBelt.Services;
 using ToolBelt.Validation;
@@ -121,7 +122,7 @@ namespace ToolBelt.Views.Profile
                 var args = new NavigationParameters();
                 args.Add(
                     "items",
-                    (await projectDataStore.GetTradeSpecialtiesAsync()).Select(specialty => new SelectionViewModel<TradeSpecialty>(specialty)
+                    (await projectDataStore.GetTradesAsync()).Select(specialty => new SelectionViewModel<Trade>(specialty)
                     {
                         DisplayValue = specialty.Name
                     }));

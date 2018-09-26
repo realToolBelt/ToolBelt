@@ -2,6 +2,7 @@
 using Splat;
 using System.Reactive.Disposables;
 using ToolBelt.Extensions;
+using ToolBelt.Models;
 using Xamarin.Forms.Xaml;
 
 namespace ToolBelt.Views.Projects
@@ -20,33 +21,48 @@ namespace ToolBelt.Views.Projects
             {
                 using (this.Log().Perf($"{nameof(ProjectDetailsPage)}: Activate."))
                 {
-                    this
-                        .OneWayBind(ViewModel, vm => vm.Project.Name, v => v._lblProjectName.Text)
-                        .DisposeWith(disposable);
+                //    this
+                //        .OneWayBind(ViewModel, vm => vm.Project.Name, v => v._lblProjectName.Text)
+                //        .DisposeWith(disposable);
 
-                    this
-                        .OneWayBind(ViewModel, vm => vm.Project.EstimatedStartDate, v => v._lblStartDate.Text, date => $"{date:d}")
-                        .DisposeWith(disposable);
+                    //this
+                    //    .OneWayBind(ViewModel, vm => vm.Project.StartStatus, v => v._lblStartDate.Text, startStatus =>
+                    //    {
+                    //        switch (startStatus)
+                    //        {
+                    //            case ProjectStartStatus.ReadyNow:
+                    //                return "Ready Now";
 
-                    this
-                        .OneWayBind(ViewModel, vm => vm.Project.EstimatedEndDate, v => v._lblEndDate.Text, date => $"{date:d}")
-                        .DisposeWith(disposable);
+                    //            case ProjectStartStatus.OneToTwoWeeks:
+                    //                return "1 - 2 Weeks";
+
+                    //            case ProjectStartStatus.ThreeToFourWeeks:
+                    //                return "3 - 4 Weeks";
+
+                    //            case ProjectStartStatus.FiveOrMoreWeeks:
+                    //                return "5+ Weeks";
+
+                    //            default:
+                    //                return "Unknown";
+                    //        }
+                    //    })
+                    //    .DisposeWith(disposable);
 
                     this
                         .OneWayBind(ViewModel, vm => vm.Project.Description, v => v._lblDescription.Text)
                         .DisposeWith(disposable);
 
-                    this
-                        .OneWayBind(ViewModel, vm => vm.Project.SkillsRequired, v => v._lblSkillsRequired.Text)
-                        .DisposeWith(disposable);
+                    //this
+                    //    .OneWayBind(ViewModel, vm => vm.Project.SkillsRequired, v => v._lblSkillsRequired.Text)
+                    //    .DisposeWith(disposable);
 
-                    this
-                        .OneWayBind(ViewModel, vm => vm.Project.PaymentRate, v => v._lblPayRate.Text)
-                        .DisposeWith(disposable);
+                    //this
+                    //    .OneWayBind(ViewModel, vm => vm.Project.PaymentRate, v => v._lblPayRate.Text)
+                    //    .DisposeWith(disposable);
 
-                    this
-                        .OneWayBind(ViewModel, vm => vm.Project.PaymentType, v => v._lblPayType.Text)
-                        .DisposeWith(disposable);
+                    //this
+                    //    .OneWayBind(ViewModel, vm => vm.Project.PaymentType, v => v._lblPayType.Text)
+                    //    .DisposeWith(disposable);
                 }
             });
         }

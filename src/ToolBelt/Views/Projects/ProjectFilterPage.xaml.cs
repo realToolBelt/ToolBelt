@@ -37,27 +37,13 @@ namespace ToolBelt.Views.Projects
                         .DisposeWith(disposable);
 
                     this
-                        .OneWayBind(ViewModel, vm => vm.DateComparisonOptions, v => v._endDateComparisonTypePicker.ItemsSource)
-                        .DisposeWith(disposable);
-
-                    this
                         .Bind(ViewModel, vm => vm.SelectedStartDateComparisonType, v => v._startDateComparisonTypePicker.SelectedItem,
                             vmToViewConverter: x => x.ToString(),
                             viewToVmConverter: v => (DateComparisonType)Enum.Parse(typeof(DateComparisonType), v.ToString()))
                         .DisposeWith(disposable);
 
                     this
-                        .Bind(ViewModel, vm => vm.SelectedEndDateComparisonType, v => v._endDateComparisonTypePicker.SelectedItem,
-                            vmToViewConverter: x => x.ToString(),
-                            viewToVmConverter: v => (DateComparisonType)Enum.Parse(typeof(DateComparisonType), v.ToString()))
-                        .DisposeWith(disposable);
-
-                    this
                         .Bind(ViewModel, vm => vm.SelectedStartDate, v => v._startDatePicker.NullableDate)
-                        .DisposeWith(disposable);
-
-                    this
-                        .Bind(ViewModel, vm => vm.SelectedEndDate, v => v._endDatePicker.NullableDate)
                         .DisposeWith(disposable);
 
                     _vcTrades
