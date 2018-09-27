@@ -3,12 +3,8 @@ using System.Collections.Generic;
 
 namespace ToolBelt.Data
 {
-    public class Project
+    public partial class Project
     {
-        public Account Account { get; set; }
-
-        public string AccountId { get; set; }
-
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
         public int CrewSize { get; set; }
@@ -22,11 +18,19 @@ namespace ToolBelt.Data
         public decimal PayRate { get; set; }
 
         public int ProjectId { get; set; }
+    }
+    
+    /* NOTE: This part of the Project class simply exists to keep all the Foreign Keys in a single place*/
+    public partial class Project
+    {
+        public Account Account { get; set; }
 
-        public List<ProjectTradeSpecialty> ProjectTradeSpecialties { get; } = new List<ProjectTradeSpecialty>();
+        public string AccountId { get; set; }
 
         public Trade Trade { get; set; }
 
         public int TradeId { get; set; }
+
+        public List<ProjectTradeSpecialty> ProjectTradeSpecialties { get; } = new List<ProjectTradeSpecialty>();
     }
 }

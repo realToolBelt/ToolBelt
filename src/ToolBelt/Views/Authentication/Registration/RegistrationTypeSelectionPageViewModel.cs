@@ -5,6 +5,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using ToolBelt.Extensions;
 using ToolBelt.Services;
+using ToolBelt.Services.Analytics;
 using ToolBelt.ViewModels;
 
 namespace ToolBelt.Views.Authentication.Registration

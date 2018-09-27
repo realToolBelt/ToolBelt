@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using ToolBelt.Data;
-using ToolBelt.Models;
-using ToolBelt.Services;
+using ToolBelt.Services.Analytics;
 using ToolBelt.Validation;
 using ToolBelt.Validation.Rules;
 using ToolBelt.ViewModels;
@@ -31,10 +30,12 @@ namespace ToolBelt.Views.Projects
             _validatableFields = new IValidity[]
             {
                 ProjectName,
+
                 //StartStatus,
                 Description,
                 SkillsRequired,
                 PayRate,
+
                 //PaymentType
             };
 
@@ -55,6 +56,7 @@ namespace ToolBelt.Views.Projects
                     // save it
                     //_project.Name = ProjectName.Value;
                     _project.Description = Description.Value;
+
                     //_project.SkillsRequired = SkillsRequired.Value;
                     //_project.PaymentRate = decimal.Parse(PayRate.Value);
                     //_project.PaymentType = PaymentType.Value;
@@ -65,17 +67,14 @@ namespace ToolBelt.Views.Projects
                     //        _project.EstimatedStartDate = DateTime.Today;
                     //        break;
 
-                    //    case ProjectStartStatus.OneToTwoWeeks:
-                    //        _project.EstimatedStartDate = DateTime.Today.AddDays(7);
-                    //        break;
+                    // case ProjectStartStatus.OneToTwoWeeks: _project.EstimatedStartDate =
+                    // DateTime.Today.AddDays(7); break;
 
-                    //    case ProjectStartStatus.ThreeToFourWeeks:
-                    //        _project.EstimatedStartDate = DateTime.Today.AddDays(7 * 3);
-                    //        break;
+                    // case ProjectStartStatus.ThreeToFourWeeks: _project.EstimatedStartDate =
+                    // DateTime.Today.AddDays(7 * 3); break;
 
-                    //    case ProjectStartStatus.FiveOrMoreWeeks:
-                    //        _project.EstimatedStartDate = DateTime.Today.AddDays(7 * 5);
-                    //        break;
+                    // case ProjectStartStatus.FiveOrMoreWeeks: _project.EstimatedStartDate =
+                    // DateTime.Today.AddDays(7 * 5); break;
 
                     //    default:
                     //        throw new InvalidOperationException("Invalid start status");
@@ -134,6 +133,7 @@ namespace ToolBelt.Views.Projects
                     //ProjectName.Value = project.Name;
                     //StartStatus.Value = project.StartStatus;
                     Description.Value = project.Description;
+
                     //SkillsRequired.Value = project.SkillsRequired;
                     //PayRate.Value = project.PaymentRate.ToString();
                     //PaymentType.Value = project.PaymentType;

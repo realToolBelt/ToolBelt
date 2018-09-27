@@ -1,8 +1,8 @@
-﻿using Microsoft.AppCenter.Analytics;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MSAnalytics = Microsoft.AppCenter.Analytics;
 
-namespace ToolBelt.Services
+namespace ToolBelt.Services.Analytics
 {
     /// <summary>
     /// An implementation of the <see cref="IAnalyticService" /> that wraps the
@@ -18,7 +18,7 @@ namespace ToolBelt.Services
         /// <returns><c>true</c> if the service is enabled; otherwise, <c>false</c>.</returns>
         public Task<bool> IsEnabledAsync()
         {
-            return Analytics.IsEnabledAsync();
+            return MSAnalytics.Analytics.IsEnabledAsync();
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace ToolBelt.Services
         /// <returns>An awaitable task.</returns>
         public Task SetEnabledAsync(bool enabled)
         {
-            return Analytics.SetEnabledAsync(enabled);
+            return MSAnalytics.Analytics.SetEnabledAsync(enabled);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace ToolBelt.Services
         /// <param name="properties">The properties related to the event.</param>
         public void TrackEvent(string name, IDictionary<string, string> properties = null)
         {
-            Analytics.TrackEvent(name, properties);
+            MSAnalytics.Analytics.TrackEvent(name, properties);
         }
     }
 }

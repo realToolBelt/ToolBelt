@@ -4,7 +4,7 @@ using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ToolBelt.Extensions;
-using ToolBelt.Services;
+using ToolBelt.Services.Device;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

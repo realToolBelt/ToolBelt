@@ -1,7 +1,17 @@
 ﻿namespace ToolBelt.Effects
 {
+    /// <summary>
+    /// Class to hold common settings related to effects. This ensures we don't have any typos
+    /// between the shared library and the downstram (Android, iOS, ...) projects.
+    /// </summary>
     public static class EffectSettings
     {
+        /// <summary>
+        /// The resolution group name used to resolve effects.
+        /// </summary>
+        /// <remarks>
+        /// This must be a constant for use in the platform-specific project's effect attributes.
+        /// </remarks>
         public const string ResolutionGroupName = "ToolBelt";
 
         /// <summary>

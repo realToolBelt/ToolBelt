@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using ToolBelt.Data;
-using ToolBelt.Services;
+using ToolBelt.Services.Analytics;
 using ToolBelt.Validation;
 using ToolBelt.Validation.Rules;
 using ToolBelt.ViewModels;
@@ -67,8 +67,10 @@ namespace ToolBelt.Views.Authentication.Registration
                     EmailAddress = CompanyEmail.Value,
                     CompanyName = CompanyName.Value,
                     CompanyUrl = CompanyUrl.Value,
+
                     //PrimaryContact = PrimaryContact.Value,
                     PhoneNumber = PrimaryPhone.Value,
+
                     //SecondaryPhoneNumber = SecondaryPhone.Value,
                     //PhysicalAddress = new Models.Address
                     //{
@@ -82,7 +84,7 @@ namespace ToolBelt.Views.Authentication.Registration
                     //SocialNetwork2 = SocialNetwork2.Value,
                     //SocialNetwork3 = SocialNetwork3.Value
                 };
-                
+
                 // TODO: ...
                 await navigationService.NavigateAsync(
                     nameof(TradeSpecialtiesPage),
@@ -113,8 +115,11 @@ namespace ToolBelt.Views.Authentication.Registration
         public ValidatableObject<string> Zip { get; } = new ValidatableObject<string>();
 
         public ValidatableObject<string> SocialNetwork1 { get; } = new ValidatableObject<string>();
+
         public ValidatableObject<string> SocialNetwork2 { get; } = new ValidatableObject<string>();
+
         public ValidatableObject<string> SocialNetwork3 { get; } = new ValidatableObject<string>();
+
         public ValidatableObject<string> PrimaryContact { get; } = new ValidatableObject<string>();
 
         private Dictionary<string, string> States { get; } = new Dictionary<string, string>

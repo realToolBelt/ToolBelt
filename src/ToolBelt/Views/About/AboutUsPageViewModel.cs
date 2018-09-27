@@ -1,5 +1,5 @@
 ﻿using Prism.Navigation;
-using ToolBelt.Services;
+using ToolBelt.Services.Analytics;
 using ToolBelt.ViewModels;
 
 namespace ToolBelt.Views.About

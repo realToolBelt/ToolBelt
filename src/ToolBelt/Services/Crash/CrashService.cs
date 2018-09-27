@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ToolBelt.Services
+namespace ToolBelt.Services.Crash
 {
     /// <summary>
     /// An implementation of the <see cref="ICrashService" /> that wraps the

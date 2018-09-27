@@ -9,5 +9,4 @@
                          prism:ViewModelLocator.AutowireViewModel="True"
                          x:TypeArguments="local:ProfileViewTabbedPageViewModel">
     <local:ProfilePage />
-    <local:GalleriesPage />
 </rxui:ReactiveTabbedPage>

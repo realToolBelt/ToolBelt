@@ -13,6 +13,7 @@ using ToolBelt.Data;
 using ToolBelt.Extensions;
 using ToolBelt.Models;
 using ToolBelt.Services;
+using ToolBelt.Services.Analytics;
 using ToolBelt.ViewModels;
 
 namespace ToolBelt.Views.Projects

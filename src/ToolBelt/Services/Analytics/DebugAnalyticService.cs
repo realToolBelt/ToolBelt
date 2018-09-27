@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ToolBelt.Services
+namespace ToolBelt.Services.Analytics
 {
     /// <summary>
     /// Implementation of an <see cref="IAnalyticService" /> that is intended for debugging purposes.

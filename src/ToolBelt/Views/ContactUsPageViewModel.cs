@@ -4,6 +4,7 @@ using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using ToolBelt.Services;
+using ToolBelt.Services.Analytics;
 using ToolBelt.Validation;
 using ToolBelt.Validation.Rules;
 using ToolBelt.ViewModels;

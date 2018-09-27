@@ -4,6 +4,10 @@ using Xamarin.Forms;
 
 namespace ToolBelt.Controls
 {
+    /// <summary>
+    /// A simple repeater that can be used to display a collection of items with a common item template.
+    /// </summary>
+    /// <seealso cref="Xamarin.Forms.StackLayout" />
     public class RepeaterView : StackLayout
     {
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(

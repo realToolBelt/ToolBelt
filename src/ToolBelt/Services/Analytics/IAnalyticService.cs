@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ToolBelt.Services
+namespace ToolBelt.Services.Analytics
 {
     /// <summary>
-    /// Interface for the crash reporting service.
+    /// Interface for the analytics service.
     /// </summary>
-    public interface ICrashService
+    public interface IAnalyticService
     {
         /// <summary>
-        /// Determines whether the crash service is enabled or not.
+        /// Determines whether the analytics service is enabled or not.
         /// </summary>
         /// <returns><c>true</c> if the service is enabled; otherwise, <c>false</c>.</returns>
         Task<bool> IsEnabledAsync();
 
         /// <summary>
-        /// Enables or disables the crash service.
+        /// Enables or disables the analytics service.
         /// </summary>
         /// <param name="enabled">If set to <c>true</c>, the service will be enabled.</param>
         /// <returns>An awaitable task.</returns>
         Task SetEnabledAsync(bool enabled);
 
         /// <summary>
-        /// Tracks the error.
+        /// Tracks the event.
         /// </summary>
-        /// <param name="exception">The error to track.</param>
+        /// <param name="name">The event name.</param>
         /// <param name="properties">The properties related to the event.</param>
-        void TrackError(Exception exception, IDictionary<string, string> properties = null);
+        void TrackEvent(string name, IDictionary<string, string> properties = null);
     }
 }

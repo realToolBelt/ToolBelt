@@ -3,8 +3,7 @@ using ReactiveUI;
 using System;
 using System.Reactive.Linq;
 using ToolBelt.Data;
-using ToolBelt.Models;
-using ToolBelt.Services;
+using ToolBelt.Services.Analytics;
 using ToolBelt.ViewModels;
 
 namespace ToolBelt.Views.Projects

@@ -2,7 +2,7 @@
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System.Threading.Tasks;
-using Xamarin.Forms;
+using DeviceInfo = Xamarin.Forms;
 
 namespace ToolBelt.Services
 {
@@ -19,7 +19,7 @@ namespace ToolBelt.Services
             bool request = false;
             if (permissionStatus == PermissionStatus.Denied)
             {
-                if (Device.RuntimePlatform == Device.iOS)
+                if (DeviceInfo.Device.RuntimePlatform == DeviceInfo.Device.iOS)
                 {
                     var iOSMessage = $"{message} Please go into Settings and turn on {permission} for the app.";
                     var task = dialogService?.ConfirmAsync(

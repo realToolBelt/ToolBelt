@@ -10,6 +10,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ToolBelt.Data;
 using ToolBelt.Services;
+using ToolBelt.Services.Analytics;
 using ToolBelt.ViewModels;
 
 namespace ToolBelt.Views.Projects

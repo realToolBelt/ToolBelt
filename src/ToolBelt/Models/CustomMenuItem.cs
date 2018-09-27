@@ -3,7 +3,7 @@ using System.Reactive;
 
 namespace ToolBelt.Models
 {
-    // TODO: This should be immutable.  Also should take the tap command out and handle it at a higher level
+    // TODO: This should be immutable.  Also should take the tap command out and handle it at a higher level.  Leaving it like this for now for the prototype app.
     public class CustomMenuItem : ReactiveObject
     {
         private string _iconSource;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ToolBelt.Services
+namespace ToolBelt.Services.Analytics
 {
     /// <summary>
     /// Extension methods for the <see cref="IAnalyticService" />.

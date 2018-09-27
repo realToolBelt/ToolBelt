@@ -8,11 +8,13 @@ using Splat;
 using System;
 using System.Threading.Tasks;
 using ToolBelt.Services;
+using ToolBelt.Services.Analytics;
+using ToolBelt.Services.Crash;
+using ToolBelt.Services.Device;
 using ToolBelt.Views;
 using ToolBelt.Views.About;
 using ToolBelt.Views.Authentication;
 using ToolBelt.Views.Authentication.Registration;
-using ToolBelt.Views.Messages;
 using ToolBelt.Views.Profile;
 using ToolBelt.Views.Projects;
 using Xamarin.Forms;
@@ -128,7 +130,6 @@ namespace ToolBelt
             // TODO: REPLACE!
             containerRegistry.Register<IUserDataStore, FakeUserDataStore>();
             containerRegistry.Register<IProjectDataStore, FakeProjectDataStore>();
-            containerRegistry.Register<IAlbumDataStore, FakeAlbumDataStore>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<ModalNavigationPage, ModalNavigationPageViewModel>();
@@ -154,10 +155,6 @@ namespace ToolBelt
             containerRegistry.RegisterForNavigation<ProfileViewTabbedPage, ProfileViewTabbedPageViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<EditableProfilePage, EditableProfilePageViewModel>();
-            containerRegistry.RegisterForNavigation<GalleriesPage, GalleriesPageViewModel>();
-            containerRegistry.RegisterForNavigation<GalleryPage, GalleryPageViewModel>();
-
-            containerRegistry.RegisterForNavigation<ChatPage, ChatPageViewModel>();
 
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<ProjectsPage, ProjectsPageViewModel>();
